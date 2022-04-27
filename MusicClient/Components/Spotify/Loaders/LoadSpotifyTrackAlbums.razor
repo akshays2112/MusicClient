@@ -1,0 +1,55 @@
+﻿@using MusicClient.Data.SQLServer.Models.Spotify
+@using MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify
+@using SpotifyApi.NetCore
+@inject IPlaylistsApi playlistsApi
+
+<button class="btn btn-primary" @onclick=LoadSpotifyTrackAlbumsAsync>Load Spotify Track Albums</button>
+<hr />
+<table class="table">
+    @if (MusicClient.Data.Globals.PreloadedSpotifyTrackAlbums.Count > 0)
+    {
+        foreach (SpotifyTrackAlbum spotifyTrackAlbum in MusicClient.Data.Globals.PreloadedSpotifyTrackAlbums)
+        {
+            <tr>
+                <td>@spotifyTrackAlbum.ID</td>
+                <td>@spotifyTrackAlbum.AlbumID</td>
+                <td>@spotifyTrackAlbum.TrackID</td>
+            </tr>
+        }
+    }
+</table>
+<hr />
+
+@code {
+    async Task LoadSpotifyTrackAlbumsAsync()
+    {
+        foreach (SpotifyPlaylist spotifyPlaylist in MusicClient.Data.Globals.PreloadedSpotifyPlaylists)
+        {
+            bool isMore = true;
+            int currentTrackCount = 0;
+            do
+            {
+                PlaylistPaged playlistPaged = await playlistsApi.GetTracks(spotifyPlaylist.PlaylistID, Globals.SpotifyAccessToken?.AccessToken, limit: 100, offset: currentTrackCount);
+                foreach (PlaylistTrack playlistTrack in playlistPaged.Items.ToList())
+                {
+                    SpotifyTrackAlbums spotifyTrackAlbums = new();
+                    SpotifyTrackAlbum spotifyTrackAlbum = SpotifyTrackAlbum.NewSpotifyTrackAlbum(
+                        MusicClient.Data.Globals.PreloadedSpotifyTracks.First(t => t.TrackID == playlistTrack.Track.Id).ID,
+                        MusicClient.Data.Globals.PreloadedSpotifyAlbums.First(a => a.AlbumID == playlistTrack.Track.Album.Id).ID);
+                    try
+                    {
+                        spotifyTrackAlbums.AddSpotifyTrackAlbum(spotifyTrackAlbum);
+                    }
+                    catch { }
+                }
+                if (playlistPaged.Items.Length < 100)
+                {
+                    isMore = false;
+                }
+                currentTrackCount += 100;
+            } while (isMore);
+        }
+
+        await base.OnInitializedAsync();
+    }
+}

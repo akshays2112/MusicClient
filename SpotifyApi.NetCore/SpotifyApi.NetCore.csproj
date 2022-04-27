@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Authors>Akshay Srinivasan</Authors>
+		<Copyright>2021 Akshay Srinivasan</Copyright>
+		<NoWarn />
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+		<WarningsAsErrors />
+		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<!-- XML Warnings suppressed need to fix -->
+		<NoWarn>1584;1658;1591;1573;1571;1570;1574;1572;1711</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<Optimize>true</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile>C:\Users\aksha\OneDrive\akshays2112\AkshaySNewDemo\SpotifyApi.NetCore\SpotifyApi.NetCore.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
+	  <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,54 @@
+﻿@using MusicClient.Data.SQLServer.Models.Spotify
+@using MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify
+@using SpotifyApi.NetCore
+@inject IPlaylistsApi playlistsApi
+
+<button class="btn btn-primary" @onclick=LoadSpotifyTracksAsync>Load Spotify Tracks</button>
+<hr />
+<table class="table">
+    @if (MusicClient.Data.Globals.PreloadedSpotifyTracks.Count > 0)
+    {
+        foreach (SpotifyTrack spotifyTrack in MusicClient.Data.Globals.PreloadedSpotifyTracks)
+        {
+            <tr>
+                <td>@spotifyTrack.ID</td>
+                <td>@spotifyTrack.TrackID</td>
+                <td>@spotifyTrack.Name</td>
+                <td>@spotifyTrack.Popularity</td>
+            </tr>
+        }
+    }
+</table>
+<hr />
+
+@code {
+    async Task LoadSpotifyTracksAsync()
+    {
+        foreach (SpotifyPlaylist spotifyPlaylist in MusicClient.Data.Globals.PreloadedSpotifyPlaylists)
+        {
+            bool isMore = true;
+            int currentTrackCount = 0;
+            do
+            {
+                PlaylistPaged playlistPaged = await playlistsApi.GetTracks(spotifyPlaylist.PlaylistID, Globals.SpotifyAccessToken?.AccessToken, limit: 100, offset: currentTrackCount);
+                foreach (PlaylistTrack playlistTrack in playlistPaged.Items)
+                {
+                    SpotifyTracks spotifyTracks = new();
+                    SpotifyTrack spotifyTrack = SpotifyTrack.NewSpotifyTrack(playlistTrack.Track.Id, playlistTrack.Track.Name, playlistTrack.Track.Popularity);
+                    try
+                    {
+                        spotifyTracks.AddSpotifyTrack(spotifyTrack);
+                    }
+                    catch { }
+                }
+                if (playlistPaged.Items.Length < 100)
+                {
+                    isMore = false;
+                }
+                currentTrackCount += 100;
+            } while (isMore);
+        }
+
+        await base.OnInitializedAsync();
+    }
+}

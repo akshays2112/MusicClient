@@ -1,0 +1,45 @@
+﻿@using MusicClient.Data.SQLServer.Models.Spotify
+@using MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify
+@using SpotifyApi.NetCore
+@inject ITracksApi tracksApi
+
+<button class="btn btn-primary" @onclick=LoadSpotifyArtistsAsync>Load Spotify Artists</button>
+<hr />
+<table class="table">
+    @if (MusicClient.Data.Globals.PreloadedSpotifyArtists.Count > 0)
+    {
+        foreach (SpotifyArtist spotifyArtist in MusicClient.Data.Globals.PreloadedSpotifyArtists)
+        {
+            <tr>
+                <td>@spotifyArtist.ID</td>
+                <td>@spotifyArtist.ArtistID</td>
+                <td>@spotifyArtist.Name</td>
+                <td>@spotifyArtist.Popularity</td>
+            </tr>
+        }
+    }
+</table>
+<hr />
+
+@code {
+    async Task LoadSpotifyArtistsAsync()
+    {
+        List<SpotifyTrack> spotifyTracks = (new SpotifyTracks()).GetAllSpotifyTracks()?.ToList() ?? new();
+        foreach (SpotifyTrack spotifyTrack in spotifyTracks)
+        {
+            Track track = await tracksApi.GetTrack(spotifyTrack.TrackID, Globals.SpotifyAccessToken?.AccessToken);
+            foreach (Artist artist in track.Artists)
+            {
+                SpotifyArtists spotifyArtists = new();
+                SpotifyArtist newSpotifyArtist = SpotifyArtist.NewSpotifyArtist(artist.Id, artist.Name, artist.Popularity);
+                try
+                {
+                    spotifyArtists.AddSpotifyArtist(newSpotifyArtist);
+                }
+                catch { }
+            }
+        }
+
+        await base.OnInitializedAsync();
+    }
+}

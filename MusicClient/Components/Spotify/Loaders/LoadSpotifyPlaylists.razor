@@ -1,0 +1,44 @@
+﻿@using MusicClient.Data.SQLServer.Models.Spotify
+@using MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify
+@using SpotifyApi.NetCore
+@inject IUsersProfileApi usersProfileApi
+@inject IPlaylistsApi playlistsApi
+
+<button class="btn btn-primary"  @onclick=LoadSpotifyPlaylistsAsync>Load Spotify Playlists</button>
+<hr />
+<table class="table">
+    @if (MusicClient.Data.Globals.PreloadedSpotifyPlaylists.Count > 0)
+    {
+        foreach (SpotifyPlaylist spotifyPlaylist in MusicClient.Data.Globals.PreloadedSpotifyPlaylists)
+        {
+            <tr>
+                <td>@spotifyPlaylist.ID</td>
+                <td>@spotifyPlaylist.Name</td>
+                <td>@spotifyPlaylist.PlaylistID</td>
+            </tr>
+        }
+    }
+</table>
+<hr />
+
+@code {
+    async Task LoadSpotifyPlaylistsAsync()
+    {
+        SpotifyPlaylists spotifyPlaylists = new();
+        User user = await usersProfileApi.GetCurrentUsersProfile(Globals.SpotifyAccessToken?.AccessToken);
+        PlaylistsSearchResult playlistsSearchResult = await playlistsApi.GetPlaylists(user.Id, Globals.SpotifyAccessToken?.AccessToken);
+        foreach (PlaylistSimplified playlistSimplified in playlistsSearchResult.Items)
+        {
+            SpotifyPlaylist spotifyPlaylist = SpotifyPlaylist.NewSpotifyPlaylist(playlistSimplified.Id, playlistSimplified.Name);
+            try
+            {
+                spotifyPlaylists.AddSpotifyPlaylist(spotifyPlaylist);
+            }
+            catch
+            {
+            }
+        }
+
+        await base.OnInitializedAsync();
+    }
+}

@@ -1,0 +1,33 @@
+﻿@using MusicClient.Data
+
+@*
+==============================================================================
+select t.ID, t.TrackID, t.Name, t.Popularity, art.Name, a.ReleaseDate from 
+	SpotifyTrackAlbums ta inner join SpotifyTracks t on ta.TrackID = t.ID 
+		inner join SpotifyAlbums a on a.ID = ta.AlbumID 
+		inner join SpotifyTrackArtists tart on tart.TrackID = t.ID
+		inner join SpotifyArtists art on art.ID = tart.ArtistID
+	order by a.ReleaseDate
+==============================================================================
+*@
+
+<h3>Query1</h3>
+
+<table>
+    <tr>
+        <td>
+
+        </td>
+    </tr>
+</table>
+
+@code {
+
+	class Query1Class {
+		//SpotifyTracks ID field from PreloadedSpotifyTracks
+		public int ID { get; set; }
+
+		//
+	}
+
+}
