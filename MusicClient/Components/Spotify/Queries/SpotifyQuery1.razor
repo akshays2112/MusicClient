@@ -1,33 +1,112 @@
-﻿@using MusicClient.Data
-
-@*
-==============================================================================
-select t.ID, t.TrackID, t.Name, t.Popularity, art.Name, a.ReleaseDate from 
-	SpotifyTrackAlbums ta inner join SpotifyTracks t on ta.TrackID = t.ID 
-		inner join SpotifyAlbums a on a.ID = ta.AlbumID 
-		inner join SpotifyTrackArtists tart on tart.TrackID = t.ID
-		inner join SpotifyArtists art on art.ID = tart.ArtistID
-	order by a.ReleaseDate
-==============================================================================
-*@
+﻿@using System.Linq
+@using System.Collections.Generic
+@using static MusicClient.Data.Globals
 
 <h3>Query1</h3>
 
-<table>
-    <tr>
-        <td>
-
-        </td>
-    </tr>
-</table>
+@if (query1Result1 is not null && query1Result1.Count > 0)
+{
+	string oldTrackID = string.Empty;
+	string newTrackID = string.Empty;
+	string artistNames = string.Empty;
+	<table class="table">
+		@foreach(Query1Class1 query1Class in query1Result1) { //(int i=0;i<query1Result.Count;i++) {
+			<tr>
+				<td>@query1Class.ID</td>
+				<td>
+					@query1Class.TrackID
+				</td>
+				<td>@query1Class.TrackName</td>
+				<td>@query1Class.TrackPopularity</td>
+				<td>
+					@if (query1Result2 is not null && query1Result2.Count > 0)
+					{
+						foreach (Query1Class2 query1Class2 in query1Result2.FindAll(q1r2 => q1r2.ID == query1Class.ID))
+						{
+							<span>@query1Class2.ArtistName,</span>
+						}
+					}
+				</td>
+				<td>@query1Class.AlbumReleaseDate</td>
+			</tr>
+		}
+	</table>
+}
 
 @code {
+	List<Query1Class1>? query1Result1;
+	List<Query1Class2>? query1Result2;
 
-	class Query1Class {
-		//SpotifyTracks ID field from PreloadedSpotifyTracks
+	class Query1Class1
+	{
 		public int ID { get; set; }
-
-		//
+		public string TrackID { get; set; } = string.Empty;
+		public string TrackName { get; set; } = string.Empty;
+		public int TrackPopularity { get; set; }
+		public DateTime AlbumReleaseDate { get; set; }
 	}
 
+	class Query1Class2
+	{
+		public int ID { get; set; }
+		public string ArtistName { get; set; } = string.Empty;
+	}
+
+	protected override void OnInitialized()
+	{
+		//==============================================================================
+		//select t.ID, t.TrackID, t.Name as TrackName, t.Popularity as TrackPopularity,
+		//	art.Name as ArtistName, a.ReleaseDate as AlbumReleaseDate from 
+		//	SpotifyTrackAlbums ta inner join SpotifyTracks t on ta.TrackID = t.ID 
+		//		inner join SpotifyAlbums a on ta.AlbumID  = a.ID
+		//		inner join SpotifyTrackArtists tart on t.ID = tart.TrackID
+		//		inner join SpotifyArtists art on tart.ArtistID = art.ID
+		//	order by a.ReleaseDate
+		//==============================================================================
+		//query1Result = (
+		//	from preloadedSpotifyTrackAlbum in PreloadedSpotifyTrackAlbums
+		//	join preloadedSpotifyTrack in PreloadedSpotifyTracks
+		//	on preloadedSpotifyTrackAlbum.TrackID equals preloadedSpotifyTrack.ID
+		//	join preloadedSpotifyAlbum in PreloadedSpotifyAlbums
+		//	on preloadedSpotifyTrackAlbum.AlbumID equals preloadedSpotifyAlbum.ID
+		//	join preloadedSpotifyTrackArtist in PreloadedSpotifyTrackArtists
+		//	on preloadedSpotifyTrack.ID equals preloadedSpotifyTrackArtist.TrackID
+		//	join preloadedSpotifyArtist in PreloadedSpotifyArtists
+		//	on preloadedSpotifyTrackArtist.ArtistID equals preloadedSpotifyArtist.ID
+		//	select new Query1Class { 
+		//		ID = preloadedSpotifyTrack.ID,
+		//		TrackID = preloadedSpotifyTrack.TrackID,
+		//		TrackName = preloadedSpotifyTrack.Name,
+		//		TrackPopularity = preloadedSpotifyTrack.Popularity,
+		//		ArtistName = preloadedSpotifyArtist.Name,
+		//		AlbumReleaseDate = preloadedSpotifyAlbum.ReleaseDate
+		//	}).ToList<Query1Class>();
+
+		query1Result1 = (
+			from preloadedSpotifyTrackAlbum in PreloadedSpotifyTrackAlbums
+			join preloadedSpotifyTrack in PreloadedSpotifyTracks
+			on preloadedSpotifyTrackAlbum.TrackID equals preloadedSpotifyTrack.ID
+			join preloadedSpotifyAlbum in PreloadedSpotifyAlbums
+			on preloadedSpotifyTrackAlbum.AlbumID equals preloadedSpotifyAlbum.ID
+			select new Query1Class1 { 
+				ID = preloadedSpotifyTrack.ID,
+				TrackID = preloadedSpotifyTrack.TrackID,
+				TrackName = preloadedSpotifyTrack.Name,
+				TrackPopularity = preloadedSpotifyTrack.Popularity,
+				AlbumReleaseDate = preloadedSpotifyAlbum.ReleaseDate
+			}).ToList<Query1Class1>();
+
+		//Need this to put multiple artists into one line
+		query1Result2 = (
+			from preloadedSpotifyTrackArtist in PreloadedSpotifyTrackArtists
+			join preloadedSpotifyArtist in PreloadedSpotifyArtists
+			on preloadedSpotifyTrackArtist.ArtistID equals preloadedSpotifyArtist.ID
+			select new Query1Class2
+			{
+				ID = preloadedSpotifyTrackArtist.TrackID,
+				ArtistName = preloadedSpotifyArtist.Name
+			}).ToList<Query1Class2>();
+
+		base.OnInitialized();
+	}
 }

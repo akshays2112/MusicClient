@@ -18,11 +18,9 @@ namespace MusicClient.Data.SQLServer
         internal virtual DbSet<SpotifyTrackArtist>? SpotifyTrackArtists { get; set; }
         #endregion
 
-
         #region Billboard
         internal virtual DbSet<BillboardSong>? BillboardSongs { get; set; }
         #endregion
-
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
