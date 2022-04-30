@@ -123,6 +123,13 @@ namespace SpotifyApi.NetCore
             string market = null,
             string accessToken = null);
 
+        Task<SearchResult> SearchAlbumTracks(
+            string query,
+            int? limit = null,
+            int offset = 0,
+            string market = null,
+            string accessToken = null);
+
         #endregion
 
         #region GetSavedAlbums

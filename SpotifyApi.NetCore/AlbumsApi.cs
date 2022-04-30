@@ -210,6 +210,20 @@ namespace SpotifyApi.NetCore
                 offset: offset,
                 accessToken: accessToken);
 
+        public async Task<SearchResult> SearchAlbumTracks(
+            string query,
+            int? limit = null,
+            int offset = 0,
+            string market = null,
+            string accessToken = null)
+            => await SearchApi.Search<SearchResult>(
+                query,
+                new string[] { SpotifySearchTypes.Track },
+                market: market,
+                limit: limit,
+                offset: offset,
+                accessToken: accessToken);
+
         #endregion
 
         #region GetSavedAlbums

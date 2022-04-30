@@ -6,7 +6,7 @@
 <button class="btn btn-primary" @onclick=LoadSpotifyAlbumsAsync>Load Spotify Albums</button>
 <hr />
 <table class="table">
-    @if (MusicClient.Data.Globals.PreloadedSpotifyAlbums.Count > 0)
+    @if (MusicClient.Data.Globals.PreloadedSpotifyAlbums?.Count > 0)
     {
         foreach (SpotifyAlbum spotifyAlbum in MusicClient.Data.Globals.PreloadedSpotifyAlbums)
         {
@@ -32,6 +32,7 @@
             try
             {
                 spotifyAlbums.AddSpotifyAlbum(newSpotifyAlbum);
+                StateHasChanged();
             }
             catch { }
         }
