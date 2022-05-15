@@ -3,6 +3,7 @@ using SpotifyApi.NetCore.Models;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace SpotifyApi.NetCore
 {
@@ -302,8 +303,7 @@ namespace SpotifyApi.NetCore
                     ArgumentException("The album ids can be a minimum of 1 and a maximum of 50.");
 
             var builder = new UriBuilder($"{BaseUrl}/me/albums");
-            builder.AppendToQueryAsCsv("ids", albumIds);
-            await Delete(builder.Uri, accessToken);
+            await Delete(builder.Uri, JsonSerializer.Serialize(new { ids = albumIds }), accessToken);
         }
         #endregion
 
@@ -327,9 +327,8 @@ namespace SpotifyApi.NetCore
                     ArgumentException("The show ids can be a minimum of 1 and a maximum of 50.");
 
             var builder = new UriBuilder($"{BaseUrl}/me/shows");
-            builder.AppendToQueryAsCsv("ids", showIds);
             builder.AppendToQueryIfValueNotNullOrWhiteSpace("market", market);
-            await Delete(builder.Uri, accessToken);
+            await Delete(builder.Uri, JsonSerializer.Serialize(new { ids = showIds }), accessToken);
         }
         #endregion
 
@@ -351,8 +350,7 @@ namespace SpotifyApi.NetCore
                     ArgumentException("The track ids can be a minimum of 1 and a maximum of 50.");
 
             var builder = new UriBuilder($"{BaseUrl}/me/tracks");
-            builder.AppendToQueryAsCsv("ids", trackIds);
-            await Delete(builder.Uri, accessToken);
+            await Delete(builder.Uri, JsonSerializer.Serialize(new { ids = trackIds }), accessToken);
         }
         #endregion
 
@@ -374,8 +372,7 @@ namespace SpotifyApi.NetCore
                     ArgumentException("A minimum of 1 and a maximum of 50 album ids can be sent.");
 
             var builder = new UriBuilder($"{BaseUrl}/me/albums");
-            builder.AppendToQueryAsCsv("ids", albumIds);
-            await Put(builder.Uri, null, accessToken);
+            await Put(builder.Uri, JsonSerializer.Serialize(new { ids = albumIds }), accessToken);
         }
         #endregion
 
@@ -397,8 +394,7 @@ namespace SpotifyApi.NetCore
                     ArgumentException("A minimum of 1 and a maximum of 50 show ids can be sent.");
 
             var builder = new UriBuilder($"{BaseUrl}/me/shows");
-            builder.AppendToQueryAsCsv("ids", showIds);
-            await Put(builder.Uri, null, accessToken);
+            await Put(builder.Uri, JsonSerializer.Serialize(new { ids = showIds }), accessToken);
         }
         #endregion
 
@@ -420,8 +416,7 @@ namespace SpotifyApi.NetCore
                     ArgumentException("A minimum of 1 and a maximum of 50 track ids can be sent.");
 
             var builder = new UriBuilder($"{BaseUrl}/me/tracks");
-            builder.AppendToQueryAsCsv("ids", trackIds);
-            await Put(builder.Uri, null, accessToken);
+            await Put(builder.Uri, JsonSerializer.Serialize(new { ids = trackIds }), accessToken);
         }
         #endregion
     }

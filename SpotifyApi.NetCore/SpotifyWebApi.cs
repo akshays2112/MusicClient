@@ -205,6 +205,12 @@ namespace SpotifyApi.NetCore
             => await PostOrPut<T>("POST", uri, data, accessToken);
 
         /// <summary>
+        /// Helper to DELETE an object as JSON body
+        /// </summary>
+        protected internal virtual async Task<SpotifyResponse> Delete(Uri uri, object data, string accessToken = null)
+            => await Delete<dynamic>(uri, data, accessToken);
+
+        /// <summary>
         /// Helper to DELETE an object with content to put in request body.
         /// </summary>
         protected internal virtual async Task<SpotifyResponse<T>> Delete<T>(Uri uri, object data, string accessToken = null)

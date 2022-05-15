@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace SpotifyApi.NetCore
 {
@@ -296,7 +297,7 @@ namespace SpotifyApi.NetCore
                 builder.AppendToQueryAsCsv("ids", albumIds);
                 return await Put<T>(builder.Uri, accessToken);
             }
-            return await Put<T>(builder.Uri, albumIds, accessToken);
+            return await Put<T>(builder.Uri, JsonSerializer.Serialize(new { ids = albumIds }), accessToken);
         }
 
         #endregion
@@ -333,7 +334,7 @@ namespace SpotifyApi.NetCore
                 builder.AppendToQueryAsCsv("ids", albumIds);
                 return await Delete<T>(builder.Uri, accessToken);
             }
-            return await Delete<T>(builder.Uri, albumIds, accessToken);
+            return await Delete<T>(builder.Uri, JsonSerializer.Serialize(new { ids = albumIds }), accessToken);
         }
 
         #endregion

@@ -5755,6 +5755,11 @@
             Helper to POST an object as JSON body and deserialize response as T
             </summary>
         </member>
+        <member name="M:SpotifyApi.NetCore.SpotifyWebApi.Delete(System.Uri,System.Object,System.String)">
+            <summary>
+            Helper to DELETE an object as JSON body
+            </summary>
+        </member>
         <member name="M:SpotifyApi.NetCore.SpotifyWebApi.Delete``1(System.Uri,System.Object,System.String)">
             <summary>
             Helper to DELETE an object with content to put in request body.

@@ -4,6 +4,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using SpotifyApi.NetCore.Helpers;
+using System.Text.Json;
 
 namespace SpotifyApi.NetCore
 {
@@ -159,8 +160,7 @@ namespace SpotifyApi.NetCore
 
             var builder = new UriBuilder($"{BaseUrl}/me/following");
             builder.AppendToQuery("type", "artist");
-            var data = new { ids = artistIds };
-            await Put(builder.Uri, data, accessToken);
+            await Put(builder.Uri, JsonSerializer.Serialize(new { ids = artistIds }), accessToken);
         }
 
         /// <summary>
@@ -180,8 +180,7 @@ namespace SpotifyApi.NetCore
 
             var builder = new UriBuilder($"{BaseUrl}/me/following");
             builder.AppendToQuery("type", "user");
-            var data = new { ids = userIds };
-            await Put(builder.Uri, data, accessToken);
+            await Put(builder.Uri, JsonSerializer.Serialize(new { ids = userIds }), accessToken);
         }
         #endregion
 
@@ -204,7 +203,7 @@ namespace SpotifyApi.NetCore
                     ArgumentNullException("playlistId");
 
             var builder = new UriBuilder($"{BaseUrl}/playlists/{playlistId}/followers");
-            await Put(builder.Uri, isPublic, accessToken);
+            await Put(builder.Uri, JsonSerializer.Serialize(new { @public = isPublic }), accessToken);
         }
         #endregion
 
@@ -268,8 +267,7 @@ namespace SpotifyApi.NetCore
 
             var builder = new UriBuilder($"{BaseUrl}/me/following");
             builder.AppendToQuery("type", "artist");
-            builder.AppendToQueryAsCsv("ids", artistIds);
-            await Delete(builder.Uri, accessToken);
+            await Delete(builder.Uri, JsonSerializer.Serialize(new { ids = artistIds }), accessToken);
         }
 
         /// <summary>
@@ -289,8 +287,7 @@ namespace SpotifyApi.NetCore
 
             var builder = new UriBuilder($"{BaseUrl}/me/following");
             builder.AppendToQuery("type", "user");
-            builder.AppendToQueryAsCsv("ids", userIds);
-            await Delete(builder.Uri, accessToken);
+            await Delete(builder.Uri, JsonSerializer.Serialize(new { ids = userIds }), accessToken);
         }
         #endregion
 

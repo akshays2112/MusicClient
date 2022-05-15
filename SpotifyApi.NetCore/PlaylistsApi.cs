@@ -472,7 +472,8 @@ namespace SpotifyApi.NetCore
                      ArgumentException("A minimum of 1 and a maximum of 100 Spotify uri must be specified.");
 
             var builder = new UriBuilder($"{BaseUrl}/playlists/{playlistId}/tracks");
-            return (await Delete<ModifyPlaylistResponse>(builder.Uri, new PlaylistRemoveItemsPayloadDataUriItems(spotifyUris, snapshotId), accessToken)).Data;
+            return (await Delete<ModifyPlaylistResponse>(builder.Uri, JsonSerializer.Serialize(
+                new PlaylistRemoveItemsPayloadDataUriItems(spotifyUris, snapshotId)), accessToken)).Data;
         }
 
         /// <summary>
@@ -503,7 +504,8 @@ namespace SpotifyApi.NetCore
                      ArgumentException("A minimum of 1 and a maximum of 100 Spotify uri and positions must be specified.");
 
             var builder = new UriBuilder($"{BaseUrl}/playlists/{playlistId}/tracks");
-            return (await Delete<ModifyPlaylistResponse>(builder.Uri, new PlaylistRemoveItemsPayloadDataUriItems(spotifyUriPositions, snapshotId), accessToken)).Data;
+            return (await Delete<ModifyPlaylistResponse>(builder.Uri, JsonSerializer.Serialize(
+                new PlaylistRemoveItemsPayloadDataUriItems(spotifyUriPositions, snapshotId)), accessToken)).Data;
         }
 
         #endregion
