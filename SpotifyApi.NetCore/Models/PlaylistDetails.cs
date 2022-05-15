@@ -16,7 +16,7 @@ namespace SpotifyApi.NetCore
         /// be able to create private playlists, the user must have granted the playlist-modify-private scope .
         /// </summary>
         [JsonPropertyName("public")]
-        public bool? Public { get; set; }
+        public bool? Public { get; set; } = true;
 
         /// <summary>
         /// Defaults to false. If true the playlist will be collaborative. Note that to create a collaborative 
@@ -24,7 +24,7 @@ namespace SpotifyApi.NetCore
         /// granted playlist-modify-private and playlist-modify-public scopes.
         /// </summary>
         [JsonPropertyName("collaborative")]
-        public bool? Collaborative { get; set; }
+        public bool? Collaborative { get; set; } = false;
 
         /// <summary>
         /// Value for playlist description as displayed in Spotify Clients and in the Web API.

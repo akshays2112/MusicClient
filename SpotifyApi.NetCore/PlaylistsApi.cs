@@ -4,6 +4,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
+using System.Text.Json;
 using System.Text;
 using SpotifyApi.NetCore.Models;
 
@@ -285,7 +286,7 @@ namespace SpotifyApi.NetCore
                      ArgumentException("The position if supplied has to be 0 or greater than 0.");
 
             var builder = new UriBuilder($"{BaseUrl}/playlists/{playlistId}/tracks");
-            return (await Post<ModifyPlaylistResponse>(builder.Uri, new { uris, position }, accessToken)).Data;
+            return (await Post<ModifyPlaylistResponse>(builder.Uri, JsonSerializer.Serialize(new { uris = uris, position = position }), accessToken)).Data;
         }
 
         #endregion
@@ -357,7 +358,7 @@ namespace SpotifyApi.NetCore
                     ArgumentException("A PlaylistDetails object param with new playlist name must be provided.");
 
             var builder = new UriBuilder($"{BaseUrl}/users/{userId}/playlists");
-            return (await Post<T>(builder.Uri, details, accessToken)).Data;
+            return (await Post<T>(builder.Uri, JsonSerializer.Serialize<PlaylistDetails>(details), accessToken)).Data;
         }
 
         #endregion

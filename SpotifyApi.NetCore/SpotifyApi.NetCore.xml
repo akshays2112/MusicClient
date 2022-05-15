@@ -3038,6 +3038,13 @@
             Defines a wrapper for the Spotify Web Tracks API.
             </summary>
         </member>
+        <member name="M:SpotifyApi.NetCore.ITracksApi.GetTrack(System.String,System.String)">
+            <summary>
+            Get Spotify catalog information for a single track identified by its unique Spotify ID.
+            </summary>
+            <param name="trackId">The Spotify ID for the track.</param>
+            <returns>Task of Track</returns>
+        </member>
         <member name="M:SpotifyApi.NetCore.ITracksApi.GetTrack(System.String,System.String,System.String)">
             <summary>
             Get Spotify catalog information for a single track identified by its unique Spotify ID.
@@ -5790,6 +5797,13 @@
             </summary>
             <param name="httpClient">An instance of <see cref="T:System.Net.Http.HttpClient"/></param>
             <param name="accessTokenProvider">An instance of <see cref="T:SpotifyApi.NetCore.Authorization.IAccessTokenProvider"/>, e.g. <see cref="T:SpotifyApi.NetCore.Authorization.AccountsService"/>.</param>
+        </member>
+        <member name="M:SpotifyApi.NetCore.TracksApi.GetTrack(System.String,System.String)">
+            <summary>
+            Get Spotify catalog information for a single track identified by its unique Spotify ID.
+            </summary>
+            <param name="trackId">The Spotify ID for the track.</param>
+            <returns>Task of Track</returns>
         </member>
         <member name="M:SpotifyApi.NetCore.TracksApi.GetTrack(System.String,System.String,System.String)">
             <summary>

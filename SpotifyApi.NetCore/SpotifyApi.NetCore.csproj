@@ -20,7 +20,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<DocumentationFile>C:\Users\aksha\OneDrive\akshays2112\AkshaySNewDemo\SpotifyApi.NetCore\SpotifyApi.NetCore.xml</DocumentationFile>
+		<DocumentationFile>C:\Users\efgjhejkr\OneDrive\akshays2112\MusicClient\SpotifyApi.NetCore\SpotifyApi.NetCore.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>

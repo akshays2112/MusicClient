@@ -73,6 +73,20 @@
                 }
             </li>
             }
+            @if(!string.IsNullOrWhiteSpace(MusicClient.Globals.SpotifyAccessToken?.AccessToken))
+            {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" @onclick="()=>expandSpotifyPages = !expandSpotifyPages" href="#">
+                    <span class="oi oi-book" aria-hidden="true"></span>Spotify Pages
+                </NavLink>
+                @if (expandSpotifyPages)
+                {
+                    <NavLink class="nav-link" href="/spotify/createplaylistsbytrackreleasedate">
+                        <span class="oi oi-plus" aria-hidden="true"></span> Create RelDatePlylsts
+                    </NavLink>
+                }
+            </li>
+            }
         </ul>
     </nav>
 </div>
@@ -84,6 +98,7 @@
 
     private bool expandSqlServer;
     private bool expandSqlServerQueries;
+    private bool expandSpotifyPages;
 
     private void ToggleNavMenu()
     {

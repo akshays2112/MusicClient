@@ -32,13 +32,13 @@ namespace MusicClient.Data.SQLServer
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<SpotifyPlaylist>(entity => { entity.HasIndex(e => e.PlaylistID).IsUnique(); });
+            //builder.Entity<SpotifyPlaylist>(entity => { entity.HasIndex(e => e.PlaylistID).IsUnique(); });
 
-            builder.Entity<SpotifyTrack>(entity => { entity.HasIndex(e => e.TrackID).IsUnique(); });
+            //builder.Entity<SpotifyTrack>(entity => { entity.HasIndex(e => e.TrackID).IsUnique(); });
 
-            builder.Entity<SpotifyArtist>(entity => { entity.HasIndex(e => e.ArtistID).IsUnique(); });
+            //builder.Entity<SpotifyArtist>(entity => { entity.HasIndex(e => e.ArtistID).IsUnique(); });
 
-            builder.Entity<SpotifyAlbum>(entity => { entity.HasIndex(e => e.AlbumID).IsUnique(); });
+            //builder.Entity<SpotifyAlbum>(entity => { entity.HasIndex(e => e.AlbumID).IsUnique(); });
         }
     }
 }
