@@ -8,67 +8,46 @@
 <h3>Query1</h3>
 
 @code {
-	List<Result> results = new();
-
-	class Query1Class1
+	struct Query1Struct1
 	{
 		public int ID { get; set; }
-		public string TrackID { get; set; } = string.Empty;
-		public string TrackName { get; set; } = string.Empty;
+		public string TrackID { get; set; }
+		public string TrackName { get; set; }
 		public int TrackPopularity { get; set; }
 		public DateTime AlbumReleaseDate { get; set; }
 		public int ReleaseDecade { get; set; }
 	}
 
-	class Result
-	{
-		public string TrackID { get; set; } = string.Empty;
-		public int ReleaseDecade { get; set; }
-		public string TrackUri { get; set; } = string.Empty;
-	}
-
 	protected override async Task OnInitializedAsync()
 	{
-		List<Query1Class1>? query1Result1 = (
+		Query1Struct1[]? query1Result1 = (
 			from preloadedSpotifyTrackAlbum in MusicClient.Data.Globals.PreloadedSpotifyTrackAlbums
 			join preloadedSpotifyTrack in MusicClient.Data.Globals.PreloadedSpotifyTracks
 			on preloadedSpotifyTrackAlbum.TrackID equals preloadedSpotifyTrack.ID
 			join preloadedSpotifyAlbum in MusicClient.Data.Globals.PreloadedSpotifyAlbums
 			on preloadedSpotifyTrackAlbum.AlbumID equals preloadedSpotifyAlbum.ID
-			select new Query1Class1
+			select new Query1Struct1
 				{
 					ID = preloadedSpotifyTrack.ID,
 					TrackID = preloadedSpotifyTrack.TrackID,
 					TrackName = preloadedSpotifyTrack.Name,
 					TrackPopularity = preloadedSpotifyTrack.Popularity,
 					AlbumReleaseDate = preloadedSpotifyAlbum.ReleaseDate,
-					ReleaseDecade = preloadedSpotifyAlbum.ReleaseDate.Year - (preloadedSpotifyAlbum.ReleaseDate.Year % 10)
-				}).OrderBy(q1c1 => q1c1.ReleaseDecade).ToList<Query1Class1>();
-
-		if (query1Result1 is not null && query1Result1.Count > 0)
-		{
-			foreach (Query1Class1 query1Class in query1Result1)
-			{
-				Result result = new();
-				result.TrackID = query1Class.TrackID;
-				result.ReleaseDecade = query1Class.ReleaseDecade;
-				result.TrackUri = $"spotify:track:{result.TrackID}";
-				results.Add(result);
-			}
-		}
+					ReleaseDecade = preloadedSpotifyAlbum.ReleaseDate.Year - (preloadedSpotifyAlbum.ReleaseDate.Year % 10),
+				}).OrderBy(q1c1 => q1c1.ReleaseDecade).ToArray<Query1Struct1>();
 
 		SpotifyPlaylists spotifyPlaylists = new();
 		User user = await usersProfileApi.GetCurrentUsersProfile(MusicClient.Globals.SpotifyAccessToken?.AccessToken);
 		int currentDecade = 0;
 		Playlist? playlist = null;
 		List<string> trackUris = new();
-		for (int i = 0; i < results.Count; i++) // Result result1 in results)
+		for (int i = 0; i < query1Result1.Length; i++) // Result result1 in results)
 		{
-			if (results[i].ReleaseDecade != currentDecade)
+			if (query1Result1[i].ReleaseDecade != currentDecade)
 			{
-				currentDecade = results[i].ReleaseDecade;
+				currentDecade = query1Result1[i].ReleaseDecade;
 				playlist = await playlistsApi.CreatePlaylist(
-					user.Id, new PlaylistDetails { Name = $"Great Music {results[i].ReleaseDecade}'s", Description = "New playlist" },
+					user.Id, new PlaylistDetails { Name = $"Great Music {query1Result1[i].ReleaseDecade}'s", Description = "New playlist" },
 					MusicClient.Globals.SpotifyAccessToken?.AccessToken);
 				try
 				{
@@ -81,9 +60,9 @@
 			}
 			else
 			{
-				trackUris.Add(results[i].TrackUri);
+				trackUris.Add($"spotify:track:{query1Result1[i].TrackID}");
 			}
-			if (playlist != null && (trackUris.Count >= 100 || (i + 1 < results.Count && results[i + 1].ReleaseDecade != currentDecade)))
+			if (playlist != null && (trackUris.Count >= 100 || (i + 1 < query1Result1.Length && query1Result1[i + 1].ReleaseDecade != currentDecade)))
 			{
 				_ = playlistsApi.AddItemsToPlaylist(playlist.Id, trackUris.ToArray<string>(), 0, MusicClient.Globals.SpotifyAccessToken?.AccessToken);
 				trackUris.Clear();
