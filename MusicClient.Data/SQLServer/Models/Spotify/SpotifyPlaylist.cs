@@ -8,17 +8,13 @@
 
         public string Name { get; set; } = string.Empty;
 
-        public static SpotifyPlaylist NewSpotifyPlaylist(string playlistID, string name) 
-        {
-            SpotifyPlaylist spotifyPlaylist = new SpotifyPlaylist();
-            spotifyPlaylist.PlaylistID = playlistID;
-            spotifyPlaylist.Name = name;
-            return spotifyPlaylist;
-        }
+        public static SpotifyPlaylist NewSpotifyPlaylist(string playlistID, string name)
+            => new SpotifyPlaylist { PlaylistID = playlistID, Name = name };
 
         public static bool CheckForExistingSpotifyPlaylist(List<SpotifyPlaylist> listSpotifyPlaylists, string id)
-        {
-            return listSpotifyPlaylists.Find(p => p.PlaylistID == id) != null;
-        }
+            => listSpotifyPlaylists.Find(p => p.PlaylistID == id) != null;
+
+        public static bool CheckForExistingSpotifyPlaylistName(List<SpotifyPlaylist> listSpotifyPlaylists, string playlistName)
+            => listSpotifyPlaylists.Find(p => p.Name == playlistName) != null;
     }
 }

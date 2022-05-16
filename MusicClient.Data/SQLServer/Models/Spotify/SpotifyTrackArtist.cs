@@ -9,11 +9,6 @@
         public int ArtistID { get; set; }
 
         public static SpotifyTrackArtist NewSpotifyTrackArtist(int trackId, int artistId)
-        {
-            SpotifyTrackArtist spotifyTrackArtist = new SpotifyTrackArtist();
-            spotifyTrackArtist.TrackID = trackId;
-            spotifyTrackArtist.ArtistID = artistId;
-            return spotifyTrackArtist;
-        }
+            => new SpotifyTrackArtist { TrackID = trackId, ArtistID = artistId };
     }
 }

@@ -11,12 +11,6 @@
         public int Popularity { get; set; }
 
         public static SpotifyArtist NewSpotifyArtist(string artistId, string name, int popularity)
-        {
-            SpotifyArtist spotifyArtist = new SpotifyArtist();
-            spotifyArtist.ArtistID = artistId;
-            spotifyArtist.Name = name;
-            spotifyArtist.Popularity = popularity;
-            return spotifyArtist;
-        }
+            => new SpotifyArtist { ArtistID = artistId, Name = name, Popularity = popularity };
     }
 }

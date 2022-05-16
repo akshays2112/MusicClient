@@ -11,17 +11,9 @@
         public int Popularity { get; set; }
 
         public static SpotifyTrack NewSpotifyTrack(string trackId, string name, int popularity)
-        {
-            SpotifyTrack spotifyTrack = new SpotifyTrack();
-            spotifyTrack.TrackID = trackId;
-            spotifyTrack.Name = name;
-            spotifyTrack.Popularity = popularity;
-            return spotifyTrack;
-        }
+            => new SpotifyTrack { TrackID = trackId, Name = name, Popularity = popularity };
 
         public static bool CheckForExistingSpotifyTrack(List<SpotifyTrack> listSpotifyTracks, string id)
-        {
-            return listSpotifyTracks.Find(t => t.TrackID == id) != null;
-        }
+            => listSpotifyTracks.Find(t => t.TrackID == id) != null;
     }
 }
