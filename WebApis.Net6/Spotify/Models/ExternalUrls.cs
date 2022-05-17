@@ -2,9 +2,9 @@
 
 namespace WebApis.Net6.Spotify.Models
 {
-    public class ExternalUrl
+    public class ExternalUrls
     {
         [JsonPropertyName("spotify")]
-        public string Spotify { get; set; } = string.Empty;
+        public string? Spotify { get; set; }
     }
 }

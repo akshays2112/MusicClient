@@ -5,12 +5,12 @@ namespace WebApis.Net6.Spotify.Models
     public class Image
     {
         [JsonPropertyName("url")]
-        public string Url { get; set; } = string.Empty;
+        public string? Url { get; set; } = string.Empty;
 
         [JsonPropertyName("height")]
-        public int Height { get; set; }
+        public int? Height { get; set; }
 
         [JsonPropertyName("width")]
-        public int Width { get; set; }
+        public int? Width { get; set; }
     }
 }

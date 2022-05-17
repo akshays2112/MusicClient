@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotifyApi.NetCore", "Spoti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicClient.Data", "MusicClient.Data\MusicClient.Data.csproj", "{A1E27650-BDF6-4BCE-BB90-C4984AA43E71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApis.Net6", "WebApis.Net6\WebApis.Net6.csproj", "{AACF12EC-258D-485D-87D7-88D5CAC419B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApis.Net6", "WebApis.Net6\WebApis.Net6.csproj", "{AACF12EC-258D-485D-87D7-88D5CAC419B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

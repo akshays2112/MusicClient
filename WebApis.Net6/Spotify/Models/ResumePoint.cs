@@ -5,9 +5,9 @@ namespace WebApis.Net6.Spotify.Models
     public class ResumePoint
     {
         [JsonPropertyName("fully_played")]
-        public bool FullyPlayed { get; set; }
+        public bool? FullyPlayed { get; set; }
 
         [JsonPropertyName("resume_position_ms")]
-        public int ResumePositionMs { get; set; }
+        public int? ResumePositionMs { get; set; }
     }
 }
