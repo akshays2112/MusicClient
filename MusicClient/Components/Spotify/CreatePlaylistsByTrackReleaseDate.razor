@@ -2,6 +2,8 @@
 @using MusicClient.Data.SQLServer.Models.Spotify
 @using MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify
 @using SpotifyApi.NetCore
+@using static MusicClient.Data.Globals
+@using Globals = MusicClient.Globals
 @inject IUsersProfileApi usersProfileApi
 @inject IPlaylistsApi playlistsApi
 
@@ -21,10 +23,10 @@
 	protected override async Task OnInitializedAsync()
 	{
 		Query1Struct1[]? query1Result1 = (
-			from preloadedSpotifyTrackAlbum in MusicClient.Data.Globals.PreloadedSpotifyTrackAlbums
-			join preloadedSpotifyTrack in MusicClient.Data.Globals.PreloadedSpotifyTracks
+			from preloadedSpotifyTrackAlbum in PreloadedSpotifyTrackAlbums
+			join preloadedSpotifyTrack in PreloadedSpotifyTracks
 			on preloadedSpotifyTrackAlbum.TrackID equals preloadedSpotifyTrack.ID
-			join preloadedSpotifyAlbum in MusicClient.Data.Globals.PreloadedSpotifyAlbums
+			join preloadedSpotifyAlbum in PreloadedSpotifyAlbums
 			on preloadedSpotifyTrackAlbum.AlbumID equals preloadedSpotifyAlbum.ID
 			select new Query1Struct1
 				{
@@ -37,7 +39,7 @@
 				}).OrderBy(q1c1 => q1c1.ReleaseDecade).ToArray<Query1Struct1>();
 
 		SpotifyPlaylists spotifyPlaylists = new();
-		User user = await usersProfileApi.GetCurrentUsersProfile(MusicClient.Globals.SpotifyAccessToken?.AccessToken);
+		User user = await usersProfileApi.GetCurrentUsersProfile(Globals.SpotifyAccessToken?.AccessToken);
 		int currentDecade = 0;
 		Playlist? playlist = null;
 		List<string> trackUris = new();
@@ -48,7 +50,7 @@
 				currentDecade = query1Result1[i].ReleaseDecade;
 				playlist = await playlistsApi.CreatePlaylist(
 					user.Id, new PlaylistDetails { Name = $"Great Music {query1Result1[i].ReleaseDecade}'s", Description = "New playlist" },
-					MusicClient.Globals.SpotifyAccessToken?.AccessToken);
+					Globals.SpotifyAccessToken?.AccessToken);
 				try
 				{
 					SpotifyPlaylist spotifyPlaylist = SpotifyPlaylist.NewSpotifyPlaylist(playlist.Id, playlist.Name);
@@ -64,13 +66,13 @@
 			}
 			if (playlist != null && (trackUris.Count >= 100 || (i + 1 < query1Result1.Length && query1Result1[i + 1].ReleaseDecade != currentDecade)))
 			{
-				_ = playlistsApi.AddItemsToPlaylist(playlist.Id, trackUris.ToArray<string>(), 0, MusicClient.Globals.SpotifyAccessToken?.AccessToken);
+				_ = playlistsApi.AddItemsToPlaylist(playlist.Id, trackUris.ToArray<string>(), 0, Globals.SpotifyAccessToken?.AccessToken);
 				trackUris.Clear();
 			}
 		}
 		if (playlist != null && trackUris.Count > 0)
 		{
-			_ = playlistsApi.AddItemsToPlaylist(playlist?.Id, trackUris.ToArray<string>(), 0, MusicClient.Globals.SpotifyAccessToken?.AccessToken);
+			_ = playlistsApi.AddItemsToPlaylist(playlist?.Id, trackUris.ToArray<string>(), 0, Globals.SpotifyAccessToken?.AccessToken);
 			trackUris.Clear();
 		}
 

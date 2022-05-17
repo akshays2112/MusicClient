@@ -1,14 +1,16 @@
 ﻿@using MusicClient.Data.SQLServer.Models.Spotify
 @using MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify
+@using static MusicClient.Data.Globals
+@using Globals = MusicClient.Globals
 @using SpotifyApi.NetCore
 @inject ITracksApi tracksApi
 
 <button class="btn btn-primary" @onclick=LoadSpotifyArtistsAsync>Load Spotify Artists</button>
 <hr />
 <table class="table">
-    @if (MusicClient.Data.Globals.PreloadedSpotifyArtists?.Count > 0)
+    @if (PreloadedSpotifyArtists?.Count > 0)
     {
-        foreach (SpotifyArtist spotifyArtist in MusicClient.Data.Globals.PreloadedSpotifyArtists)
+        foreach (SpotifyArtist spotifyArtist in PreloadedSpotifyArtists)
         {
             <tr>
                 <td>@spotifyArtist.ID</td>

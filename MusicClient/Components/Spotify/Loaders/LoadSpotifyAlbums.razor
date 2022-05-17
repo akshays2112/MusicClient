@@ -1,14 +1,16 @@
 ﻿@using MusicClient.Data.SQLServer.Models.Spotify
 @using MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify
+@using static MusicClient.Data.Globals
+@using Globals = MusicClient.Globals
 @using SpotifyApi.NetCore
 @inject ITracksApi tracksApi
 
 <button class="btn btn-primary" @onclick=LoadSpotifyAlbumsAsync>Load Spotify Albums</button>
 <hr />
 <table class="table">
-    @if (MusicClient.Data.Globals.PreloadedSpotifyAlbums?.Count > 0)
+    @if (PreloadedSpotifyAlbums?.Count > 0)
     {
-        foreach (SpotifyAlbum spotifyAlbum in MusicClient.Data.Globals.PreloadedSpotifyAlbums)
+        foreach (SpotifyAlbum spotifyAlbum in PreloadedSpotifyAlbums)
         {
             <tr>
                 <td>@spotifyAlbum.ID</td>
@@ -24,11 +26,12 @@
 @code {
     async Task LoadSpotifyAlbumsAsync()
     {
-        foreach (SpotifyTrack spotifyTrack in MusicClient.Data.Globals.PreloadedSpotifyTracks)
+        foreach (SpotifyTrack spotifyTrack in PreloadedSpotifyTracks)
         {
             Track track = await tracksApi.GetTrack(spotifyTrack.TrackID, Globals.SpotifyAccessToken?.AccessToken);
             SpotifyAlbums spotifyAlbums = new();
-            SpotifyAlbum newSpotifyAlbum = SpotifyAlbum.NewSpotifyAlbum(track.Album.Id, track.Album.Name, MusicClient.Data.Globals.ConvertToDatetime(track.Album.ReleaseDate));
+            SpotifyAlbum newSpotifyAlbum = SpotifyAlbum.NewSpotifyAlbum(track.Album.Id, track.Album.Name,
+                ConvertToDatetime(track.Album.ReleaseDate));
             try
             {
                 spotifyAlbums.AddSpotifyAlbum(newSpotifyAlbum);

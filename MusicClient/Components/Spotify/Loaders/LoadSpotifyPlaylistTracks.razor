@@ -1,14 +1,16 @@
 ﻿@using MusicClient.Data.SQLServer.Models.Spotify
 @using MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify
+@using static MusicClient.Data.Globals
+@using Globals = MusicClient.Globals
 @using SpotifyApi.NetCore
 @inject IPlaylistsApi playlistsApi
 
 <button class="btn btn-primary" @onclick=LoadSpotifyPlaylistTracksAsync>Load Spotify Playlist Tracks</button>
 <hr />
 <table class="table">
-    @if (MusicClient.Data.Globals.PreloadedSpotifyPlaylistTracks?.Count > 0)
+    @if (PreloadedSpotifyPlaylistTracks?.Count > 0)
     {
-        foreach (SpotifyPlaylistTrack spotifyPlaylistTrack in MusicClient.Data.Globals.PreloadedSpotifyPlaylistTracks)
+        foreach (SpotifyPlaylistTrack spotifyPlaylistTrack in PreloadedSpotifyPlaylistTracks)
         {
             <tr>
                 <td>@spotifyPlaylistTrack.ID</td>
@@ -23,7 +25,7 @@
 @code {
     async Task LoadSpotifyPlaylistTracksAsync()
     {
-        foreach (SpotifyPlaylist spotifyPlaylist in MusicClient.Data.Globals.PreloadedSpotifyPlaylists)
+        foreach (SpotifyPlaylist spotifyPlaylist in PreloadedSpotifyPlaylists)
         {
             bool isMore = true;
             int currentTrackCount = 0;
@@ -34,7 +36,7 @@
                 {
                     SpotifyPlaylistTracks spotifyPlaylistTracks = new();
                     SpotifyPlaylistTrack spotifyPlaylistTrack = SpotifyPlaylistTrack.NewSpotifyPlaylistTrack(spotifyPlaylist.ID, 
-                        MusicClient.Data.Globals.PreloadedSpotifyTracks.First(t => t.TrackID == playlistTrack.Track.Id).ID);
+                        PreloadedSpotifyTracks.First(t => t.TrackID == playlistTrack.Track.Id).ID);
                     try
                     {
                         spotifyPlaylistTracks.AddSpotifyPlaylistTrack(spotifyPlaylistTrack);

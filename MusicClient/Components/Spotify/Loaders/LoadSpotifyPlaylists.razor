@@ -1,5 +1,7 @@
 ﻿@using MusicClient.Data.SQLServer.Models.Spotify
 @using MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify
+@using static MusicClient.Data.Globals
+@using Globals = MusicClient.Globals
 @using SpotifyApi.NetCore
 @inject IUsersProfileApi usersProfileApi
 @inject IPlaylistsApi playlistsApi
@@ -7,9 +9,9 @@
 <button class="btn btn-primary"  @onclick=LoadSpotifyPlaylistsAsync>Load Spotify Playlists</button>
 <hr />
 <table class="table">
-    @if (MusicClient.Data.Globals.PreloadedSpotifyPlaylists?.Count > 0)
+    @if (PreloadedSpotifyPlaylists?.Count > 0)
     {
-        foreach (SpotifyPlaylist spotifyPlaylist in MusicClient.Data.Globals.PreloadedSpotifyPlaylists)
+        foreach (SpotifyPlaylist spotifyPlaylist in PreloadedSpotifyPlaylists)
         {
             <tr>
                 <td>@spotifyPlaylist.ID</td>
