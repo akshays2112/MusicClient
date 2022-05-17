@@ -1,4 +1,4 @@
-﻿using MusicClient.Data;
+﻿using static MusicClient.Data.Globals;
 using MusicClient.Data.SQLServer.Models.Spotify;
 
 namespace MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify
@@ -25,7 +25,7 @@ namespace MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify
             {
                 mcdbc.SpotifyPlaylists?.Add(SpotifyPlaylist);
                 mcdbc.SaveChanges();
-                Globals.PreloadedSpotifyPlaylists.Add(SpotifyPlaylist);
+                PreloadedSpotifyPlaylists.Add(SpotifyPlaylist);
             }
             catch
             {
@@ -39,11 +39,11 @@ namespace MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify
             {
                 mcdbc.Update(SpotifyPlaylist);
                 mcdbc.SaveChanges();
-                int idx = Globals.PreloadedSpotifyPlaylists.FindIndex(p => p.PlaylistID == SpotifyPlaylist.PlaylistID);
+                int idx = PreloadedSpotifyPlaylists.FindIndex(p => p.PlaylistID == SpotifyPlaylist.PlaylistID);
                 if (idx > -1)
                 {
-                    Globals.PreloadedSpotifyPlaylists.RemoveAt(idx);
-                    Globals.PreloadedSpotifyPlaylists.Insert(idx, SpotifyPlaylist);
+                    PreloadedSpotifyPlaylists.RemoveAt(idx);
+                    PreloadedSpotifyPlaylists.Insert(idx, SpotifyPlaylist);
                 }
             }
             catch
@@ -74,7 +74,7 @@ namespace MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify
                 {
                     mcdbc.Remove(SpotifyPlaylist);
                     mcdbc.SaveChanges();
-                    Globals.PreloadedSpotifyPlaylists.Remove(SpotifyPlaylist);
+                    PreloadedSpotifyPlaylists.Remove(SpotifyPlaylist);
                 }
             }
             catch

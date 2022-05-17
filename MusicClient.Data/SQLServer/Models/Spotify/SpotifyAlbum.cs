@@ -11,6 +11,6 @@
         public DateTime ReleaseDate { get; set; }
 
         public static SpotifyAlbum NewSpotifyAlbum(string albumId, string name, DateTime releaseDate)
-            => new SpotifyAlbum { AlbumID = albumId, Name = name, ReleaseDate = releaseDate };
+            => new() { AlbumID = albumId, Name = name, ReleaseDate = releaseDate };
     }
 }

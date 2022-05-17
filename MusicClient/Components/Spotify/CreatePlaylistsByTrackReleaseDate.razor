@@ -42,7 +42,7 @@
 		User user = await usersProfileApi.GetCurrentUsersProfile(Globals.SpotifyAccessToken?.AccessToken);
 		int currentDecade = 0;
 		Playlist? playlist = null;
-		List<string> trackUris = new();
+		Stack<string> trackUris = new();
 		for (int i = 0; i < query1Result1.Length; i++) // Result result1 in results)
 		{
 			if (query1Result1[i].ReleaseDecade != currentDecade)
@@ -62,7 +62,7 @@
 			}
 			else
 			{
-				trackUris.Add($"spotify:track:{query1Result1[i].TrackID}");
+				trackUris.Push($"spotify:track:{query1Result1[i].TrackID}");
 			}
 			if (playlist != null && (trackUris.Count >= 100 || (i + 1 < query1Result1.Length && query1Result1[i + 1].ReleaseDecade != currentDecade)))
 			{

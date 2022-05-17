@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotifyApi.NetCore", "Spoti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicClient.Data", "MusicClient.Data\MusicClient.Data.csproj", "{A1E27650-BDF6-4BCE-BB90-C4984AA43E71}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApis.Net6", "WebApis.Net6\WebApis.Net6.csproj", "{AACF12EC-258D-485D-87D7-88D5CAC419B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A1E27650-BDF6-4BCE-BB90-C4984AA43E71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1E27650-BDF6-4BCE-BB90-C4984AA43E71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1E27650-BDF6-4BCE-BB90-C4984AA43E71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AACF12EC-258D-485D-87D7-88D5CAC419B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AACF12EC-258D-485D-87D7-88D5CAC419B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AACF12EC-258D-485D-87D7-88D5CAC419B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AACF12EC-258D-485D-87D7-88D5CAC419B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

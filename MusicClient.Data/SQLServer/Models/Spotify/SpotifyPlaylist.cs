@@ -9,7 +9,7 @@
         public string Name { get; set; } = string.Empty;
 
         public static SpotifyPlaylist NewSpotifyPlaylist(string playlistID, string name)
-            => new SpotifyPlaylist { PlaylistID = playlistID, Name = name };
+            => new() { PlaylistID = playlistID, Name = name };
 
         public static bool CheckForExistingSpotifyPlaylist(List<SpotifyPlaylist> listSpotifyPlaylists, string id)
             => listSpotifyPlaylists.Find(p => p.PlaylistID == id) != null;
