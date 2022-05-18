@@ -8,7 +8,7 @@ namespace WebApis.Net6.Spotify.Models
         public string? Href { get; set; } = string.Empty;
 
         [JsonPropertyName("items")]
-        T[]? Items { get; set; } = Array.Empty<T>();
+        public T[]? Items { get; set; } = Array.Empty<T>();
 
         [JsonPropertyName("limit")]
         public int? Limit { get; set; }

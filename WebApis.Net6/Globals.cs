@@ -6,10 +6,12 @@ namespace WebApis.Net6
 {
     public static class Globals
     {
+        public static HttpClient? HttpClient { get; set; }
+
         public static async Task<T?> CallWebApiEndpoint<T>(WebApiEndpoint<T> webApiEndPoint, string? accessToken = null)
         {
-            HttpClient httpClient = new();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            HttpClient ??= new();
+            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             StringContent? content = null;
             if (webApiEndPoint.BodyObject is not null)
             {
@@ -21,7 +23,7 @@ namespace WebApis.Net6
             {
                 Content = content
             };
-            HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request);
+            HttpResponseMessage httpResponseMessage = await HttpClient.SendAsync(request);
             if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 if (typeof(T) == typeof(EmptyResponse)) return default;

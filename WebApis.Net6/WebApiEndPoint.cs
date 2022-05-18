@@ -47,7 +47,6 @@ namespace WebApis.Net6
             queryString.Append('?');
             for (int j = 0; j < QueryParameters?.Length; j++)
             {
-                queryString.Append($"{QueryParameters[j].Name}=");
                 object? value = null;
                 if (QueryParameters[j].SimpleValue is not null)
                 {
@@ -59,7 +58,17 @@ namespace WebApis.Net6
                         QueryParameters[j].PropertyName ?? string.Empty);
                     if (propertyInfo is not null) value = propertyInfo?.GetValue(QueryParameters[j].ObjInstance);
                 }
-                queryString.Append($"{GetQueryStringValue(value)}&");
+                for (int c = 0; c < QueryParameters[j]?.Constraints?.Length; c++)
+                {
+                    if (!QueryParameters[j]?.Constraints?[c].CheckConstraint(value) ?? false)
+                    {
+                        throw new Exception("Query Parameter failed Constraint.");
+                    }
+                }
+                if (value is not null)
+                {
+                    queryString.Append($"{QueryParameters[j].Name}={GetQueryStringValue(value)}&");
+                }
             }
             string retStr = queryString.ToString();
             return (retStr[^1] == '&' ? retStr[..^1] : retStr);
@@ -74,8 +83,8 @@ namespace WebApis.Net6
             return value switch
             {
                 string s => WebUtility.UrlEncode(s),
-                int or bool or float or double or decimal => WebUtility.UrlEncode(value.ToString()),
-                string[] arr => WebUtility.UrlEncode(string.Join(',', arr)),
+                bool or short or int or long or float or double or decimal => WebUtility.UrlEncode(value.ToString()),
+                string[] arr => WebUtility.UrlEncode(string.Join(',', (string[]) arr)),
                 DateTime dt => WebUtility.UrlEncode(dt.ToString("s", CultureInfo.InvariantCulture)),
                 _ => string.Empty,
             };

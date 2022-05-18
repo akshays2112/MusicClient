@@ -17,5 +17,7 @@ namespace WebApis.Net6
         public string? PropertyName { get; set; }
 
         public object? ObjInstance { get; set; }
+
+        public Constraint[]? Constraints { get; set; }
     }
 }

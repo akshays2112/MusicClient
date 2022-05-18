@@ -1,33 +1,69 @@
-﻿@using MCGlobals = MusicClient.Globals
-@using WebApis.Net6
+﻿@using WebApis.Net6
+@using WebApis.Net6.Spotify.WebApiEndpoints
+@using WebApis.Net6.Spotify.Models
+@using MCGlobals = MusicClient.Globals
 @using WApiGlobals = WebApis.Net6.Globals
 @using WApiSpotifyGlobals = WebApis.Net6.Spotify.Globals
-@using WApiUserProfile = WebApis.Net6.Spotify.WebApiEndpoints.WApiUserProfile
-@using WebApis.Net6.Spotify.Models
+@inject HttpClient httpClient
 
 <h3>TestingWebApisNet6</h3>
+
 @if(userProfile is not null)
 {
     <span>@userProfile.DisplayName</span><br />
     <span>@userProfile.Email</span><br />
-    <span>@userProfile.Id</span>
+    <span>@userProfile.Id</span><br />
+}
+@*
+@if(userTopTracks is not null && userTopTracks.Items?.Length > 0)
+{
+    foreach(Track track in userTopTracks.Items)
+    {
+        <span>@track.Name</span><br />
+    }
+}
+@if(followedArtists is not null && followedArtists.Items?.Length > 0)
+{
+    foreach(Artist artist in followedArtists.Items)
+    {
+        <span>@artist.Name</span><br />
+    }
+}
+*@
+@if(userPlaylists is not null && userPlaylists.Items?.Length > 0)
+{
+    foreach(Playlist playlist in userPlaylists.Items)
+    {
+        <span>@playlist.Name</span><br />
+        <span>@playlist.Id</span><br />
+    }
 }
 
 @code {
     UserProfile? userProfile;
-    Paged<Track>? userTopTracks;
+    //Paged<Track>? userTopTracks;
+    //Paged<Artist>? followedArtists;
+    Paged<Playlist>? userPlaylists;
 
     protected override async Task OnInitializedAsync()
     {
         WApiSpotifyGlobals.AccessToken = MCGlobals.SpotifyAccessToken?.AccessToken;
+        WApiGlobals.HttpClient = httpClient;
 
         userProfile = await WApiUserProfile.GetCurrentUsersProfile();
 
         //jkdesxdxvu6uetjdnaro2yrfc
-        await WApiUserProfile.PutFollowArtistsOrUsers(WApiSpotifyGlobals.ArtistOrUser.artist, 
-            new string[] { "2CIMQHirSU0MQqyYHq0eOx" });
+        //await WApiUserProfile.PutFollowArtistsOrUsers(WApiSpotifyGlobals.ArtistOrUser.artist, 
+        //    new string[] { "2CIMQHirSU0MQqyYHq0eOx" });
 
-        userTopTracks = await WApiUserProfile.GetUsersTopTracks();
+        //userTopTracks = await WApiUserProfile.GetUsersTopTracks(20, 0, WApiSpotifyGlobals.TimeRanges.long_term);
+
+        //followedArtists = await WApiUserProfile.GetFollowedArtists(null, 20, 0);
+
+        userPlaylists = await WApiPlaylist.GetCurrentUsersPlaylists(20, 0);
+
+        bool[]? bools = await WApiUserProfile.GetCheckIfUsersFollowPlaylist("37i9dQZF1DWUJF24WXSSyO", 
+            new string[] { "jkdesxdxvu6uetjdnaro2yrfc" });
 
         await base.OnInitializedAsync();
     }

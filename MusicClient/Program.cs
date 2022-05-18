@@ -15,7 +15,7 @@ Globals.SpotifyClientSecret = builder.Configuration.GetValue<string>("SpotifyCli
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-builder.Services.AddSingleton(new HttpClient { BaseAddress = new Uri(Globals.RedirectUri) });
+builder.Services.AddSingleton(typeof(HttpClient), new HttpClient { BaseAddress = new Uri(Globals.RedirectUri) });
 builder.Services.AddSingleton(typeof(IUsersProfileApi), typeof(UsersProfileApi));
 builder.Services.AddSingleton(typeof(IPlaylistsApi), typeof(PlaylistsApi));
 builder.Services.AddSingleton(typeof(IAlbumsApi), typeof(AlbumsApi));
