@@ -10,9 +10,7 @@ namespace WebApis.Net6
     {
         public string? Name { get; set; } = string.Empty;
 
-        public string? SimpleValue { get; set; }
-
-        public Type? Type { get; set; }
+        public object? SimpleValue { get; set; }
 
         public string? PropertyName { get; set; }
 

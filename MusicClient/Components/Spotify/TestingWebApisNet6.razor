@@ -1,6 +1,8 @@
 ﻿@using MCGlobals = MusicClient.Globals
 @using WebApis.Net6
-@using WApiGlobals = WebApis.Net6.Spotify.Globals
+@using WApiGlobals = WebApis.Net6.Globals
+@using WApiSpotifyGlobals = WebApis.Net6.Spotify.Globals
+@using WApiUserProfile = WebApis.Net6.Spotify.WebApiEndpoints.WApiUserProfile
 @using WebApis.Net6.Spotify.Models
 
 <h3>TestingWebApisNet6</h3>
@@ -13,21 +15,20 @@
 
 @code {
     UserProfile? userProfile;
+    Paged<Track>? userTopTracks;
 
     protected override async Task OnInitializedAsync()
     {
-        WApiGlobals.SpotifyAccessToken = new() { AccessToken = MCGlobals.SpotifyAccessToken?.AccessToken };
+        WApiSpotifyGlobals.AccessToken = MCGlobals.SpotifyAccessToken?.AccessToken;
 
-        WebApiEndpoint<UserProfile> webApiEndpointUserProfile = WApiGlobals.GetCurrentUsersProfile();
-        userProfile = await WApiGlobals.CallWebApiEndpoint<UserProfile>(webApiEndpointUserProfile);
+        userProfile = await WApiUserProfile.GetCurrentUsersProfile();
 
         //jkdesxdxvu6uetjdnaro2yrfc
-        WebApiEndpoint<EmptyResponse> webApiEndpointFollowUser = WApiGlobals.PutFollowArtistsOrUsers();
-        webApiEndpointFollowUser.QueryParameters = new QueryParameter[] { new() { Name = "type", SimpleValue = "artist" } };
-        webApiEndpointFollowUser.BodyObject = new { ids = new string[] { "2CIMQHirSU0MQqyYHq0eOx" } };
-        await WApiGlobals.CallWebApiEndpoint<EmptyResponse>(webApiEndpointFollowUser);
+        await WApiUserProfile.PutFollowArtistsOrUsers(WApiSpotifyGlobals.ArtistOrUser.artist, 
+            new string[] { "2CIMQHirSU0MQqyYHq0eOx" });
+
+        userTopTracks = await WApiUserProfile.GetUsersTopTracks();
 
         await base.OnInitializedAsync();
     }
-
 }

@@ -10,12 +10,12 @@ namespace WebApis.Net6
     {
         public string? Placeholder { get; set; } = string.Empty;
 
-        public string? Value { get; set; }
+        public object? SimpleValue { get; set; }
 
         public Type? Type { get; set; }
 
         public string? PropertyName { get; set; }
 
-        public object? objInstance { get; set; }
+        public object? ObjInstance { get; set; }
     }
 }
