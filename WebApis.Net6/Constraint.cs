@@ -49,10 +49,10 @@ namespace WebApis.Net6
         public bool CheckArrayCount(object? value)
         {
             Type? type = value?.GetType();
-            int valueLen = 0, tmpMaxCount = 0;
+            decimal valueLen = 0, tmpMaxCount = 0;
             if (!type?.IsArray ?? true) return false;
-            if (!int.TryParse(type?.GetProperty("Length")?.GetValue(value)?.ToString(), out valueLen)) return false;
-            if (!int.TryParse(MaxCount?.ToString(), out tmpMaxCount)) return false;
+            if (!decimal.TryParse(type?.GetProperty("Length")?.GetValue(value)?.ToString(), out valueLen)) return false;
+            if (!decimal.TryParse(MaxCount?.ToString(), out tmpMaxCount)) return false;
             if (valueLen <= tmpMaxCount) return true;
             return false;
         }
