@@ -15,7 +15,7 @@ namespace WebApis.Net6.Spotify.WebApiEndpoints
             {
                 HttpMethod = HttpMethod.Get,
                 EndPointUrl = "/me"
-            }, AccessToken);
+            }, Globals.SpotifyAccessToken?.AccessToken);
 
         public static async Task<Paged<Artist>?> GetUsersTopArtists(int limit = 20, int offset = 0,
             TimeRanges? time_range = TimeRanges.medium_term)
@@ -51,7 +51,7 @@ namespace WebApis.Net6.Spotify.WebApiEndpoints
                     },
                     new() { Name = "time_range", SimpleValue = time_range.ToString() }
                 }
-            }, AccessToken);
+            }, Globals.SpotifyAccessToken?.AccessToken);
 
         ///<summary>
         ///Get User's Profile
@@ -66,7 +66,7 @@ namespace WebApis.Net6.Spotify.WebApiEndpoints
                 {
                     new() { Placeholder = "{user_id}", SimpleValue = user_id }
                 }
-            }, AccessToken);
+            }, Globals.SpotifyAccessToken?.AccessToken);
 
         ///<summary>
         ///Follow Playlist
@@ -81,14 +81,14 @@ namespace WebApis.Net6.Spotify.WebApiEndpoints
                 {
                     new() { Placeholder = "{playlist_id}", SimpleValue = playlist_id }
                 },
-                BodyObject = new { @public = @public }
-            }, AccessToken);
+                BodyObject = new { @public }
+            }, Globals.SpotifyAccessToken?.AccessToken);
 
         ///<summary>
         ///Unfollow Playlist
         ///Add the current user as a follower of a playlist.
         ///</summary>
-        public static async Task<EmptyResponse?> DeleteUnfollowPlaylist(string playlist_id, bool @public = true)
+        public static async Task<EmptyResponse?> DeleteUnfollowPlaylist(string playlist_id)
             => await WApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
             {
                 HttpMethod = HttpMethod.Delete,
@@ -97,7 +97,7 @@ namespace WebApis.Net6.Spotify.WebApiEndpoints
                 {
                     new() { Placeholder = "{playlist_id}", SimpleValue = playlist_id }
                 }
-            }, AccessToken);
+            }, Globals.SpotifyAccessToken?.AccessToken);
 
         ///<summary>
         ///Get Followed Artists
@@ -115,7 +115,7 @@ namespace WebApis.Net6.Spotify.WebApiEndpoints
                     new() { Name = "limit", SimpleValue = limit, Constraints = new Constraint[] { new() { MinValue = 1, MaxValue = 50 } } },
                     new() { Name = "offset", SimpleValue = offset, Constraints = new Constraint[] { new() { MinValue = 0, MaxValue = 50 } } }
                 }
-            }, AccessToken);
+            }, Globals.SpotifyAccessToken?.AccessToken);
 
         ///<summary>
         ///Follow Artists or Users
@@ -128,7 +128,7 @@ namespace WebApis.Net6.Spotify.WebApiEndpoints
                 EndPointUrl = "/me/following",
                 QueryParameters = new QueryParameter[] { new() { Name = "type", SimpleValue = type.ToString() } },
                 BodyObject = new { ids }
-            }, AccessToken);
+            }, Globals.SpotifyAccessToken?.AccessToken);
 
         ///<summary>
         ///Follow Artists or Users
@@ -141,7 +141,7 @@ namespace WebApis.Net6.Spotify.WebApiEndpoints
                 EndPointUrl = "/me/following",
                 QueryParameters = new QueryParameter[] { new() { Name = "type", SimpleValue = type.ToString() } },
                 BodyObject = new { ids }
-            }, AccessToken);
+            }, Globals.SpotifyAccessToken?.AccessToken);
 
         ///<summary>
         ///Check If User Follows Artists or Users
@@ -157,7 +157,7 @@ namespace WebApis.Net6.Spotify.WebApiEndpoints
                     new() { Name = "ids", SimpleValue = ids },
                     new() { Name = "type", SimpleValue = artistOrUser.ToString() }
                 }
-            }, AccessToken);
+            }, Globals.SpotifyAccessToken?.AccessToken);
 
         ///<summary>
         ///Check if Users Follow Playlist
@@ -176,6 +176,6 @@ namespace WebApis.Net6.Spotify.WebApiEndpoints
                 {
                     new() { Name = "ids", SimpleValue = ids, Constraints = new Constraint[] { new() { MaxCount = 5 } } }
                 }
-            }, AccessToken);
+            }, Globals.SpotifyAccessToken?.AccessToken);
     }
 }

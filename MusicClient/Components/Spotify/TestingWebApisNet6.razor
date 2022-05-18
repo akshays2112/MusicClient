@@ -47,9 +47,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        WApiSpotifyGlobals.AccessToken = MCGlobals.SpotifyAccessToken?.AccessToken;
-        WApiGlobals.HttpClient = httpClient;
-
         userProfile = await WApiUserProfile.GetCurrentUsersProfile();
 
         //await WApiUserProfile.PutFollowArtistsOrUsers(WApiSpotifyGlobals.ArtistOrUser.artist, 

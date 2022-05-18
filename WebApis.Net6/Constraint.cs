@@ -15,6 +15,8 @@ namespace WebApis.Net6
         {
             switch(value)
             {
+                case byte:
+                case short:
                 case int:
                     if (int.TryParse(value?.ToString(), out int tmpValue) &&
                         int.TryParse(MinValue?.ToString(), out int tmpMinValue) &&
@@ -26,8 +28,6 @@ namespace WebApis.Net6
                         }
                     }
                     break;
-                case byte:
-                case short:
                 case long:
                 case float:
                 case double:
@@ -49,10 +49,9 @@ namespace WebApis.Net6
         public bool CheckArrayCount(object? value)
         {
             Type? type = value?.GetType();
-            decimal valueLen = 0, tmpMaxCount = 0;
             if (!type?.IsArray ?? true) return false;
-            if (!decimal.TryParse(type?.GetProperty("Length")?.GetValue(value)?.ToString(), out valueLen)) return false;
-            if (!decimal.TryParse(MaxCount?.ToString(), out tmpMaxCount)) return false;
+            if (!int.TryParse(type?.GetProperty("Length")?.GetValue(value)?.ToString(), out int valueLen)) return false;
+            if (!int.TryParse(MaxCount?.ToString(), out int tmpMaxCount)) return false;
             if (valueLen <= tmpMaxCount) return true;
             return false;
         }

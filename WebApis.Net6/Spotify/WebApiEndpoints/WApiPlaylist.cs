@@ -26,6 +26,6 @@ namespace WebApis.Net6.Spotify.WebApiEndpoints
                         Constraints = new Constraint[] { new() { MinValue = 0, MaxValue = 5 } }
                     }
                 }
-            }, AccessToken);
+            }, Globals.SpotifyAccessToken?.AccessToken);
     }
 }
