@@ -1,6 +1,5 @@
-﻿namespace WebApis.Net6.Spotify.Models
+﻿namespace WebApis.Net6.Spotify.Models;
+
+public class EmptyResponse
 {
-    public class EmptyResponse
-    {
-    }
 }

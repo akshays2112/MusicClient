@@ -1,11 +1,10 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace WebApis.Net6.Spotify.Models
-{
-    public class AlbumAllOf
-    {
-        public Album? Album { get; set; }
+namespace WebApis.Net6.Spotify.Models;
 
-        public AlbumGroupArtists? AlbumGroupArtists { get; set; }
-    }
+public class AlbumAllOf
+{
+    public Album? Album { get; set; }
+
+    public AlbumGroupArtists? AlbumGroupArtists { get; set; }
 }

@@ -1,12 +1,10 @@
 ﻿namespace WebApis.Net6;
 
-public class EndPointUrlPlaceholder
+public class Parameter
 {
-    public string? Placeholder { get; set; } = string.Empty;
+    public string? Name { get; set; } = string.Empty;
 
     public object? SimpleValue { get; set; }
-
-    public Type? Type { get; set; }
 
     public string? PropertyName { get; set; }
 

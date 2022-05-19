@@ -4,21 +4,21 @@ using WebApis.Net6.Spotify.Models;
 
 namespace WebApis.Net6.Spotify.WebApiEndpoints;
 
-public class WApiAlbum
+public class WApiShow
 {
     ///<summary>
-    ///Get Album
-    ///Get Spotify catalog information for a single album.
+    ///Get Show
+    ///Get Spotify catalog information for a single artist identified by their unique Spotify ID.
     ///</summary>
-    public static async Task<Album?> GetAlbum(string id, string? market = null,
+    public static async Task<Show?> GetShow(string id, string? market = null,
         string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<Album>(new()
+        => await WApiGlobals.CallWebApiEndpoint<Show>(new()
         {
             HttpMethod = HttpMethod.Get,
-            EndPointUrl = "/albums/{id}",
+            EndPointUrl = "/shows/{id}",
             EndPointUrlPlaceholders = new EndPointUrlPlaceholder[]
             {
-                new() { Placeholder = "{id}", SimpleValue = id }
+               new() { Placeholder = "{id}", SimpleValue = id }
             },
             QueryParameters = new Parameter[]
             {
@@ -27,15 +27,15 @@ public class WApiAlbum
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
-    ///Get Several Albums
-    ///Get Spotify catalog information for multiple albums identified by their Spotify IDs.
+    ///Get Several Shows
+    ///Get Spotify catalog information for several shows based on their Spotify IDs.
     ///</summary>
-    public static async Task<Album[]?> GetSeveralAlbums(string[] ids, string? market = null,
+    public static async Task<Show[]?> GetSeveralShows(string[] ids, string? market = null,
         string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<Album[]>(new()
+        => await WApiGlobals.CallWebApiEndpoint<Show[]>(new()
         {
             HttpMethod = HttpMethod.Get,
-            EndPointUrl = "/albums",
+            EndPointUrl = "/shows",
             QueryParameters = new Parameter[]
             {
                 new() { Name = "ids", SimpleValue = ids },
@@ -44,15 +44,16 @@ public class WApiAlbum
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
-    ///Get Album Tracks
-    ///Get Spotify catalog information about an album’s tracks. Optional parameters can be used to limit the number of tracks returned.
+    ///Get Show Episodes
+    ///Get Spotify catalog information about an show’s episodes. Optional parameters 
+    ///can be used to limit the number of episodes returned.
     ///</summary>
-    public static async Task<Paged<Track>?> GetAlbumTracks(string id, int limit = 20,
+    public static async Task<Paged<Episode>?> GetShowEpisodes(string id, int limit = 20, 
         int offset = 0, string? market = null, string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<Paged<Track>>(new()
+        => await WApiGlobals.CallWebApiEndpoint<Paged<Episode>>(new()
         {
             HttpMethod = HttpMethod.Get,
-            EndPointUrl = "/albums/{id}/tracks",
+            EndPointUrl = "/shows/{id}/episodes",
             EndPointUrlPlaceholders = new EndPointUrlPlaceholder[]
             {
                 new() { Placeholder = "{id}", SimpleValue = id }
@@ -60,7 +61,7 @@ public class WApiAlbum
             QueryParameters = new Parameter[]
             {
                 new() { Name = "limit", SimpleValue = limit, Constraints = new Constraint[]
-                    { new() { Value = 1, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual }, 
+                    { new() { Value = 1, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
                       new() { Value = 50, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
                 new() { Name = "offset", SimpleValue = offset, Constraints = new Constraint[]
                     { new() { Value = 0, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
@@ -70,15 +71,16 @@ public class WApiAlbum
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
-    ///Get Saved Albums
-    ///Get a list of the albums saved in the current Spotify user's 'Your Music' library.
+    ///Get User's Saved Shows
+    ///Get a list of shows saved in the current Spotify user's library. Optional 
+    ///parameters can be used to limit the number of shows returned.
     ///</summary>
-    public static async Task<Paged<Album>?> GetSavedAlbums(int limit = 20, int offset = 0, 
-        string? market = null, string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<Paged<Album>>(new()
+    public static async Task<Paged<Show>?> GetUsersSavedShows(string id, int limit = 20,
+        int offset = 0, string? market = null, string? accessToken = null)
+        => await WApiGlobals.CallWebApiEndpoint<Paged<Show>>(new()
         {
             HttpMethod = HttpMethod.Get,
-            EndPointUrl = "/me/albums",
+            EndPointUrl = "/me/shows",
             QueryParameters = new Parameter[]
             {
                 new() { Name = "limit", SimpleValue = limit, Constraints = new Constraint[]
@@ -92,38 +94,15 @@ public class WApiAlbum
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
-    ///Save Albums
-    ///Save one or more albums to the current user's 'Your Music' library.
+    ///Save Shows for Current User
+    ///Save one or more shows to current Spotify user's library.
     ///</summary>
-    public static async Task<EmptyResponse?> PutSaveAlbums(string[] ids, string? accessToken = null)
+    public static async Task<EmptyResponse?> PutSaveShowsForCurrentUser(string[] ids,
+        string? accessToken = null)
         => await WApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
         {
             HttpMethod = HttpMethod.Put,
-            EndPointUrl = "/me/albums",
-            BodyObject = new { ids }
-        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
-
-    ///<summary>
-    ///Remove Albums
-    ///Remove one or more albums from the current user's 'Your Music' library.
-    ///</summary>
-    public static async Task<EmptyResponse?> DeleteRemoveAlbums(string[] ids, string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
-        {
-            HttpMethod = HttpMethod.Delete,
-            EndPointUrl = "/me/albums",
-            BodyObject = new { ids }
-        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
-
-    ///<summary>
-    ///Check Saved Albums
-    ///Check if one or more albums is already saved in the current Spotify user's 'Your Music' library.
-    ///</summary>
-    public static async Task<bool[]?> GetCheckSavedAlbums(string[] ids, string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<bool[]>(new()
-        {
-            HttpMethod = HttpMethod.Get,
-            EndPointUrl = "/me/albums/contains",
+            EndPointUrl = "/me/shows",
             QueryParameters = new Parameter[]
             {
                 new() { Name = "ids", SimpleValue = ids }
@@ -131,24 +110,34 @@ public class WApiAlbum
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
-    ///Get New Releases
-    ///Get a list of new album releases featured in Spotify (shown, for example, on a Spotify player’s “Browse” tab).
+    ///Remove User's Saved Shows
+    ///Delete one or more shows from current Spotify user's library.
     ///</summary>
-    public static async Task<bool[]?> GetNewReleases(string? country, int limit = 20, 
-        int offset = 0, string? accessToken = null)
+    public static async Task<EmptyResponse?> DeleteRemoveUsersSavedShows(string[] ids,
+        string? market = null, string? accessToken = null)
+        => await WApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
+        {
+            HttpMethod = HttpMethod.Delete,
+            EndPointUrl = "/me/shows",
+            QueryParameters = new Parameter[]
+            {
+                new() { Name = "ids", SimpleValue = ids },
+                new() { Name = "market", SimpleValue = market }
+            }
+        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+
+    ///<summary>
+    ///Check User's Saved Shows
+    ///Check if one or more shows is already saved in the current Spotify user's library.
+    ///</summary>
+    public static async Task<bool[]?> GetCheckUsersSavedShows(string[] ids, string? accessToken = null)
         => await WApiGlobals.CallWebApiEndpoint<bool[]>(new()
         {
             HttpMethod = HttpMethod.Get,
-            EndPointUrl = "/browse/new-releases",
+            EndPointUrl = "/me/shows/contains",
             QueryParameters = new Parameter[]
             {
-                new() { Name = "limit", SimpleValue = limit, Constraints = new Constraint[]
-                    { new() { Value = 1, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 50, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
-                new() { Name = "offset", SimpleValue = offset, Constraints = new Constraint[]
-                    { new() { Value = 0, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 5, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
-                new() { Name = "country", SimpleValue = country }
+                new() { Name = "ids", SimpleValue = ids }
             }
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 }

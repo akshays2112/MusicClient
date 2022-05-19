@@ -1,31 +1,29 @@
 ﻿using WApiGlobals = WebApis.Net6.Globals;
-using static WebApis.Net6.Spotify.Globals;
+using WApiSpotifyGlobals = WebApis.Net6.Spotify.Globals;
 using WebApis.Net6.Spotify.Models;
 
-namespace WebApis.Net6.Spotify.WebApiEndpoints
+namespace WebApis.Net6.Spotify.WebApiEndpoints;
+
+public class WApiPlaylist
 {
-    public class WApiPlaylist
-    {
-        ///<summary>
-        ///Get Current User's Playlists
-        ///Get a list of the playlists owned or followed by the current Spotify user.
-        /// </summary>
-        public static async Task<Paged<Playlist>?> GetCurrentUsersPlaylists(int limit = 20, int offset = 0)
-            => await WApiGlobals.CallWebApiEndpoint<Paged<Playlist>>(new()
+    ///<summary>
+    ///Get Current User's Playlists
+    ///Get a list of the playlists owned or followed by the current Spotify user.
+    /// </summary>
+    public static async Task<Paged<Playlist>?> GetCurrentUsersPlaylists(int limit = 20,
+        int offset = 0, string? accessToken = null)
+        => await WApiGlobals.CallWebApiEndpoint<Paged<Playlist>>(new()
+        {
+            HttpMethod = HttpMethod.Get,
+            EndPointUrl = "/me/playlists",
+            QueryParameters = new Parameter[]
             {
-                HttpMethod = HttpMethod.Get,
-                EndPointUrl = "/me/playlists",
-                QueryParameters = new QueryParameter[]
-                {
-                    new() {
-                        Name = "limit", SimpleValue = limit,
-                        Constraints = new Constraint[] { new() { MinValue = 0, MaxValue = 50 } }
-                    },
-                    new() {
-                        Name = "offset", SimpleValue = offset,
-                        Constraints = new Constraint[] { new() { MinValue = 0, MaxValue = 5 } }
-                    }
-                }
-            }, Globals.SpotifyAccessToken?.AccessToken);
-    }
+                new() { Name = "limit", SimpleValue = limit, Constraints = new Constraint[]
+                    { new() { Value = 1, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
+                      new() { Value = 50, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+                new() { Name = "offset", SimpleValue = offset, Constraints = new Constraint[]
+                    { new() { Value = 0, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
+                      new() { Value = 5, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+            }
+        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 }

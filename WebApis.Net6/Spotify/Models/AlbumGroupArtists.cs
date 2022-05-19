@@ -1,13 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace WebApis.Net6.Spotify.Models
-{
-    public class AlbumGroupArtists
-    {
-        [JsonPropertyName("album_group")]
-        public string? AlbumGroup { get; set; } = string.Empty;
+namespace WebApis.Net6.Spotify.Models;
 
-        [JsonPropertyName("artists")]
-        public Artist[]? Artists { get; set; } = Array.Empty<Artist>();
-    }
+public class AlbumGroupArtists
+{
+    [JsonPropertyName("album_group")]
+    public string? AlbumGroup { get; set; } = string.Empty;
+
+    [JsonPropertyName("artists")]
+    public Artist[]? Artists { get; set; } = Array.Empty<Artist>();
 }

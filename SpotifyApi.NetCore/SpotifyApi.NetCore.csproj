@@ -2,8 +2,6 @@
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
-		<Authors>Akshay Srinivasan</Authors>
-		<Copyright>2021 Akshay Srinivasan</Copyright>
 		<NoWarn />
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 		<WarningsAsErrors />

@@ -1,12 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace WebApis.Net6.Spotify.Models
-{
-    public class OwnerAllOf
-    {
-        public UserProfile? Profile { get; set; }
+namespace WebApis.Net6.Spotify.Models;
 
-        [JsonPropertyName("display_name")]
-        public string? DisplayName { get; set; }
-    }
+public class OwnerAllOf
+{
+    public UserProfile? Profile { get; set; }
+
+    [JsonPropertyName("display_name")]
+    public string? DisplayName { get; set; }
 }
