@@ -20,7 +20,7 @@ public class WApiAlbum
             {
                 new() { Placeholder = "{id}", SimpleValue = id }
             },
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "market", SimpleValue = market }
             }
@@ -36,7 +36,7 @@ public class WApiAlbum
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/albums",
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "ids", SimpleValue = ids },
                 new() { Name = "market", SimpleValue = market }
@@ -57,14 +57,14 @@ public class WApiAlbum
             {
                 new() { Placeholder = "{id}", SimpleValue = id }
             },
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "limit", SimpleValue = limit, Constraints = new Constraint[]
-                    { new() { Value = 1, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual }, 
-                      new() { Value = 50, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+                    { new() { Value = 1, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) }, 
+                      new() { Value = 50, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "offset", SimpleValue = offset, Constraints = new Constraint[]
-                    { new() { Value = 0, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 5, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+                    { new() { Value = 0, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
+                      new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "market", SimpleValue = market }
             }
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
@@ -79,14 +79,14 @@ public class WApiAlbum
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/me/albums",
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "limit", SimpleValue = limit, Constraints = new Constraint[]
-                    { new() { Value = 1, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 50, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+                    { new() { Value = 1, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
+                      new() { Value = 50, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "offset", SimpleValue = offset, Constraints = new Constraint[]
-                    { new() { Value = 0, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 5, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+                    { new() { Value = 0, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
+                      new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "market", SimpleValue = market }
             }
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
@@ -124,7 +124,7 @@ public class WApiAlbum
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/me/albums/contains",
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "ids", SimpleValue = ids }
             }
@@ -140,14 +140,14 @@ public class WApiAlbum
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/browse/new-releases",
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "limit", SimpleValue = limit, Constraints = new Constraint[]
-                    { new() { Value = 1, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 50, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+                    { new() { Value = 1, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
+                      new() { Value = 50, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "offset", SimpleValue = offset, Constraints = new Constraint[]
-                    { new() { Value = 0, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 5, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+                    { new() { Value = 0, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
+                      new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "country", SimpleValue = country }
             }
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);

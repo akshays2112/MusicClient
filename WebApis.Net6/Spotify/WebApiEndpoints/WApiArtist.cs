@@ -20,7 +20,7 @@ public class WApiArtist
             {
                 new() { Placeholder = "{id}", SimpleValue = id }
             },
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "market", SimpleValue = market }
             }
@@ -35,7 +35,7 @@ public class WApiArtist
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/artists",
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "ids", SimpleValue = ids }
             }
@@ -56,15 +56,15 @@ public class WApiArtist
             {
                 new() { Placeholder = "{id}", SimpleValue = id }
             },
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "include_groups", SimpleValue = include_groups },
                 new() { Name = "limit", SimpleValue = limit, Constraints = new Constraint[]
-                    { new() { Value = 1, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 50, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+                    { new() { Value = 1, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
+                      new() { Value = 50, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "offset", SimpleValue = offset, Constraints = new Constraint[]
-                    { new() { Value = 0, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 5, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+                    { new() { Value = 0, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
+                      new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "market", SimpleValue = market }
             }
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
@@ -83,7 +83,7 @@ public class WApiArtist
             {
                 new() { Placeholder = "{id}", SimpleValue = id }
             },
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "market", SimpleValue = market }
             }

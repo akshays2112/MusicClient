@@ -15,7 +15,9 @@ public class WebApiEndpoint<T>
 
     public EndPointUrlPlaceholder[]? EndPointUrlPlaceholders { get; set; } = Array.Empty<EndPointUrlPlaceholder>();
 
-    public Parameter[]? QueryParameters { get; set; } = Array.Empty<Parameter>();
+    public SimpleParameter[]? QuerySimpleParameters { get; set; } = Array.Empty<SimpleParameter>();
+
+    public ObjectParameter? QueryObjectParameters { get; set; }
 
     public string? GetQueryString()
     {
@@ -43,31 +45,66 @@ public class WebApiEndpoint<T>
             }
         }
         queryString.Append(endpointUrl);
-        if (QueryParameters is null || QueryParameters?.Length == 0) return queryString.ToString();
-        queryString.Append('?');
-        for (int j = 0; j < QueryParameters?.Length; j++)
+        if ((QuerySimpleParameters is not null && QuerySimpleParameters?.Length > 0) ||
+            (QueryObjectParameter is not null && QueryParameterObjPropertyNames is not null &&
+            QueryParameterObjPropertyNames.Length > 0))
         {
-            object? value = null;
-            if (QueryParameters[j].SimpleValue is not null)
+            queryString.Append('?');
+        }
+        if (QuerySimpleParameters is not null && QuerySimpleParameters?.Length > 0)
+        {
+            for (int j = 0; j < QuerySimpleParameters?.Length; j++)
             {
-                value = QueryParameters[j].SimpleValue;
-            }
-            else if (QueryParameters[j].ObjInstance is not null && !string.IsNullOrWhiteSpace(QueryParameters[j].PropertyName))
-            {
-                PropertyInfo? propertyInfo = QueryParameters[j]?.ObjInstance?.GetType().GetProperty(
-                    QueryParameters[j].PropertyName ?? string.Empty);
-                if (propertyInfo is not null) value = propertyInfo?.GetValue(QueryParameters[j].ObjInstance);
-            }
-            for (int c = 0; c < QueryParameters[j]?.Constraints?.Length; c++)
-            {
-                if (!QueryParameters[j]?.Constraints?[c].CheckConstraint(value) ?? false)
+                object? value = null;
+                if (QuerySimpleParameters[j].SimpleValue is not null)
                 {
-                    throw new Exception("Query Parameter failed Constraint.");
+                    value = QuerySimpleParameters[j].SimpleValue;
+                }
+                else if (QuerySimpleParameters[j].ObjInstance is not null && 
+                    !string.IsNullOrWhiteSpace(QuerySimpleParameters[j].PropertyName))
+                {
+                    PropertyInfo? propertyInfo = QuerySimpleParameters[j]?.ObjInstance?.GetType().GetProperty(
+                        QuerySimpleParameters[j].PropertyName ?? string.Empty);
+                    if (propertyInfo is not null) value = propertyInfo?.GetValue(QuerySimpleParameters[j].ObjInstance);
+                }
+                for (int c = 0; c < QuerySimpleParameters[j]?.Constraints?.Length; c++)
+                {
+                    if (!QuerySimpleParameters[j]?.Constraints?[c].CheckConstraint(value) ?? false)
+                    {
+                        throw new Exception("Query Parameter failed Constraint.");
+                    }
+                }
+                if (value is not null)
+                {
+                    queryString.Append($"{QuerySimpleParameters[j].Name}={GetQueryStringValue(value)}&");
                 }
             }
-            if (value is not null)
+        }
+        if (QueryObjectParameter is not null && QueryParameterObjPropertyNames is not null &&
+            QueryParameterObjPropertyNames.Length > 0)
+        {
+            Type? type = QueryObjectParameter?.GetType();
+            if(type is not null)
             {
-                queryString.Append($"{QueryParameters[j].Name}={GetQueryStringValue(value)}&");
+                for (int a = 0; a < QueryParameterObjPropertyNames?.Length; a++)
+                {
+                    object? value = null; 
+                    if (QueryParameterObjPropertyNames[a] is not null &&
+                    !string.IsNullOrWhiteSpace(QueryParameterObjPropertyNames[a]))
+                    {
+                        PropertyInfo? objPropertyInfo = type.GetProperty(
+                            QueryParameterObjPropertyNames[a] ?? string.Empty);
+                        if (objPropertyInfo is not null)
+                        {
+                            value = objPropertyInfo?.GetValue(QueryParameterObjPropertyNames[a]);
+                            if (value is not null)
+                            {
+                                queryString.Append(
+                                    $"{QueryParameterObjPropertyNames[a]}={GetQueryStringValue(value)}&");
+                            }
+                        }
+                    }
+                }
             }
         }
         string retStr = queryString.ToString();

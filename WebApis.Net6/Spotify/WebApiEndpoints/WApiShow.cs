@@ -20,7 +20,7 @@ public class WApiShow
             {
                new() { Placeholder = "{id}", SimpleValue = id }
             },
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "market", SimpleValue = market }
             }
@@ -36,7 +36,7 @@ public class WApiShow
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/shows",
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "ids", SimpleValue = ids },
                 new() { Name = "market", SimpleValue = market }
@@ -58,14 +58,14 @@ public class WApiShow
             {
                 new() { Placeholder = "{id}", SimpleValue = id }
             },
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "limit", SimpleValue = limit, Constraints = new Constraint[]
-                    { new() { Value = 1, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 50, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+                    { new() { Value = 1, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
+                      new() { Value = 50, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "offset", SimpleValue = offset, Constraints = new Constraint[]
-                    { new() { Value = 0, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 5, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+                    { new() { Value = 0, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
+                      new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "market", SimpleValue = market }
             }
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
@@ -81,14 +81,14 @@ public class WApiShow
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/me/shows",
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "limit", SimpleValue = limit, Constraints = new Constraint[]
-                    { new() { Value = 1, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 50, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+                    { new() { Value = 1, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
+                      new() { Value = 50, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "offset", SimpleValue = offset, Constraints = new Constraint[]
-                    { new() { Value = 0, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 5, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+                    { new() { Value = 0, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
+                      new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "market", SimpleValue = market }
             }
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
@@ -103,7 +103,7 @@ public class WApiShow
         {
             HttpMethod = HttpMethod.Put,
             EndPointUrl = "/me/shows",
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "ids", SimpleValue = ids }
             }
@@ -119,7 +119,7 @@ public class WApiShow
         {
             HttpMethod = HttpMethod.Delete,
             EndPointUrl = "/me/shows",
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "ids", SimpleValue = ids },
                 new() { Name = "market", SimpleValue = market }
@@ -135,7 +135,7 @@ public class WApiShow
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/me/shows/contains",
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "ids", SimpleValue = ids }
             }

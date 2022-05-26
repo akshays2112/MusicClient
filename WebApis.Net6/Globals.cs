@@ -6,7 +6,11 @@ namespace WebApis.Net6;
 
 public static class Globals
 {
-    public enum ConstraintComparison { Equal, LessThanOrEqual, GreaterThanOrEqual }
+    public enum ConstraintComparison
+    {
+        Equal = 0b1000_0000, LessThanOrEqual = 0b0100_0000,
+        GreaterThanOrEqual = 0b0010_0000, Length = 0b0001_0000, Count = 0b0000_1000
+    }
 
     public static HttpClient? HttpClient { get; set; }
 

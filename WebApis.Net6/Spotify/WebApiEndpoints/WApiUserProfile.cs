@@ -39,14 +39,14 @@ public static class WApiUserProfile
             {
                 new() { Placeholder = "{type}", SimpleValue = type.ToString() }
             },
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "limit", SimpleValue = limit, Constraints = new Constraint[]
-                    { new() { Value = 1, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 50, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+                    { new() { Value = 1, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
+                      new() { Value = 50, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "offset", SimpleValue = offset, Constraints = new Constraint[]
-                    { new() { Value = 0, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 5, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+                    { new() { Value = 0, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
+                      new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "time_range", SimpleValue = time_range.ToString() }
             }
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
@@ -70,7 +70,7 @@ public static class WApiUserProfile
     ///Follow Playlist
     ///Add the current user as a follower of a playlist.
     ///</summary>
-    public static async Task<EmptyResponse?> PutFollowPlaylist(string playlist_id, 
+    public static async Task<EmptyResponse?> PutFollowPlaylist(string playlist_id,
         bool @public = true, string? accessToken = null)
         => await WApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
         {
@@ -103,22 +103,22 @@ public static class WApiUserProfile
     ///Get Followed Artists
     ///Get the current user's followed artists.
     ///</summary>
-    public static async Task<Paged<Artist>?> GetFollowedArtists(string? after, int limit = 20, 
+    public static async Task<Paged<Artist>?> GetFollowedArtists(string? after, int limit = 20,
         int offset = 0, string? accessToken = null)
         => await WApiGlobals.CallWebApiEndpoint<Paged<Artist>>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/me/following",
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "type", SimpleValue = "artist" },
                 new() { Name = "after", SimpleValue = after },
                 new() { Name = "limit", SimpleValue = limit, Constraints = new Constraint[]
-                    { new() { Value = 1, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 50, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } },
+                    { new() { Value = 1, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
+                      new() { Value = 50, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "offset", SimpleValue = offset, Constraints = new Constraint[]
-                    { new() { Value = 0, ConstraintComparison = WApiGlobals.ConstraintComparison.GreaterThanOrEqual },
-                      new() { Value = 5, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } }
+                    { new() { Value = 0, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
+                      new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } }
             }
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
@@ -126,13 +126,13 @@ public static class WApiUserProfile
     ///Follow Artists or Users
     ///Add the current user as a follower of one or more artists or other Spotify users.
     ///</summary>
-    public static async Task<EmptyResponse?> PutFollowArtistsOrUsers(WApiSpotifyGlobals.ArtistOrUser type, 
+    public static async Task<EmptyResponse?> PutFollowArtistsOrUsers(WApiSpotifyGlobals.ArtistOrUser type,
         string[] ids, string? accessToken = null)
         => await WApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
         {
             HttpMethod = HttpMethod.Put,
             EndPointUrl = "/me/following",
-            QueryParameters = new Parameter[] { new() { Name = "type", SimpleValue = type.ToString() } },
+            QuerySimpleParameters = new SimpleParameter[] { new() { Name = "type", SimpleValue = type.ToString() } },
             BodyObject = new { ids }
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
@@ -140,13 +140,13 @@ public static class WApiUserProfile
     ///Follow Artists or Users
     ///Add the current user as a follower of one or more artists or other Spotify users.
     ///</summary>
-    public static async Task<EmptyResponse?> DeleteUnfollowArtistsOrUsers(WApiSpotifyGlobals.ArtistOrUser type, 
+    public static async Task<EmptyResponse?> DeleteUnfollowArtistsOrUsers(WApiSpotifyGlobals.ArtistOrUser type,
         string[] ids, string? accessToken = null)
         => await WApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
         {
             HttpMethod = HttpMethod.Delete,
             EndPointUrl = "/me/following",
-            QueryParameters = new Parameter[] { new() { Name = "type", SimpleValue = type.ToString() } },
+            QuerySimpleParameters = new SimpleParameter[] { new() { Name = "type", SimpleValue = type.ToString() } },
             BodyObject = new { ids }
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
@@ -154,13 +154,13 @@ public static class WApiUserProfile
     ///Check If User Follows Artists or Users
     ///Get the current user's followed artists.
     ///</summary>
-    public static async Task<bool[]?> GetCheckIfUserFollowsArtistsOrUsers(string[] ids, 
+    public static async Task<bool[]?> GetCheckIfUserFollowsArtistsOrUsers(string[] ids,
         WApiSpotifyGlobals.ArtistOrUser artistOrUser, string? accessToken = null)
         => await WApiGlobals.CallWebApiEndpoint<bool[]>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/me/following/contains",
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
                 new() { Name = "ids", SimpleValue = ids },
                 new() { Name = "type", SimpleValue = artistOrUser.ToString() }
@@ -171,7 +171,7 @@ public static class WApiUserProfile
     ///Check if Users Follow Playlist
     ///Get the current user's followed artists.
     ///</summary>
-    public static async Task<bool[]?> GetCheckIfUsersFollowPlaylist(string playlist_id, 
+    public static async Task<bool[]?> GetCheckIfUsersFollowPlaylist(string playlist_id,
         string[] ids, string? accessToken = null)
         => await WApiGlobals.CallWebApiEndpoint<bool[]>(new()
         {
@@ -181,10 +181,23 @@ public static class WApiUserProfile
             {
                 new() { Placeholder = "{playlist_id}", SimpleValue = playlist_id }
             },
-            QueryParameters = new Parameter[]
+            QuerySimpleParameters = new SimpleParameter[]
             {
-                new() { Name = "ids", SimpleValue = ids, Constraints = new Constraint[] { new() { 
-                    Value = 5, ConstraintComparison = WApiGlobals.ConstraintComparison.LessThanOrEqual } } }
+                new() 
+                {
+                    Name = "ids", 
+                    SimpleValue = ids, 
+                    Constraints = new Constraint[] 
+                    {
+                        new() 
+                        {
+                            Value = 5, 
+                            ConstraintComparison = 
+                                ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) | 
+                                ((int)WApiGlobals.ConstraintComparison.Length) 
+                        }
+                    } 
+                }
             }
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 }
