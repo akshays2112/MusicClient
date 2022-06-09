@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.Json;
 using System.Reflection;
-using SpotifyGlobals = WebApis.Net6.Spotify.Globals;
+using SpotifyGlobals = WebApis.Net6.Spotify.WApiSpotifyGlobals;
 using System.Globalization;
 
 namespace WebApis.Net6;
@@ -113,10 +113,16 @@ public class WebApiEndpoint<T>
         {
             string s => WebUtility.UrlEncode(s),
             bool or short or int or long or float or double or decimal => WebUtility.UrlEncode(value.ToString()),
-            string[] arr => WebUtility.UrlEncode(string.Join(',', (string[]) arr)),
+            string[] arr => JoinAndEncodeStringArray((string[]) arr),
             DateTime dt => WebUtility.UrlEncode(dt.ToString("s", CultureInfo.InvariantCulture)),
             _ => string.Empty,
         };
+    }
+
+    public string? JoinAndEncodeStringArray(string[] arr)
+    {
+        arr.ToList().ForEach(s => WebUtility.UrlEncode(s));
+        return string.Join(',', arr);
     }
 
     public string? GetBodyJsonString()

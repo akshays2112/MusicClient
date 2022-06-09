@@ -1,6 +1,5 @@
-﻿using WApiGlobals = WebApis.Net6.Globals;
-using WApiSpotifyGlobals = WebApis.Net6.Spotify.Globals;
-using WebApis.Net6.Spotify.Models;
+﻿using WebApis.Net6.Spotify.Models;
+using WebApis.Net6.Spotify.Models.Responses;
 
 namespace WebApis.Net6.Spotify.WebApiEndpoints;
 
@@ -12,7 +11,7 @@ public static class WApiAlbum
     ///</summary>
     public static async Task<Album?> GetAlbum(string id, string? market = null,
         string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<Album>(new()
+        => await WApiGlobals.CallWebApiEndpoint(new WebApiEndpoint<Album?>()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/albums/{id}",
@@ -30,9 +29,9 @@ public static class WApiAlbum
     ///Get Several Albums
     ///Get Spotify catalog information for multiple albums identified by their Spotify IDs.
     ///</summary>
-    public static async Task<Album[]?> GetSeveralAlbums(string[] ids, string? market = null,
+    public static async Task<RAlbums?> GetSeveralAlbums(string[] ids, string? market = null,
         string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<Album[]>(new()
+        => await WApiGlobals.CallWebApiEndpoint(new WebApiEndpoint<RAlbums?>()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/albums",

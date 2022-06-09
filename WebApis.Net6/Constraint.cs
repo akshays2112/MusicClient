@@ -1,4 +1,4 @@
-﻿using static WebApis.Net6.Globals;
+﻿using static WebApis.Net6.WApiGlobals;
 
 namespace WebApis.Net6;
 
@@ -18,8 +18,8 @@ public class Constraint
         if (type?.IsArray ?? false)
         {
             if (!int.TryParse(type?.GetProperty(
-                (ConstraintComparison & ((int)Globals.ConstraintComparison.Length)) > 0 ? "Length" :
-                (ConstraintComparison & ((int)Globals.ConstraintComparison.Count)) > 0 ? "Count" :
+                (ConstraintComparison & ((int)WApiGlobals.ConstraintComparison.Length)) > 0 ? "Length" :
+                (ConstraintComparison & ((int)WApiGlobals.ConstraintComparison.Count)) > 0 ? "Count" :
                 string.Empty)?.GetValue(value)?.ToString(),
                 out tmpObjValue)) return false;
         }
@@ -28,11 +28,11 @@ public class Constraint
             if (!int.TryParse(value?.ToString(), out tmpObjValue)) return false;
         }
         if (!int.TryParse(Value?.ToString(), out tmpValue)) return false;
-        if ((ConstraintComparison & ((int)Globals.ConstraintComparison.LessThanOrEqual)) > 0 &&
+        if ((ConstraintComparison & ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual)) > 0 &&
             tmpObjValue <= tmpValue) return true;
-        if ((ConstraintComparison & ((int)Globals.ConstraintComparison.GreaterThanOrEqual)) > 0 &&
+        if ((ConstraintComparison & ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual)) > 0 &&
             tmpObjValue >= tmpValue) return true;
-        if ((ConstraintComparison & ((int)Globals.ConstraintComparison.Equal)) > 0 &&
+        if ((ConstraintComparison & ((int)WApiGlobals.ConstraintComparison.Equal)) > 0 &&
             tmpObjValue == tmpValue) return true;
         return false;
     }

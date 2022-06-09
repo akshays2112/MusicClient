@@ -4,8 +4,8 @@ using MusicClient;
 using MusicClient.Data.SQLServer;
 using SpotifyApi.NetCore;
 using MCGlobals = MusicClient.Globals;
-using WApiGlobals = WebApis.Net6.Globals;
-using WApiSpotifyGlobals = WebApis.Net6.Spotify.Globals;
+using WApiGlobals = WebApis.Net6.WApiGlobals;
+using WApiSpotifyGlobals = WebApis.Net6.Spotify.WApiSpotifyGlobals;
 
 var builder = WebApplication.CreateBuilder(args);
 

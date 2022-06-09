@@ -1,0 +1,39 @@
+﻿@using WebApis.Net6
+@using WebApis.Net6.Spotify.Models.Responses
+@using WebApis.Net6.Spotify.WebApiEndpoints
+@using WebApis.Net6.Spotify.Models
+@using MusicClient
+@using WApiSpotifyGlobals = WebApis.Net6.Spotify.WApiSpotifyGlobals
+@inject HttpClient httpClient
+
+<h3>TestingWebApisNet6</h3>
+
+@if(album is not null)
+{
+    <span>@album.Name</span><br />
+}
+
+@if(severalAlbums?.Albums?.Length > 0)
+{
+    foreach(Album a in severalAlbums.Albums)
+    {
+        <span>@a.Name</span><br />
+    }
+}
+
+@code {
+    Album? album;
+    RAlbums? severalAlbums;
+
+    protected override async Task OnInitializedAsync()
+    {
+        album = await WApiAlbum.GetAlbum("4aawyAB9vmqN3uQ7FjRGTy");
+
+        severalAlbums = await WApiAlbum.GetSeveralAlbums(new string[]
+        {
+            "382ObEPsp2rxGrnsizN5TX", "1A2GTWGtFfWp7KSQTwWOyo", "2noRn2Aes5aoNVsU6iWThc"
+        });
+
+        await base.OnInitializedAsync();
+    }
+}

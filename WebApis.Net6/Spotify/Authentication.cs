@@ -1,6 +1,6 @@
 ﻿using System.Net;
-using WApiGlobals = WebApis.Net6.Globals;
-using WApiSpotifyGlobals = WebApis.Net6.Spotify.Globals;
+using WApiGlobals = WebApis.Net6.WApiGlobals;
+using WApiSpotifyGlobals = WebApis.Net6.Spotify.WApiSpotifyGlobals;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Headers;
 using System.Text;

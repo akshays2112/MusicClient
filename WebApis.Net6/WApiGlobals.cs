@@ -4,7 +4,7 @@ using System.Net.Http.Headers;
 
 namespace WebApis.Net6;
 
-public static class Globals
+public static class WApiGlobals
 {
     public enum ConstraintComparison
     {

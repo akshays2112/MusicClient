@@ -1,6 +1,4 @@
-﻿using WApiGlobals = WebApis.Net6.Globals;
-using WApiSpotifyGlobals = WebApis.Net6.Spotify.Globals;
-using WebApis.Net6.Spotify.Models;
+﻿using WebApis.Net6.Spotify.Models;
 
 namespace WebApis.Net6.Spotify.WebApiEndpoints;
 

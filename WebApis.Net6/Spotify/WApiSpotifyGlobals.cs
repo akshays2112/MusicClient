@@ -2,7 +2,7 @@
 
 namespace WebApis.Net6.Spotify;
 
-public static class Globals
+public static class WApiSpotifyGlobals
 {
     public const string ApiUrl = "https://api.spotify.com/v1";
 
