@@ -4,7 +4,7 @@ using WebApis.Net6.Spotify.Models;
 
 namespace WebApis.Net6.Spotify.WebApiEndpoints;
 
-public class WApiShow
+public static class WApiShow
 {
     ///<summary>
     ///Get Show

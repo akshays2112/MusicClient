@@ -4,7 +4,7 @@ using WebApis.Net6.Spotify.Models;
 
 namespace WebApis.Net6.Spotify.WebApiEndpoints;
 
-public class WApiTrack
+public static class WApiTrack
 {
     ///<summary>
     ///Get Track
@@ -75,7 +75,7 @@ public class WApiTrack
         {
             HttpMethod = HttpMethod.Put,
             EndPointUrl = "/me/tracks",
-            BodyObject = new { ids = ids },
+            BodyObject = new { ids },
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
@@ -92,7 +92,7 @@ public class WApiTrack
             {
                 new() { Name = "market", SimpleValue = market }
             },
-            BodyObject = new { ids = ids }
+            BodyObject = new { ids }
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>

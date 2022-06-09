@@ -4,7 +4,7 @@ using WebApis.Net6.Spotify.Models;
 
 namespace WebApis.Net6.Spotify.WebApiEndpoints;
 
-public class WApiAlbum
+public static class WApiAlbum
 {
     ///<summary>
     ///Get Album

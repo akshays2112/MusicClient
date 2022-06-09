@@ -4,7 +4,7 @@ using WebApis.Net6.Spotify.Models;
 
 namespace WebApis.Net6.Spotify.WebApiEndpoints;
 
-public class WApiPlaylist
+public static class WApiPlaylist
 {
     ///<summary>
     ///Get Current User's Playlists
