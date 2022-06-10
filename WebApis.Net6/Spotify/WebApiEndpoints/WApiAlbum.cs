@@ -68,6 +68,13 @@ public static class WApiAlbum
             }
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
+    public static async Task<Paged<Track>?> GetNextPageAlbumTracks(string nextPage, string? accessToken = null)
+        => await WApiGlobals.CallWebApiEndpoint<Paged<Track>>(new()
+        {
+            HttpMethod = HttpMethod.Get,
+            PrecalculatedQueryString = nextPage
+        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+
     ///<summary>
     ///Get Saved Albums
     ///Get a list of the albums saved in the current Spotify user's 'Your Music' library.
@@ -88,6 +95,13 @@ public static class WApiAlbum
                       new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "market", SimpleValue = market }
             }
+        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+
+    public static async Task<Paged<Album>?> GetNextPageSavedAlbums(string nextPage, string? accessToken = null)
+        => await WApiGlobals.CallWebApiEndpoint<Paged<Album>>(new()
+        {
+            HttpMethod = HttpMethod.Get,
+            PrecalculatedQueryString = nextPage
         }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>

@@ -19,8 +19,14 @@ public class WebApiEndpoint<T>
 
     public ObjectParameter? QueryObjectParameters { get; set; }
 
+    public string? PrecalculatedQueryString { get; set; } = string.Empty;
+
     public string? GetQueryString()
     {
+        if (!string.IsNullOrWhiteSpace(PrecalculatedQueryString))
+        {
+            return PrecalculatedQueryString;
+        } 
         StringBuilder queryString = new($"{SpotifyGlobals.ApiUrl}");
         string? endpointUrl = EndPointUrl;
         if (EndPointUrlPlaceholders is not null && EndPointUrlPlaceholders.Length > 0)

@@ -21,9 +21,18 @@
     }
 }
 
+@if(albumTracksList?.Count > 0)
+{
+    foreach(Track track in albumTracksList)
+    {
+        <span>@track.Name</span><br />
+    }
+}
+
 @code {
     Album? album;
     RAlbums? severalAlbums;
+    List<Track> albumTracksList = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -33,6 +42,20 @@
         {
             "382ObEPsp2rxGrnsizN5TX", "1A2GTWGtFfWp7KSQTwWOyo", "2noRn2Aes5aoNVsU6iWThc"
         });
+
+        Paged<Track>? albumTracks = await WApiAlbum.GetAlbumTracks("4aawyAB9vmqN3uQ7FjRGTy", 5);
+        if (albumTracks?.Items?.Length > 0)
+        {
+            albumTracksList.AddRange(albumTracks.Items);
+        }
+        while (!string.IsNullOrWhiteSpace(albumTracks?.Next))
+        {
+            albumTracks = await WApiAlbum.GetNextPageAlbumTracks(albumTracks.Next);
+            if (albumTracks?.Items?.Length > 0)
+            {
+                albumTracksList.AddRange(albumTracks.Items);
+            }
+        }
 
         await base.OnInitializedAsync();
     }
