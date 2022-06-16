@@ -1,0 +1,171 @@
+﻿@using WebApis.Net6.Spotify.Models
+@using WebApis.Net6.Spotify.Models.Responses
+@using WebApis.Net6.Spotify.WebApiEndpoints
+@using WebApis.Net6.Spotify
+@inject IWApiShow wApiShow
+
+<h3>TestingWebApisNet6</h3>
+
+@if(show is not null)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetShow</span>
+        </div>
+        <div class="MCDivTestResults">
+            <span>@show.Name</span><br />
+        </div>
+    </div>
+}
+<br />
+
+@if(severalShows?.Shows?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetSeveralShows</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Show show in severalShows.Shows)
+        {
+            <span>@show.Name</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(showEpisodesList?.Count > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetShowEpisodes</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Episode episode in showEpisodesList)
+        {
+            <span>@episode.Name</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(checkUsersSavedShowsAfterAddBools?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetCheckUsersSavedShows and PutSaveShowsForCurrentUser</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(bool addBool in checkUsersSavedShowsAfterAddBools)
+        {
+            <span>@addBool</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(usersSavedShowsList?.Count > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetUsersSavedShows</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Show show in usersSavedShowsList)
+        {
+            <span>@show.Name</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(checkUsersSavedShowsAfterRemoveBools?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetCheckUsersSavedShows and DeleteRemoveUsersSavedShows</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(bool removeBool in checkUsersSavedShowsAfterRemoveBools)
+        {
+            <span>@removeBool</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@code {
+    Show? show;
+    RShows? severalShows;
+    List<Episode> showEpisodesList = new();
+    List<Show> usersSavedShowsList = new();
+    bool[]? checkUsersSavedShowsAfterAddBools;
+    bool[]? checkUsersSavedShowsAfterRemoveBools;
+
+    protected override async Task OnInitializedAsync()
+    {
+        show = await wApiShow.GetShow("38bS44xjbVVZ3No3ByF1dJ");
+
+        severalShows = await wApiShow.GetSeveralShows(new string[]
+        {
+            "5CfCWKI5pZ28U0uOzXkDHe", "5as3aKmN2k11yfDDDSrvaZ"
+        });
+
+        Paged<Episode>? showEpisodes = await wApiShow.GetShowEpisodes("38bS44xjbVVZ3No3ByF1dJ", limit: 50);
+        if (showEpisodes?.Items?.Length > 0)
+        {
+            showEpisodesList.AddRange(showEpisodes.Items);
+        }
+        while (!string.IsNullOrWhiteSpace(showEpisodes?.Next))
+        {
+            showEpisodes = await wApiShow.GetNextPageShowEpisodes(showEpisodes.Next);
+            if (showEpisodes?.Items?.Length > 0)
+            {
+                showEpisodesList.AddRange(showEpisodes.Items);
+            }
+        }
+
+        _ = await wApiShow.PutSaveShowsForCurrentUser(new string[] { "5CfCWKI5pZ28U0uOzXkDHe", "5as3aKmN2k11yfDDDSrvaZ" });
+
+        checkUsersSavedShowsAfterAddBools = await wApiShow.GetCheckUsersSavedShows(
+            new string[] { "5CfCWKI5pZ28U0uOzXkDHe", "5as3aKmN2k11yfDDDSrvaZ" });
+
+        Paged<RShow>? usersSavedShows = await wApiShow.GetUsersSavedShows(50);
+        if (usersSavedShows?.Items?.Length > 0)
+        {
+            foreach(RShow rShow in usersSavedShows.Items)
+            {
+                if (rShow?.Show is not null)
+                {
+                    usersSavedShowsList.Add(rShow.Show);
+                }
+            }
+        }
+        while (!string.IsNullOrWhiteSpace(usersSavedShows?.Next))
+        {
+            usersSavedShows = await wApiShow.GetNextPageUsersSavedShows(usersSavedShows.Next);
+            if (usersSavedShows?.Items?.Length > 0)
+            {
+                foreach (RShow rShow in usersSavedShows.Items)
+                {
+                    if (rShow?.Show is not null)
+                    {
+                        usersSavedShowsList.Add(rShow.Show);
+                    }
+                }
+            }
+        }
+
+        _ = await wApiShow.DeleteRemoveUsersSavedShows(new string[] { "5CfCWKI5pZ28U0uOzXkDHe", "5as3aKmN2k11yfDDDSrvaZ" });
+
+        checkUsersSavedShowsAfterRemoveBools = await wApiShow.GetCheckUsersSavedShows(
+            new string[] { "5CfCWKI5pZ28U0uOzXkDHe", "5as3aKmN2k11yfDDDSrvaZ" });
+
+        await base.OnInitializedAsync();
+    }
+}

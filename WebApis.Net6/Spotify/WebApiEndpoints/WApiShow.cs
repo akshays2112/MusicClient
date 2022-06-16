@@ -1,13 +1,14 @@
 ﻿using WebApis.Net6.Spotify.Models;
+using WebApis.Net6.Spotify.Models.Responses;
 
 namespace WebApis.Net6.Spotify.WebApiEndpoints;
 
 public class WApiShow : IWApiShow
 {
-    private readonly WApiGlobals _wApiGlobals;
-    private readonly WApiSpotifyGlobals _wApiSpotifyGlobals;
+    private readonly IWApiGlobals _wApiGlobals;
+    private readonly IWApiSpotifyGlobals _wApiSpotifyGlobals;
 
-    public WApiShow(WApiGlobals wApiGlobals, WApiSpotifyGlobals wApiSpotifyGlobals)
+    public WApiShow(IWApiGlobals wApiGlobals, IWApiSpotifyGlobals wApiSpotifyGlobals)
     {
         _wApiGlobals = wApiGlobals;
         _wApiSpotifyGlobals = wApiSpotifyGlobals;
@@ -37,9 +38,9 @@ public class WApiShow : IWApiShow
     ///Get Several Shows
     ///Get Spotify catalog information for several shows based on their Spotify IDs.
     ///</summary>
-    public async Task<Show[]?> GetSeveralShows(string[] ids, string? market = null,
+    public async Task<RShows?> GetSeveralShows(string[] ids, string? market = null,
         string? accessToken = null)
-        => await _wApiGlobals.CallWebApiEndpoint<Show[]>(new()
+        => await _wApiGlobals.CallWebApiEndpoint<RShows>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/shows",
@@ -77,14 +78,21 @@ public class WApiShow : IWApiShow
             }
         }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
+    public async Task<Paged<Episode>?> GetNextPageShowEpisodes(string nextPage, string? accessToken = null)
+        => await _wApiGlobals.CallWebApiEndpoint<Paged<Episode>>(new()
+        {
+            HttpMethod = HttpMethod.Get,
+            PrecalculatedQueryString = nextPage
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+
     ///<summary>
     ///Get User's Saved Shows
     ///Get a list of shows saved in the current Spotify user's library. Optional 
     ///parameters can be used to limit the number of shows returned.
     ///</summary>
-    public async Task<Paged<Show>?> GetUsersSavedShows(string id, int limit = 20,
-        int offset = 0, string? market = null, string? accessToken = null)
-        => await _wApiGlobals.CallWebApiEndpoint<Paged<Show>>(new()
+    public async Task<Paged<RShow>?> GetUsersSavedShows(int limit = 20,
+        int offset = 0, string? accessToken = null)
+        => await _wApiGlobals.CallWebApiEndpoint<Paged<RShow>>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/me/shows",
@@ -95,9 +103,15 @@ public class WApiShow : IWApiShow
                       new() { Value = 50, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "offset", SimpleValue = offset, Constraints = new Constraint[]
                     { new() { Value = 0, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
-                      new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
-                new() { Name = "market", SimpleValue = market }
+                      new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } }
             }
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+
+    public async Task<Paged<RShow>?> GetNextPageUsersSavedShows(string nextPage, string? accessToken = null)
+        => await _wApiGlobals.CallWebApiEndpoint<Paged<RShow>>(new()
+        {
+            HttpMethod = HttpMethod.Get,
+            PrecalculatedQueryString = nextPage
         }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
