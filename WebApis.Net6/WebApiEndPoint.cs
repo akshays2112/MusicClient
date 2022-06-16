@@ -119,16 +119,23 @@ public class WebApiEndpoint<T>
         {
             string s => WebUtility.UrlEncode(s),
             bool or short or int or long or float or double or decimal => WebUtility.UrlEncode(value.ToString()),
-            string[] arr => JoinAndEncodeStringArray((string[])arr),
             DateTime dt => WebUtility.UrlEncode(dt.ToString("s", CultureInfo.InvariantCulture)),
+            Array array => JoinAndEncodeArray(array),
             _ => string.Empty,
         };
     }
 
-    public string? JoinAndEncodeStringArray(string[] arr)
+    public string? JoinAndEncodeArray(Array arr)
     {
-        arr.ToList().ForEach(s => WebUtility.UrlEncode(s));
-        return string.Join(',', arr);
+        List<string> strings = new();
+        foreach(var item in arr)
+        {
+            if (item is not null)
+            {
+                strings.Add(WebUtility.UrlEncode(item.ToString() ?? string.Empty));
+            }
+        }
+        return string.Join(',', strings);
     }
 
     public string? GetBodyJsonString()

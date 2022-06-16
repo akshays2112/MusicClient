@@ -1,30 +1,31 @@
 ﻿@using WebApis.Net6.Spotify.Models
 @using WebApis.Net6.Spotify.Models.Responses
 @using WebApis.Net6.Spotify.WebApiEndpoints
-@inject IWApiAlbum wApiAlbum
+@using WebApis.Net6.Spotify
+@inject IWApiArtist wApiArtist
 
 <h3>TestingWebApisNet6</h3>
 
-@if(album is not null)
+@if(artist is not null)
 {
     <div>
         <div class="MCDivTestHeader">
-            <span>GetAlbum</span>
+            <span>GetArtist</span>
         </div>
         <div class="MCDivTestResults">
-            <span>@album.Name</span><br />
+            <span>@artist.Name</span><br />
         </div>
     </div>
 }
 <br />
-@if(severalAlbums?.Albums?.Length > 0)
+@if(severalArtists?.Artists?.Length > 0)
 {
     <div>
         <div class="MCDivTestHeader">
-            <span>GetSeveralAlbums</span>
+            <span>GetSeveralArtists</span>
         </div>
         <div class="MCDivTestResults">
-        @foreach(Album a in severalAlbums.Albums)
+        @foreach(Artist a in severalArtists.Artists)
         {
             <span>@a.Name</span><br />
         }
@@ -32,21 +33,25 @@
     </div>
 }
 <br />
-@if(albumTracksList?.Count > 0)
+
+@if(artistsAlbumsList?.Count > 0)
 {
     <div>
         <div class="MCDivTestHeader">
-            <span>GetAlbumTracks</span>
+            <span>GetArtistsAlbums</span>
         </div>
         <div class="MCDivTestResults">
-        @foreach(Track track in albumTracksList)
+        @foreach(Album album in artistsAlbumsList)
         {
-            <span>@track.Name</span><br />
+            <span>@album.Name</span><br />
         }
         </div>
     </div>
 }
 <br />
+
+@****************************************
+
 @if(savedAlbumsList?.Count > 0)
 {
     <div>
@@ -113,39 +118,45 @@
     </div>
 }
 <br />
+
+****************************************@
+
 @code {
-    Album? album;
-    RAlbums? severalAlbums;
-    List<Track> albumTracksList = new();
-    List<RAlbum> savedAlbumsList = new();
-    bool[]? checkedSaveAlbumsBools;
-    bool[]? checkedRemoveAlbumsBools;
-    List<Album> newAlbumReleases = new();
+    Artist? artist;
+    RArtists? severalArtists;
+    List<Album> artistsAlbumsList = new();
+    //List<RAlbum> savedAlbumsList = new();
+    //bool[]? checkedSaveAlbumsBools;
+    //bool[]? checkedRemoveAlbumsBools;
+    //List<Album> newAlbumReleases = new();
 
     protected override async Task OnInitializedAsync()
     {
-        album = await wApiAlbum.GetAlbum("4aawyAB9vmqN3uQ7FjRGTy");
+        //artist = await wApiArtist.GetArtist("0TnOYISbd1XYRBk9myaseg");
 
-        severalAlbums = await wApiAlbum.GetSeveralAlbums(new string[]
-        {
-            "382ObEPsp2rxGrnsizN5TX", "1A2GTWGtFfWp7KSQTwWOyo", "2noRn2Aes5aoNVsU6iWThc"
-        });
+        //severalArtists = await wApiArtist.GetSeveralArtists(new string[]
+        //{
+        //    "2CIMQHirSU0MQqyYHq0eOx", "57dN52uHvrHOxijzpIgu3E", "1vCWHaC5f2uS3yhpwWbIA6"
+        //});
 
-        Paged<Track>? albumTracks = await wApiAlbum.GetAlbumTracks("4aawyAB9vmqN3uQ7FjRGTy", 50);
-        if (albumTracks?.Items?.Length > 0)
+        Paged<Album>? artistsAlbums = await wApiArtist.GetArtistsAlbums("0TnOYISbd1XYRBk9myaseg",
+            include_groups: new WApiSpotifyGlobals.IncludeGroups[] { WApiSpotifyGlobals.IncludeGroups.single }, limit: 50);
+        if (artistsAlbums?.Items?.Length > 0)
         {
-            albumTracksList.AddRange(albumTracks.Items);
+            artistsAlbumsList.AddRange(artistsAlbums.Items);
         }
-        while (!string.IsNullOrWhiteSpace(albumTracks?.Next))
+        while (!string.IsNullOrWhiteSpace(artistsAlbums?.Next))
         {
-            albumTracks = await wApiAlbum.GetNextPageAlbumTracks(albumTracks.Next);
-            if (albumTracks?.Items?.Length > 0)
+            artistsAlbums = await wApiArtist.GetNextPageArtistsAlbums(artistsAlbums.Next);
+            if (artistsAlbums?.Items?.Length > 0)
             {
-                albumTracksList.AddRange(albumTracks.Items);
+                artistsAlbumsList.AddRange(artistsAlbums.Items);
             }
         }
 
-        Paged<RAlbum>? savedAlbums = await wApiAlbum.GetSavedAlbums(50);
+        /*******************************
+
+        Paged<RAlbum>? savedAlbums = await wApiAlbum.GetSavedAlbums(5);
         if (savedAlbums?.Items?.Length > 0)
         {
             savedAlbumsList.AddRange(savedAlbums.Items);
@@ -179,7 +190,7 @@
             "382ObEPsp2rxGrnsizN5TX", "1A2GTWGtFfWp7KSQTwWOyo", "2noRn2Aes5aoNVsU6iWThc"
         });
 
-        RPagedAlbums? rPagedAlbums = await wApiAlbum.GetNewReleases("SE", 50);
+        RPagedAlbums? rPagedAlbums = await wApiAlbum.GetNewReleases("SE");
         if (rPagedAlbums?.Albums?.Items?.Length > 0)
         {
             newAlbumReleases.AddRange(rPagedAlbums.Albums.Items);
@@ -192,6 +203,8 @@
                 newAlbumReleases.AddRange(rPagedAlbums.Albums.Items);
             }
         }
+
+        *******************************/
 
         await base.OnInitializedAsync();
     }

@@ -25,6 +25,7 @@ builder.Services.AddScoped<IWApiSpotifyGlobals, WApiSpotifyGlobals>(context =>
 });
 builder.Services.AddScoped<ISpotifyAuthentication, SpotifyAuthentication>();
 builder.Services.AddScoped<IWApiAlbum, WApiAlbum>();
+builder.Services.AddScoped<IWApiArtist, WApiArtist>();
 
 //builder.Services.AddSingleton(typeof(IUsersProfileApi), typeof(UsersProfileApi));
 //builder.Services.AddSingleton(typeof(IPlaylistsApi), typeof(PlaylistsApi));

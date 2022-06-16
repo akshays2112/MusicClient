@@ -8,7 +8,7 @@ public class Artist
     public ExternalUrls? ExternalUrls { get; set; }
 
     [JsonPropertyName("followers")]
-    public Follower[]? Followers { get; set; } = Array.Empty<Follower>();
+    public Follower? Followers { get; set; }
 
     [JsonPropertyName("genres")]
     public string[]? Genres { get; set; } = Array.Empty<string>();

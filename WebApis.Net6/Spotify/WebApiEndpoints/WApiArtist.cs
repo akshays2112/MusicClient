@@ -1,13 +1,14 @@
 ﻿using WebApis.Net6.Spotify.Models;
+using WebApis.Net6.Spotify.Models.Responses;
 
 namespace WebApis.Net6.Spotify.WebApiEndpoints;
 
 public class WApiArtist : IWApiArtist
 {
-    private readonly WApiGlobals _wApiGlobals;
-    private readonly WApiSpotifyGlobals _wApiSpotifyGlobals;
+    private readonly IWApiGlobals _wApiGlobals;
+    private readonly IWApiSpotifyGlobals _wApiSpotifyGlobals;
 
-    public WApiArtist(WApiGlobals wApiGlobals, WApiSpotifyGlobals wApiSpotifyGlobals)
+    public WApiArtist(IWApiGlobals wApiGlobals, IWApiSpotifyGlobals wApiSpotifyGlobals)
     {
         _wApiGlobals = wApiGlobals;
         _wApiSpotifyGlobals = wApiSpotifyGlobals;
@@ -17,8 +18,7 @@ public class WApiArtist : IWApiArtist
     ///Get Artist
     ///Get Spotify catalog information for a single artist identified by their unique Spotify ID.
     ///</summary>
-    public async Task<Artist?> GetArtist(string id, string? market = null,
-        string? accessToken = null)
+    public async Task<Artist?> GetArtist(string id, string? accessToken = null)
         => await _wApiGlobals.CallWebApiEndpoint<Artist>(new()
         {
             HttpMethod = HttpMethod.Get,
@@ -26,10 +26,6 @@ public class WApiArtist : IWApiArtist
             EndPointUrlPlaceholders = new EndPointUrlPlaceholder[]
             {
                 new() { Placeholder = "{id}", SimpleValue = id }
-            },
-            QuerySimpleParameters = new SimpleParameter[]
-            {
-                new() { Name = "market", SimpleValue = market }
             }
         }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
@@ -37,8 +33,8 @@ public class WApiArtist : IWApiArtist
     ///Get Several Artists
     ///Get Spotify catalog information for several artists based on their Spotify IDs.
     ///</summary>
-    public async Task<Artist[]?> GetSeveralArtists(string[] ids, string? accessToken = null)
-        => await _wApiGlobals.CallWebApiEndpoint<Artist[]>(new()
+    public async Task<RArtists?> GetSeveralArtists(string[] ids, string? accessToken = null)
+        => await _wApiGlobals.CallWebApiEndpoint<RArtists>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/artists",
@@ -74,6 +70,13 @@ public class WApiArtist : IWApiArtist
                       new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "market", SimpleValue = market }
             }
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+
+    public async Task<Paged<Album>?> GetNextPageArtistsAlbums(string nextPage, string? accessToken = null)
+        => await _wApiGlobals.CallWebApiEndpoint<Paged<Album>>(new()
+        {
+            HttpMethod = HttpMethod.Get,
+            PrecalculatedQueryString = nextPage
         }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
