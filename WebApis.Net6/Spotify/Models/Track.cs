@@ -23,7 +23,7 @@ public class Track
     public bool? Explicit { get; set; }
 
     [JsonPropertyName("external_ids")]
-    public ExternalId[]? ExternalIds { get; set; } = Array.Empty<ExternalId>();
+    public ExternalId? ExternalIds { get; set; }
 
     [JsonPropertyName("external_urls")]
     public ExternalUrls? ExternalUrls { get; set; }

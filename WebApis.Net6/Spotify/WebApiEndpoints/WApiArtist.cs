@@ -83,9 +83,9 @@ public class WApiArtist : IWApiArtist
     ///Get Artist's Top Tracks
     ///Get Spotify catalog information about an artist's top tracks by country.
     ///</summary>
-    public async Task<Track[]?> GetArtistsTopTracks(string id,
-        string? market = null, string? accessToken = null)
-        => await _wApiGlobals.CallWebApiEndpoint<Track[]>(new()
+    public async Task<RTracks?> GetArtistsTopTracks(string id,
+        string? market, string? accessToken = null)
+        => await _wApiGlobals.CallWebApiEndpoint<RTracks>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/artists/{id}/top-tracks",
@@ -104,9 +104,9 @@ public class WApiArtist : IWApiArtist
     ///Get Spotify catalog information about artists similar to a given artist. 
     ///Similarity is based on analysis of the Spotify community's listening history.
     ///</summary>
-    public async Task<Artist[]?> GetArtistsRelatedArtists(string id,
+    public async Task<RArtists?> GetArtistsRelatedArtists(string id,
         string? accessToken = null)
-        => await _wApiGlobals.CallWebApiEndpoint<Artist[]>(new()
+        => await _wApiGlobals.CallWebApiEndpoint<RArtists>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/artists/{id}/related-artists",

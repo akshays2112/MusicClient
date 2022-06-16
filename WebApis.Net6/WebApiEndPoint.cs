@@ -28,6 +28,7 @@ public class WebApiEndpoint<T>
             return PrecalculatedQueryString;
         }
         StringBuilder queryString = new($"{SpotifyGlobals.ApiUrl}");
+        StringBuilder queryString2 = new();
         string? endpointUrl = EndPointUrl;
         if (EndPointUrlPlaceholders is not null && EndPointUrlPlaceholders.Length > 0)
         {
@@ -51,11 +52,6 @@ public class WebApiEndpoint<T>
             }
         }
         queryString.Append(endpointUrl);
-        if ((QuerySimpleParameters is not null && QuerySimpleParameters?.Length > 0) ||
-            QueryObjectParameters is not null)
-        {
-            queryString.Append('?');
-        }
         if (QuerySimpleParameters is not null && QuerySimpleParameters?.Length > 0)
         {
             for (int j = 0; j < QuerySimpleParameters?.Length; j++)
@@ -74,7 +70,7 @@ public class WebApiEndpoint<T>
                 }
                 if (value is not null)
                 {
-                    queryString.Append($"{QuerySimpleParameters[j].Name}={GetQueryStringValue(value)}&");
+                    queryString2.Append($"{QuerySimpleParameters[j].Name}={GetQueryStringValue(value)}&");
                 }
             }
         }
@@ -97,13 +93,17 @@ public class WebApiEndpoint<T>
                                 QueryObjectParameters.ObjectParameterProperties[a].PropertyName);
                             if (value is not null)
                             {
-                                queryString.Append(
+                                queryString2.Append(
                                     $"{QueryObjectParameters.ObjectParameterProperties[a].PropertyName}={GetQueryStringValue(value)}&");
                             }
                         }
                     }
                 }
             }
+        }
+        if(queryString2.Length > 0)
+        {
+            queryString.Append("?").Append(queryString2);
         }
         string retStr = queryString.ToString();
         return (retStr[^1] == '&' ? retStr[..^1] : retStr);
