@@ -2,15 +2,24 @@
 
 namespace WebApis.Net6.Spotify.WebApiEndpoints;
 
-public static class WApiPlaylist
+public class WApiPlaylist : IWApiPlaylist
 {
+    private readonly WApiGlobals _wApiGlobals;
+    private readonly WApiSpotifyGlobals _wApiSpotifyGlobals;
+
+    public WApiPlaylist(WApiGlobals wApiGlobals, WApiSpotifyGlobals wApiSpotifyGlobals)
+    {
+        _wApiGlobals = wApiGlobals;
+        _wApiSpotifyGlobals = wApiSpotifyGlobals;
+    }
+
     ///<summary>
     ///Get Current User's Playlists
     ///Get a list of the playlists owned or followed by the current Spotify user.
     /// </summary>
-    public static async Task<Paged<Playlist>?> GetCurrentUsersPlaylists(int limit = 20,
+    public async Task<Paged<Playlist>?> GetCurrentUsersPlaylists(int limit = 20,
         int offset = 0, string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<Paged<Playlist>>(new()
+        => await _wApiGlobals.CallWebApiEndpoint<Paged<Playlist>>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/me/playlists",
@@ -23,5 +32,5 @@ public static class WApiPlaylist
                     { new() { Value = 0, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
                       new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
             }
-        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 }

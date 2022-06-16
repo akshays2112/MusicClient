@@ -3,10 +3,11 @@
 @using System.Text
 @using System.Text.RegularExpressions
 @using System.Net
-@using MCGlobals = MusicClient.Globals
+@using WebApis.Net6
 @using WebApis.Net6.Spotify
-@using WApiSpotifyGlobals = WebApis.Net6.Spotify.WApiSpotifyGlobals
-@inject NavigationManager myNavMgr
+@inject IWApiGlobals wApiGlobals
+@inject IWApiSpotifyGlobals wApiSpotifyGlobals
+@inject ISpotifyAuthentication spotifyAuthentication
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -30,7 +31,7 @@
                     <span class="oi oi-plus" aria-hidden="true"></span> Spotify Login
                 </NavLink>
             </li>
-            @if(!string.IsNullOrWhiteSpace(WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken))
+            @if(!string.IsNullOrWhiteSpace(wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken))
             {
             <li class="nav-item px-3">
                 <NavLink class="nav-link" @onclick="()=>expandSqlServer = !expandSqlServer" href="#">
@@ -62,7 +63,7 @@
                 }
             </li>
             }
-            @if(!string.IsNullOrWhiteSpace(WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken))
+            @if(!string.IsNullOrWhiteSpace(wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken))
             {
             <li class="nav-item px-3">
                 <NavLink class="nav-link" @onclick="()=>expandSqlServerQueries = !expandSqlServerQueries" href="#">
@@ -76,7 +77,7 @@
                 }
             </li>
             }
-            @if(!string.IsNullOrWhiteSpace(WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken))
+            @if(!string.IsNullOrWhiteSpace(wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken))
             {
             <li class="nav-item px-3">
                 <NavLink class="nav-link" @onclick="()=>expandSpotifyPages = !expandSpotifyPages" href="#">
@@ -113,12 +114,15 @@
 
     void GetSpotifyToken()
     {
-        Authentication.GetASPNetCoreSpotifyCode(myNavMgr);
+        spotifyAuthentication.GetSpotifyApiCode();
     }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await Authentication.GetSpotifyAccessToken(myNavMgr);
-        await base.OnInitializedAsync();
+        if (firstRender)
+        {
+            await spotifyAuthentication.GetSpotifyAccessToken();
+        }
+        await base.OnAfterRenderAsync(firstRender);
     }
 }

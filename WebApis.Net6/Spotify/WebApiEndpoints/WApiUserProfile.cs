@@ -2,24 +2,33 @@
 
 namespace WebApis.Net6.Spotify.WebApiEndpoints;
 
-public static class WApiUserProfile
+public class WApiUserProfile : IWApiUserProfile
 {
+    private readonly WApiGlobals _wApiGlobals;
+    private readonly WApiSpotifyGlobals _wApiSpotifyGlobals;
+
+    public WApiUserProfile(WApiGlobals wApiGlobals, WApiSpotifyGlobals wApiSpotifyGlobals)
+    {
+        _wApiGlobals = wApiGlobals;
+        _wApiSpotifyGlobals = wApiSpotifyGlobals;
+    }
+
     ///<summary>
     ///Get Current User's Profile
     ///Get detailed profile information about the current user (including the current user's username).
     ///</summary>
-    public static async Task<UserProfile?> GetCurrentUsersProfile(string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<UserProfile>(new()
+    public async Task<UserProfile?> GetCurrentUsersProfile(string? accessToken = null)
+        => await _wApiGlobals.CallWebApiEndpoint<UserProfile>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/me"
-        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
-    public static async Task<Paged<Artist>?> GetUsersTopArtists(int limit = 20, int offset = 0,
+    public async Task<Paged<Artist>?> GetUsersTopArtists(int limit = 20, int offset = 0,
         WApiSpotifyGlobals.TimeRanges? time_range = WApiSpotifyGlobals.TimeRanges.medium_term, string? accessToken = null)
         => await GetUsersTopItems<Paged<Artist>>(WApiSpotifyGlobals.ArtistsOrTracks.artists, limit, offset, time_range, accessToken);
 
-    public static async Task<Paged<Track>?> GetUsersTopTracks(int limit = 20, int offset = 0,
+    public async Task<Paged<Track>?> GetUsersTopTracks(int limit = 20, int offset = 0,
         WApiSpotifyGlobals.TimeRanges? time_range = WApiSpotifyGlobals.TimeRanges.medium_term, string? accessToken = null)
         => await GetUsersTopItems<Paged<Track>>(WApiSpotifyGlobals.ArtistsOrTracks.tracks, limit, offset, time_range, accessToken);
 
@@ -27,9 +36,9 @@ public static class WApiUserProfile
     ///Get User's Top Items
     ///Get the current user's top artists or tracks based on calculated affinity.
     ///</summary>
-    public static async Task<T?> GetUsersTopItems<T>(WApiSpotifyGlobals.ArtistsOrTracks type, int limit = 20, int offset = 0,
+    public async Task<T?> GetUsersTopItems<T>(WApiSpotifyGlobals.ArtistsOrTracks type, int limit = 20, int offset = 0,
         WApiSpotifyGlobals.TimeRanges? time_range = WApiSpotifyGlobals.TimeRanges.medium_term, string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<T>(new()
+        => await _wApiGlobals.CallWebApiEndpoint<T>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/me/top/{type}",
@@ -47,14 +56,14 @@ public static class WApiUserProfile
                       new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "time_range", SimpleValue = time_range.ToString() }
             }
-        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
     ///Get User's Profile
     ///Get public profile information about a Spotify user.
     ///</summary>
-    public static async Task<UserProfile?> GetUsersProfile(string user_id, string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<UserProfile>(new()
+    public async Task<UserProfile?> GetUsersProfile(string user_id, string? accessToken = null)
+        => await _wApiGlobals.CallWebApiEndpoint<UserProfile>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/users/{user_id}",
@@ -62,15 +71,15 @@ public static class WApiUserProfile
             {
                 new() { Placeholder = "{user_id}", SimpleValue = user_id }
             }
-        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
     ///Follow Playlist
     ///Add the current user as a follower of a playlist.
     ///</summary>
-    public static async Task<EmptyResponse?> PutFollowPlaylist(string playlist_id,
+    public async Task<EmptyResponse?> PutFollowPlaylist(string playlist_id,
         bool @public = true, string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
+        => await _wApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
         {
             HttpMethod = HttpMethod.Put,
             EndPointUrl = "/playlists/{playlist_id}/followers",
@@ -79,15 +88,15 @@ public static class WApiUserProfile
                 new() { Placeholder = "{playlist_id}", SimpleValue = playlist_id }
             },
             BodyObject = new { @public }
-        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
     ///Unfollow Playlist
     ///Add the current user as a follower of a playlist.
     ///</summary>
-    public static async Task<EmptyResponse?> DeleteUnfollowPlaylist(string playlist_id,
+    public async Task<EmptyResponse?> DeleteUnfollowPlaylist(string playlist_id,
         string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
+        => await _wApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
         {
             HttpMethod = HttpMethod.Delete,
             EndPointUrl = "/playlists/{playlist_id}/followers",
@@ -95,15 +104,15 @@ public static class WApiUserProfile
             {
                 new() { Placeholder = "{playlist_id}", SimpleValue = playlist_id }
             }
-        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
     ///Get Followed Artists
     ///Get the current user's followed artists.
     ///</summary>
-    public static async Task<Paged<Artist>?> GetFollowedArtists(string? after, int limit = 20,
+    public async Task<Paged<Artist>?> GetFollowedArtists(string? after, int limit = 20,
         int offset = 0, string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<Paged<Artist>>(new()
+        => await _wApiGlobals.CallWebApiEndpoint<Paged<Artist>>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/me/following",
@@ -118,43 +127,43 @@ public static class WApiUserProfile
                     { new() { Value = 0, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
                       new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } }
             }
-        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
     ///Follow Artists or Users
     ///Add the current user as a follower of one or more artists or other Spotify users.
     ///</summary>
-    public static async Task<EmptyResponse?> PutFollowArtistsOrUsers(WApiSpotifyGlobals.ArtistOrUser type,
+    public async Task<EmptyResponse?> PutFollowArtistsOrUsers(WApiSpotifyGlobals.ArtistOrUser type,
         string[] ids, string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
+        => await _wApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
         {
             HttpMethod = HttpMethod.Put,
             EndPointUrl = "/me/following",
             QuerySimpleParameters = new SimpleParameter[] { new() { Name = "type", SimpleValue = type.ToString() } },
             BodyObject = new { ids }
-        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
     ///Follow Artists or Users
     ///Add the current user as a follower of one or more artists or other Spotify users.
     ///</summary>
-    public static async Task<EmptyResponse?> DeleteUnfollowArtistsOrUsers(WApiSpotifyGlobals.ArtistOrUser type,
+    public async Task<EmptyResponse?> DeleteUnfollowArtistsOrUsers(WApiSpotifyGlobals.ArtistOrUser type,
         string[] ids, string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
+        => await _wApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
         {
             HttpMethod = HttpMethod.Delete,
             EndPointUrl = "/me/following",
             QuerySimpleParameters = new SimpleParameter[] { new() { Name = "type", SimpleValue = type.ToString() } },
             BodyObject = new { ids }
-        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
     ///Check If User Follows Artists or Users
     ///Get the current user's followed artists.
     ///</summary>
-    public static async Task<bool[]?> GetCheckIfUserFollowsArtistsOrUsers(string[] ids,
+    public async Task<bool[]?> GetCheckIfUserFollowsArtistsOrUsers(string[] ids,
         WApiSpotifyGlobals.ArtistOrUser artistOrUser, string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<bool[]>(new()
+        => await _wApiGlobals.CallWebApiEndpoint<bool[]>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/me/following/contains",
@@ -163,15 +172,15 @@ public static class WApiUserProfile
                 new() { Name = "ids", SimpleValue = ids },
                 new() { Name = "type", SimpleValue = artistOrUser.ToString() }
             }
-        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
     ///Check if Users Follow Playlist
     ///Get the current user's followed artists.
     ///</summary>
-    public static async Task<bool[]?> GetCheckIfUsersFollowPlaylist(string playlist_id,
+    public async Task<bool[]?> GetCheckIfUsersFollowPlaylist(string playlist_id,
         string[] ids, string? accessToken = null)
-        => await WApiGlobals.CallWebApiEndpoint<bool[]>(new()
+        => await _wApiGlobals.CallWebApiEndpoint<bool[]>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/playlists/{playlist_id}/followers/contains",
@@ -181,21 +190,21 @@ public static class WApiUserProfile
             },
             QuerySimpleParameters = new SimpleParameter[]
             {
-                new() 
+                new()
                 {
-                    Name = "ids", 
-                    SimpleValue = ids, 
-                    Constraints = new Constraint[] 
+                    Name = "ids",
+                    SimpleValue = ids,
+                    Constraints = new Constraint[]
                     {
-                        new() 
+                        new()
                         {
-                            Value = 5, 
-                            ConstraintComparison = 
-                                ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) | 
-                                ((int)WApiGlobals.ConstraintComparison.Length) 
+                            Value = 5,
+                            ConstraintComparison =
+                                ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) |
+                                ((int)WApiGlobals.ConstraintComparison.Length)
                         }
-                    } 
+                    }
                 }
             }
-        }, accessToken ?? WApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 }

@@ -1,10 +1,7 @@
-﻿@using WebApis.Net6
+﻿@using WebApis.Net6.Spotify.Models
 @using WebApis.Net6.Spotify.Models.Responses
 @using WebApis.Net6.Spotify.WebApiEndpoints
-@using WebApis.Net6.Spotify.Models
-@using MusicClient
-@using WApiSpotifyGlobals = WebApis.Net6.Spotify.WApiSpotifyGlobals
-@inject HttpClient httpClient
+@inject IWApiAlbum wApiAlbum
 
 <h3>TestingWebApisNet6</h3>
 
@@ -36,21 +33,21 @@
 
     protected override async Task OnInitializedAsync()
     {
-        album = await WApiAlbum.GetAlbum("4aawyAB9vmqN3uQ7FjRGTy");
+        album = await wApiAlbum.GetAlbum("4aawyAB9vmqN3uQ7FjRGTy");
 
-        severalAlbums = await WApiAlbum.GetSeveralAlbums(new string[]
+        severalAlbums = await wApiAlbum.GetSeveralAlbums(new string[]
         {
             "382ObEPsp2rxGrnsizN5TX", "1A2GTWGtFfWp7KSQTwWOyo", "2noRn2Aes5aoNVsU6iWThc"
         });
 
-        Paged<Track>? albumTracks = await WApiAlbum.GetAlbumTracks("4aawyAB9vmqN3uQ7FjRGTy", 5);
+        Paged<Track>? albumTracks = await wApiAlbum.GetAlbumTracks("4aawyAB9vmqN3uQ7FjRGTy", 5);
         if (albumTracks?.Items?.Length > 0)
         {
             albumTracksList.AddRange(albumTracks.Items);
         }
         while (!string.IsNullOrWhiteSpace(albumTracks?.Next))
         {
-            albumTracks = await WApiAlbum.GetNextPageAlbumTracks(albumTracks.Next);
+            albumTracks = await wApiAlbum.GetNextPageAlbumTracks(albumTracks.Next);
             if (albumTracks?.Items?.Length > 0)
             {
                 albumTracksList.AddRange(albumTracks.Items);
