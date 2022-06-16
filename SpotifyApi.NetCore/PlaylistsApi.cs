@@ -1,12 +1,10 @@
 ﻿using SpotifyApi.NetCore.Authorization;
 using SpotifyApi.NetCore.Helpers;
+using SpotifyApi.NetCore.Models;
 using System;
 using System.Net.Http;
-using System.Threading.Tasks;
-using System.Text.Json.Serialization;
 using System.Text.Json;
-using System.Text;
-using SpotifyApi.NetCore.Models;
+using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore
 {
@@ -100,13 +98,13 @@ namespace SpotifyApi.NetCore
         /// Provide this parameter if you want to apply Track Relinking.</param>
         /// <returns>Task of <see cref="PlaylistSimplified"/></returns>
         public async Task<PlaylistSimplified> GetPlaylist(
-            string playlistId, 
+            string playlistId,
             string accessToken = null,
             string fields = null,
             string[] additionalTypes = null,
             string market = null)
             => await GetPlaylist<PlaylistSimplified>(
-                playlistId, 
+                playlistId,
                 accessToken,
                 fields: fields,
                 additionalTypes: additionalTypes,
@@ -129,7 +127,7 @@ namespace SpotifyApi.NetCore
         /// <typeparam name="T">Optionally provide your own type to deserialise Spotify's response to.</typeparam>
         /// <returns>Task of T</returns>
         public async Task<T> GetPlaylist<T>(
-            string playlistId, 
+            string playlistId,
             string accessToken = null,
             string fields = null,
             string[] additionalTypes = null,
@@ -176,7 +174,7 @@ namespace SpotifyApi.NetCore
             int? limit = null,
             int offset = 0,
             string market = null,
-            string[] additionalTypes = null) 
+            string[] additionalTypes = null)
             => await GetTracks<PlaylistPaged>(
                 playlistId,
                 accessToken: accessToken,

@@ -1,11 +1,11 @@
-using System.Text.Json;
 using SpotifyApi.NetCore.Authorization;
 using SpotifyApi.NetCore.Http;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace SpotifyApi.NetCore
 {
@@ -234,7 +234,7 @@ namespace SpotifyApi.NetCore
 
             HttpResponseMessage response = null;
 
-            HttpRequestMessage request = new (HttpMethod.Delete, uri)
+            HttpRequestMessage request = new(HttpMethod.Delete, uri)
             {
                 Content = content
             };
@@ -268,7 +268,7 @@ namespace SpotifyApi.NetCore
             Logger.Debug($"DELETE {uri}. Token = {accessToken?.ToString()?[..4]}...", nameof(SpotifyWebApi));
 
             _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                "Bearer", 
+                "Bearer",
                 accessToken ?? (await GetAccessToken()));
 
             var response = await _http.DeleteAsync(uri);
@@ -288,7 +288,7 @@ namespace SpotifyApi.NetCore
         {
             Logger.Debug($"{verb} {uri}. Token = {accessToken?.ToString()?[..4]}...", nameof(SpotifyWebApi));
 
-            _http.DefaultRequestHeaders.Authorization = new ("Bearer", accessToken ?? (await GetAccessToken()));
+            _http.DefaultRequestHeaders.Authorization = new("Bearer", accessToken ?? (await GetAccessToken()));
 
             StringContent content = null;
 

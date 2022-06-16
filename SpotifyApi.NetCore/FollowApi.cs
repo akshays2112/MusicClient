@@ -1,10 +1,8 @@
 ﻿using SpotifyApi.NetCore.Authorization;
-using SpotifyApi.NetCore.Models;
 using System;
 using System.Net.Http;
-using System.Threading.Tasks;
-using SpotifyApi.NetCore.Helpers;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore
 {

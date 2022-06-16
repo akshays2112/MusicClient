@@ -1,6 +1,4 @@
-﻿using static WebApis.Net6.WApiGlobals;
-
-namespace WebApis.Net6;
+﻿namespace WebApis.Net6;
 
 public class Constraint
 {
@@ -12,7 +10,7 @@ public class Constraint
 
     public bool CheckConstraint(object? value)
     {
-        if(value == null) return false;
+        if (value == null) return false;
         int tmpObjValue = 0, tmpValue = 0;
         Type? type = value?.GetType();
         if (type?.IsArray ?? false)

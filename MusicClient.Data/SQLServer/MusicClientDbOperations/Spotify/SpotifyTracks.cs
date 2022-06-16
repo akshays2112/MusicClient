@@ -1,5 +1,5 @@
-﻿using static MusicClient.Data.Globals;
-using MusicClient.Data.SQLServer.Models.Spotify;
+﻿using MusicClient.Data.SQLServer.Models.Spotify;
+using static MusicClient.Data.Globals;
 
 namespace MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify
 {
@@ -72,7 +72,7 @@ namespace MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify
                 {
                     foreach (SpotifyTrack spotifyTrack in mcdbc.SpotifyTracks)
                     {
-                        if(spotifyTrack.TrackID == spotifyTrackId)
+                        if (spotifyTrack.TrackID == spotifyTrackId)
                         {
                             return spotifyTrack.ID;
                         }

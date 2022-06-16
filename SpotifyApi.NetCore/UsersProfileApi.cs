@@ -1,8 +1,6 @@
 ﻿using SpotifyApi.NetCore.Authorization;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore
@@ -41,7 +39,7 @@ namespace SpotifyApi.NetCore
         /// </summary>
         /// <param name="httpClient">An instance of <see cref="HttpClient"/></param>
         /// <param name="accessTokenProvider">An instance of <see cref="IAccessTokenProvider"/>, e.g. <see cref="Authorization.AccountsService"/>.</param>
-        public UsersProfileApi(HttpClient httpClient, IAccessTokenProvider accessTokenProvider) 
+        public UsersProfileApi(HttpClient httpClient, IAccessTokenProvider accessTokenProvider)
             : base(httpClient, accessTokenProvider)
         {
         }

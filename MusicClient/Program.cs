@@ -1,8 +1,5 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using MusicClient;
 using MusicClient.Data.SQLServer;
-using SpotifyApi.NetCore;
 using WebApis.Net6;
 using WebApis.Net6.Spotify;
 using WebApis.Net6.Spotify.WebApiEndpoints;
@@ -19,7 +16,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<HttpClient>(context => new() { BaseAddress = new Uri(Globals.RedirectUri) });
 builder.Services.AddScoped<IWApiGlobals, WApiGlobals>();
-builder.Services.AddScoped<IWApiSpotifyGlobals, WApiSpotifyGlobals>(context => {
+builder.Services.AddScoped<IWApiSpotifyGlobals, WApiSpotifyGlobals>(context =>
+{
     WApiSpotifyGlobals wApiSpotifyGlobals = new();
     wApiSpotifyGlobals.SpotifyClientId = Globals.SpotifyClientId;
     wApiSpotifyGlobals.SpotifyClientSecret = Globals.SpotifyClientSecret;

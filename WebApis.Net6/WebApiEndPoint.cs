@@ -1,9 +1,9 @@
-﻿using System.Net;
+﻿using System.Globalization;
+using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using System.Reflection;
 using SpotifyGlobals = WebApis.Net6.Spotify.WApiSpotifyGlobals;
-using System.Globalization;
 
 namespace WebApis.Net6;
 
@@ -26,12 +26,12 @@ public class WebApiEndpoint<T>
         if (!string.IsNullOrWhiteSpace(PrecalculatedQueryString))
         {
             return PrecalculatedQueryString;
-        } 
+        }
         StringBuilder queryString = new($"{SpotifyGlobals.ApiUrl}");
         string? endpointUrl = EndPointUrl;
         if (EndPointUrlPlaceholders is not null && EndPointUrlPlaceholders.Length > 0)
         {
-            for(int i = 0; i < EndPointUrlPlaceholders.Length; i++)
+            for (int i = 0; i < EndPointUrlPlaceholders.Length; i++)
             {
                 object? epValue = null;
                 if (EndPointUrlPlaceholders[i].SimpleValue is not null)
@@ -82,7 +82,7 @@ public class WebApiEndpoint<T>
             QueryObjectParameters.ObjectParameterProperties.Length > 0)
         {
             Type? type = QueryObjectParameters?.GetType();
-            if(type is not null)
+            if (type is not null)
             {
                 for (int a = 0; a < QueryObjectParameters?.ObjectParameterProperties?.Length; a++)
                 {
@@ -119,7 +119,7 @@ public class WebApiEndpoint<T>
         {
             string s => WebUtility.UrlEncode(s),
             bool or short or int or long or float or double or decimal => WebUtility.UrlEncode(value.ToString()),
-            string[] arr => JoinAndEncodeStringArray((string[]) arr),
+            string[] arr => JoinAndEncodeStringArray((string[])arr),
             DateTime dt => WebUtility.UrlEncode(dt.ToString("s", CultureInfo.InvariantCulture)),
             _ => string.Empty,
         };
@@ -132,7 +132,7 @@ public class WebApiEndpoint<T>
     }
 
     public string? GetBodyJsonString()
-    { 
+    {
         if (BodyObject is null) return null;
         return JsonSerializer.Serialize(BodyObject);
     }

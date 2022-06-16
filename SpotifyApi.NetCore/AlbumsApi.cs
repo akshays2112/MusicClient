@@ -1,11 +1,9 @@
 ﻿using SpotifyApi.NetCore.Authorization;
 using SpotifyApi.NetCore.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore
 {
@@ -292,7 +290,7 @@ namespace SpotifyApi.NetCore
             }
 
             var builder = new UriBuilder($"{BaseUrl}/me/albums");
-            if(albumIds.Length <= 20)
+            if (albumIds.Length <= 20)
             {
                 builder.AppendToQueryAsCsv("ids", albumIds);
                 return await Put<T>(builder.Uri, accessToken);
@@ -348,7 +346,7 @@ namespace SpotifyApi.NetCore
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>A Task that, once successfully completed, returns a full <see cref="SpotifyResponse"/> object.</returns>
         /// <remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/check-users-saved-albums</remarks>
-        public Task<Album[]> CheckSavedAlbums(string[] albumIds, string accessToken = null) 
+        public Task<Album[]> CheckSavedAlbums(string[] albumIds, string accessToken = null)
             => CheckSavedAlbums<Album[]>(albumIds: albumIds, accessToken: accessToken);
 
         /// <summary>
@@ -405,7 +403,7 @@ namespace SpotifyApi.NetCore
         /// <remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/get-new-releases</remarks>
         public async Task<T> GetNewReleases<T>(string country, int? limit = null, int offset = 0, string accessToken = null)
         {
-            if(string.IsNullOrEmpty(country))
+            if (string.IsNullOrEmpty(country))
             {
                 throw new ArgumentNullException(nameof(country));
             }

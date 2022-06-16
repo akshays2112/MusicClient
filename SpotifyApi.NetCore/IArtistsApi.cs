@@ -134,8 +134,8 @@ namespace SpotifyApi.NetCore
         /// <returns>Task of Album[]</returns>
         /// <remarks> https://developer.spotify.com/documentation/web-api/reference/artists/get-artists-albums/ </remarks>
         Task<PagedAlbums> GetArtistsAlbums(
-            string artistId, 
-            string[] includeGroups = null, 
+            string artistId,
+            string[] includeGroups = null,
             string country = null,
             int? limit = null,
             int offset = 0,

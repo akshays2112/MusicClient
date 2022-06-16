@@ -1,9 +1,8 @@
 ﻿using SpotifyApi.NetCore.Authorization;
-using SpotifyApi.NetCore.Models;
 using System;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore
 {
@@ -179,7 +178,7 @@ namespace SpotifyApi.NetCore
         {
             if (limit < 1 || limit > 50) throw new
                     ArgumentException("The limit can be a minimum of 1 and a maximum of 50 album IDs.");
-            if(offset < 0) throw new
+            if (offset < 0) throw new
                     ArgumentException("The offset must be an integer value greater than 0.");
 
             var builder = new UriBuilder($"{BaseUrl}/me/albums");

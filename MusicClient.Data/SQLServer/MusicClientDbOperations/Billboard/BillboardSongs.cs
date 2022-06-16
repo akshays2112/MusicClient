@@ -12,9 +12,9 @@ namespace MusicClient.Data.SQLServer.MusicClientDbOperations.Billboard
             {
                 return mcdbc.BillboardSongs?.ToList();
             }
-            catch 
+            catch
             {
-                throw; 
+                throw;
             }
         }
         //To Add new BillboardSong
@@ -25,9 +25,9 @@ namespace MusicClient.Data.SQLServer.MusicClientDbOperations.Billboard
                 mcdbc.BillboardSongs?.Add(BillboardSong);
                 mcdbc.SaveChanges();
             }
-            catch 
+            catch
             {
-                throw; 
+                throw;
             }
         }
         //To Update particular BillboardSong
@@ -38,9 +38,9 @@ namespace MusicClient.Data.SQLServer.MusicClientDbOperations.Billboard
                 mcdbc.Update(BillboardSong);
                 mcdbc.SaveChanges();
             }
-            catch 
-            { 
-                throw; 
+            catch
+            {
+                throw;
             }
         }
         //Get the particular BillboardSong

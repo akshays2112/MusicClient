@@ -1,10 +1,10 @@
 using SpotifyApi.NetCore.Authorization;
 using SpotifyApi.NetCore.Helpers;
 using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Text.Json;
 using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore
 {
@@ -334,7 +334,7 @@ namespace SpotifyApi.NetCore
         /// <remarks>
         /// https://developer.spotify.com/documentation/web-api/reference/player/start-a-users-playback/
         /// </remarks>
-        public Task Play(string accessToken = null, string deviceId = null) 
+        public Task Play(string accessToken = null, string deviceId = null)
             => Play(null, accessToken, deviceId, 0);
 
         #endregion
@@ -352,7 +352,7 @@ namespace SpotifyApi.NetCore
         /// <remarks>
         /// https://developer.spotify.com/documentation/web-api/reference/player/get-a-users-available-devices/
         /// </remarks>
-        public Task<Device[]> GetDevices(string accessToken = null) 
+        public Task<Device[]> GetDevices(string accessToken = null)
             => GetDevices<Device[]>(accessToken: accessToken);
 
         /// <summary>
@@ -396,7 +396,7 @@ namespace SpotifyApi.NetCore
         /// If no devices are active API may return 204 (No Content) which will be returned as `null`. 
         /// </remarks>
         public async Task<CurrentPlaybackContext> GetCurrentPlaybackInfo(
-            string accessToken = null, 
+            string accessToken = null,
             string market = null,
             string[] additionalTypes = null)
         {
@@ -437,7 +437,7 @@ namespace SpotifyApi.NetCore
         /// https://developer.spotify.com/documentation/web-api/reference/player/get-information-about-the-users-current-playback/
         /// </remarks>
         public async Task<T> GetCurrentPlaybackInfo<T>(
-            string accessToken = null, 
+            string accessToken = null,
             string market = null,
             string[] additionalTypes = null)
         {
@@ -772,8 +772,8 @@ namespace SpotifyApi.NetCore
         public async Task TransferPlayback(string deviceId, bool? play = null, string accessToken = null)
         {
             await Put(
-                new Uri($"{BaseUrl}/me/player"), 
-                new { device_ids = new[] { deviceId }, play }, 
+                new Uri($"{BaseUrl}/me/player"),
+                new { device_ids = new[] { deviceId }, play },
                 accessToken: accessToken);
         }
 

@@ -1,6 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using MusicClient.Data.SQLServer.Models.Spotify;
-using MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify;
 
 namespace MusicClient
 {

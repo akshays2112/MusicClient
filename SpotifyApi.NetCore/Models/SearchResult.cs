@@ -3,8 +3,6 @@
 namespace SpotifyApi.NetCore
 {
     using System.Text.Json.Serialization;
-    using SpotifyApi.NetCore.Models;
-    using System;
 
     /// <summary>
     /// Search Result.

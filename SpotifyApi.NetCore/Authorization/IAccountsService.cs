@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore.Authorization
@@ -39,6 +38,6 @@ namespace SpotifyApi.NetCore.Authorization
     /// </summary>
     /// <remarks>https://developer.spotify.com/documentation/general/guides/authorization-guide/#client-credentials-flow</remarks>
     public interface IAccountsService : IAccessTokenProvider
-    {        
+    {
     }
 }

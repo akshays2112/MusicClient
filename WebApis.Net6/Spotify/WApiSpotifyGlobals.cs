@@ -1,6 +1,4 @@
-﻿using WebApis.Net6.Spotify.Models;
-
-namespace WebApis.Net6.Spotify;
+﻿namespace WebApis.Net6.Spotify;
 
 public class WApiSpotifyGlobals : IWApiSpotifyGlobals
 {

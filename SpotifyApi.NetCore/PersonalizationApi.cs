@@ -1,9 +1,8 @@
 ﻿using SpotifyApi.NetCore.Authorization;
-using SpotifyApi.NetCore.Models;
+using SpotifyApi.NetCore.Helpers;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using SpotifyApi.NetCore.Helpers;
 
 namespace SpotifyApi.NetCore
 {
@@ -117,7 +116,7 @@ namespace SpotifyApi.NetCore
             var builder = new UriBuilder($"{BaseUrl}/me/top/{type}s");
             builder.AppendToQuery("limit", limit);
             builder.AppendToQuery("offset", offset);
-            builder.AppendToQuery("time_range",  TimeRangeHelper.TimeRangeString(timeRange));
+            builder.AppendToQuery("time_range", TimeRangeHelper.TimeRangeString(timeRange));
             return await GetModel<T>(builder.Uri, accessToken);
         }
         #endregion

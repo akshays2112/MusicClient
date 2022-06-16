@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace WebApis.Net6.Spotify.Models;
+﻿namespace WebApis.Net6.Spotify.Models;
 
 public class AlbumAllOf
 {

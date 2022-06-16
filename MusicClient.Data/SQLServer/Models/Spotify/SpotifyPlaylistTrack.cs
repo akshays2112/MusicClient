@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MusicClient.Data.SQLServer.Models.Spotify
+﻿namespace MusicClient.Data.SQLServer.Models.Spotify
 {
     public class SpotifyPlaylistTrack
     {

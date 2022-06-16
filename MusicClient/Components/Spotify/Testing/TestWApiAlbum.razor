@@ -3,33 +3,138 @@
 @using WebApis.Net6.Spotify.WebApiEndpoints
 @inject IWApiAlbum wApiAlbum
 
+<style>
+    .MCDivTestHeader {
+        border: solid;
+        border-color: blueviolet;
+        background-color: darkslateblue;
+        color: white
+    }
+
+    .MCDivTestResults {
+        border: solid;
+        border-color: blueviolet
+    }
+</style>
+
 <h3>TestingWebApisNet6</h3>
 
 @if(album is not null)
 {
-    <span>@album.Name</span><br />
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetAlbum</span>
+        </div>
+        <div class="MCDivTestResults">
+            <span>@album.Name</span><br />
+        </div>
+    </div>
 }
-
+<br />
 @if(severalAlbums?.Albums?.Length > 0)
 {
-    foreach(Album a in severalAlbums.Albums)
-    {
-        <span>@a.Name</span><br />
-    }
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetSeveralAlbums</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Album a in severalAlbums.Albums)
+        {
+            <span>@a.Name</span><br />
+        }
+        </div>
+    </div>
 }
-
+<br />
 @if(albumTracksList?.Count > 0)
 {
-    foreach(Track track in albumTracksList)
-    {
-        <span>@track.Name</span><br />
-    }
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetAlbumTracks</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Track track in albumTracksList)
+        {
+            <span>@track.Name</span><br />
+        }
+        </div>
+    </div>
 }
-
+<br />
+@if(savedAlbumsList?.Count > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetSavedAlbums</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(RAlbum ralbum in savedAlbumsList)
+        {
+            if (!string.IsNullOrWhiteSpace(ralbum.Album?.Name))
+            {
+                <span>@ralbum.Album?.Name</span><br />
+            }
+        }
+        </div>
+    </div>
+}
+<br />
+@if(checkedSaveAlbumsBools?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>PutSaveAlbums and GetCheckSavedAlbums</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(bool saved in checkedSaveAlbumsBools)
+        {
+            <span>@saved</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+@if(checkedRemoveAlbumsBools?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>DeleteRemoveAlbums and GetCheckSavedAlbums</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(bool saved in checkedRemoveAlbumsBools)
+        {
+            <span>@saved</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+@if(newAlbumReleases?.Count > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetNewReleases</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Album album in newAlbumReleases)
+        {
+            if (!string.IsNullOrWhiteSpace(album.Name))
+            {
+                <span>@album.Name</span><br />
+            }
+        }
+        </div>
+    </div>
+}
+<br />
 @code {
     Album? album;
     RAlbums? severalAlbums;
     List<Track> albumTracksList = new();
+    List<RAlbum> savedAlbumsList = new();
+    bool[]? checkedSaveAlbumsBools;
+    bool[]? checkedRemoveAlbumsBools;
+    List<Album> newAlbumReleases = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -51,6 +156,54 @@
             if (albumTracks?.Items?.Length > 0)
             {
                 albumTracksList.AddRange(albumTracks.Items);
+            }
+        }
+
+        Paged<RAlbum>? savedAlbums = await wApiAlbum.GetSavedAlbums(5);
+        if (savedAlbums?.Items?.Length > 0)
+        {
+            savedAlbumsList.AddRange(savedAlbums.Items);
+        }
+        while (!string.IsNullOrWhiteSpace(savedAlbums?.Next))
+        {
+            savedAlbums = await wApiAlbum.GetNextPageSavedAlbums(savedAlbums.Next);
+            if (savedAlbums?.Items?.Length > 0)
+            {
+                savedAlbumsList.AddRange(savedAlbums.Items);
+            }
+        }
+
+        _ = await wApiAlbum.PutSaveAlbums(new string[]
+        {
+            "382ObEPsp2rxGrnsizN5TX", "1A2GTWGtFfWp7KSQTwWOyo", "2noRn2Aes5aoNVsU6iWThc"
+        });
+
+        checkedSaveAlbumsBools = await wApiAlbum.GetCheckSavedAlbums(new string[]
+        {
+            "382ObEPsp2rxGrnsizN5TX", "1A2GTWGtFfWp7KSQTwWOyo", "2noRn2Aes5aoNVsU6iWThc"
+        });
+
+        _ = await wApiAlbum.DeleteRemoveAlbums(new string[]
+        {
+            "382ObEPsp2rxGrnsizN5TX", "1A2GTWGtFfWp7KSQTwWOyo", "2noRn2Aes5aoNVsU6iWThc"
+        });
+
+        checkedRemoveAlbumsBools = await wApiAlbum.GetCheckSavedAlbums(new string[]
+        {
+            "382ObEPsp2rxGrnsizN5TX", "1A2GTWGtFfWp7KSQTwWOyo", "2noRn2Aes5aoNVsU6iWThc"
+        });
+
+        RPagedAlbums? rPagedAlbums = await wApiAlbum.GetNewReleases("SE");
+        if (rPagedAlbums?.Albums?.Items?.Length > 0)
+        {
+            newAlbumReleases.AddRange(rPagedAlbums.Albums.Items);
+        }
+        while (!string.IsNullOrWhiteSpace(rPagedAlbums?.Albums?.Next))
+        {
+            rPagedAlbums = await wApiAlbum.GetNextPageNewReleases(rPagedAlbums.Albums.Next);
+            if (rPagedAlbums?.Albums?.Items?.Length > 0)
+            {
+                newAlbumReleases.AddRange(rPagedAlbums.Albums.Items);
             }
         }
 

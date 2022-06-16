@@ -1,7 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using System.Dynamic;
-
-namespace SpotifyApi.NetCore
+﻿namespace SpotifyApi.NetCore
 {
     /// <summary>
     /// Paged Full Artist Objects.

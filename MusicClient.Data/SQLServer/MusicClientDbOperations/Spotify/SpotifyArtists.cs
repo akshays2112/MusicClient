@@ -1,5 +1,5 @@
-﻿using static MusicClient.Data.Globals;
-using MusicClient.Data.SQLServer.Models.Spotify;
+﻿using MusicClient.Data.SQLServer.Models.Spotify;
+using static MusicClient.Data.Globals;
 
 namespace MusicClient.Data.SQLServer.MusicClientDbOperations.Spotify
 {

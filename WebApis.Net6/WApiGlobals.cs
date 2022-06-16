@@ -1,6 +1,6 @@
-﻿using WebApis.Net6.Spotify.Models;
+﻿using System.Net.Http.Headers;
 using System.Text.Json;
-using System.Net.Http.Headers;
+using WebApis.Net6.Spotify.Models;
 
 namespace WebApis.Net6;
 

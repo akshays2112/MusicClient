@@ -208,10 +208,10 @@ namespace SpotifyApi.NetCore
         /// <returns>Result deserialised to `T`.</returns>
         /// <remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-categorys-playlists/ </remarks>
         public async Task<T> GetCategoryPlaylists<T>(
-            string categoryId, 
-            string country = null, 
-            int? limit = null, 
-            int offset = 0, 
+            string categoryId,
+            string country = null,
+            int? limit = null,
+            int offset = 0,
             string accessToken = null)
         {
             var builder = new UriBuilder($"{BaseUrl}/browse/categories/{categoryId}/playlists");
@@ -255,7 +255,7 @@ namespace SpotifyApi.NetCore
                 locale: locale,
                 timestamp: timestamp,
                 limit: limit,
-                offset: offset, 
+                offset: offset,
                 accessToken: accessToken);
 
         /// <summary>
@@ -283,11 +283,11 @@ namespace SpotifyApi.NetCore
         /// <returns>Result deserialised to `T`.</returns>
         /// <remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-list-featured-playlists/ </remarks>
         public async Task<T> GetFeaturedPlaylists<T>(
-            string country = null, 
+            string country = null,
             string locale = null,
-            DateTime? timestamp = null, 
-            int? limit = null, 
-            int offset = 0, 
+            DateTime? timestamp = null,
+            int? limit = null,
+            int offset = 0,
             string accessToken = null)
         {
             var builder = new UriBuilder($"{BaseUrl}/browse/featured-playlists");

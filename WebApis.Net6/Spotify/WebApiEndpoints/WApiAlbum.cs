@@ -88,9 +88,9 @@ public class WApiAlbum : IWApiAlbum
     ///Get Saved Albums
     ///Get a list of the albums saved in the current Spotify user's 'Your Music' library.
     ///</summary>
-    public async Task<Paged<Album>?> GetSavedAlbums(int limit = 20, int offset = 0,
+    public async Task<Paged<RAlbum>?> GetSavedAlbums(int limit = 20, int offset = 0,
         string? market = null, string? accessToken = null)
-        => await _wApiGlobals.CallWebApiEndpoint<Paged<Album>>(new()
+        => await _wApiGlobals.CallWebApiEndpoint<Paged<RAlbum>>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/me/albums",
@@ -106,8 +106,8 @@ public class WApiAlbum : IWApiAlbum
             }
         }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
-    public async Task<Paged<Album>?> GetNextPageSavedAlbums(string nextPage, string? accessToken = null)
-        => await _wApiGlobals.CallWebApiEndpoint<Paged<Album>>(new()
+    public async Task<Paged<RAlbum>?> GetNextPageSavedAlbums(string nextPage, string? accessToken = null)
+        => await _wApiGlobals.CallWebApiEndpoint<Paged<RAlbum>>(new()
         {
             HttpMethod = HttpMethod.Get,
             PrecalculatedQueryString = nextPage
@@ -156,9 +156,9 @@ public class WApiAlbum : IWApiAlbum
     ///Get New Releases
     ///Get a list of new album releases featured in Spotify (shown, for example, on a Spotify player’s “Browse” tab).
     ///</summary>
-    public async Task<bool[]?> GetNewReleases(string? country, int limit = 20,
+    public async Task<RPagedAlbums?> GetNewReleases(string? country, int limit = 20,
         int offset = 0, string? accessToken = null)
-        => await _wApiGlobals.CallWebApiEndpoint<bool[]>(new()
+        => await _wApiGlobals.CallWebApiEndpoint<RPagedAlbums>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/browse/new-releases",
@@ -172,5 +172,12 @@ public class WApiAlbum : IWApiAlbum
                       new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "country", SimpleValue = country }
             }
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+
+    public async Task<RPagedAlbums?> GetNextPageNewReleases(string nextPage, string? accessToken = null)
+        => await _wApiGlobals.CallWebApiEndpoint<RPagedAlbums>(new()
+        {
+            HttpMethod = HttpMethod.Get,
+            PrecalculatedQueryString = nextPage
         }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 }

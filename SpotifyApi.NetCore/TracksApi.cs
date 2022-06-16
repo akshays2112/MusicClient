@@ -172,8 +172,8 @@ namespace SpotifyApi.NetCore
         /// </summary>
         /// <param name="trackIds">An array of the Spotify IDs for the tracks. Maximum: 100 IDs.</param>
         /// <returns>Task of <see cref="TrackAudioFeatures[]" /></returns>
-        public  Task<TrackAudioFeatures[]> GetTracksAudioFeatures(string[] trackIds, string accessToken = null)
-            =>  GetTracksAudioFeatures<TrackAudioFeatures[]>(trackIds, accessToken: accessToken);
+        public Task<TrackAudioFeatures[]> GetTracksAudioFeatures(string[] trackIds, string accessToken = null)
+            => GetTracksAudioFeatures<TrackAudioFeatures[]>(trackIds, accessToken: accessToken);
 
         /// <summary>
         /// Get audio features for multiple tracks based on their Spotify IDs.

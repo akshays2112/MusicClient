@@ -1,6 +1,4 @@
-﻿using SpotifyApi.NetCore.Models;
-
-namespace SpotifyApi.NetCore.Helpers
+﻿namespace SpotifyApi.NetCore.Helpers
 {
     /// <summary>
     /// Helper for TimeRange

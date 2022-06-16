@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SpotifyApi.NetCore
+﻿namespace SpotifyApi.NetCore
 {
     /// <summary>
     /// Paged Full Episodes Object.

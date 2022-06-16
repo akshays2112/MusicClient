@@ -12,7 +12,7 @@ public class SpotifyAuthentication : ISpotifyAuthentication
     private readonly HttpClient _httpClient;
     private readonly NavigationManager _navigationManager;
 
-    public SpotifyAuthentication(IWApiGlobals wApiGlobals, IWApiSpotifyGlobals wApiSpotifyGlobals, 
+    public SpotifyAuthentication(IWApiGlobals wApiGlobals, IWApiSpotifyGlobals wApiSpotifyGlobals,
         HttpClient httpClient, NavigationManager navigationManager)
     {
         _wApiGlobals = wApiGlobals;
