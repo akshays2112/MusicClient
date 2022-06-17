@@ -158,16 +158,22 @@
     {
         track = await wApiTrack.GetTrack("11dFghVXANMlKmJXsNCbNl");
 
+        StateHasChanged();
+
         severalTracks = await wApiTrack.GetSeveralTracks(new string[]
         {
             "7ouMYWpwJ422jRcDASZB7P", "4VqPOruhp5EdPBeR92t6lQ", "2takcwOaAZWiXQijPHIx7B"
         });
+
+        StateHasChanged();
 
         _ = await wApiTrack.PutSaveTracksForCurrentUser(new string[] {
             "7ouMYWpwJ422jRcDASZB7P", "4VqPOruhp5EdPBeR92t6lQ", "2takcwOaAZWiXQijPHIx7B" });
 
         checkUsersSavedTracksAfterAddBools = await wApiTrack.GetCheckUsersSavedTracks(
             new string[] { "7ouMYWpwJ422jRcDASZB7P", "4VqPOruhp5EdPBeR92t6lQ", "2takcwOaAZWiXQijPHIx7B" });
+
+        StateHasChanged();
 
         Paged<RTrack>? usersSavedTracks = await wApiTrack.GetUsersSavedTracks(50);
         if (usersSavedTracks?.Items?.Length > 0)
@@ -195,25 +201,37 @@
             }
         }
 
+        StateHasChanged();
+
         _ = await wApiTrack.DeleteRemoveUsersSavedTracks(new string[] {
             "7ouMYWpwJ422jRcDASZB7P", "4VqPOruhp5EdPBeR92t6lQ", "2takcwOaAZWiXQijPHIx7B" });
 
         checkUsersSavedTracksAfterRemoveBools = await wApiTrack.GetCheckUsersSavedTracks(
             new string[] { "7ouMYWpwJ422jRcDASZB7P", "4VqPOruhp5EdPBeR92t6lQ", "2takcwOaAZWiXQijPHIx7B" });
 
+        StateHasChanged();
+
         rAudioFeatures = await wApiTrack.GetTracksAudioFeatures(new string[]
         {
             "7ouMYWpwJ422jRcDASZB7P", "4VqPOruhp5EdPBeR92t6lQ", "2takcwOaAZWiXQijPHIx7B"
         });
 
+        StateHasChanged();
+
         audioFeature = await wApiTrack.GetTracksAudioFeatures("11dFghVXANMlKmJXsNCbNl");
 
+        StateHasChanged();
+
         audioAnalysis = await wApiTrack.GetTracksAudioAnalysis("11dFghVXANMlKmJXsNCbNl");
+
+        StateHasChanged();
 
         recommendation = await wApiTrack.GetRecommendations(new
         {
             seed_tracks = new string[] { "7ouMYWpwJ422jRcDASZB7P", "4VqPOruhp5EdPBeR92t6lQ", "2takcwOaAZWiXQijPHIx7B" }
         });
+
+        StateHasChanged();
 
         await base.OnInitializedAsync();
     }

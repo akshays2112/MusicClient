@@ -126,10 +126,14 @@
     {
         album = await wApiAlbum.GetAlbum("4aawyAB9vmqN3uQ7FjRGTy");
 
+        StateHasChanged();
+
         severalAlbums = await wApiAlbum.GetSeveralAlbums(new string[]
         {
             "382ObEPsp2rxGrnsizN5TX", "1A2GTWGtFfWp7KSQTwWOyo", "2noRn2Aes5aoNVsU6iWThc"
         });
+
+        StateHasChanged();
 
         Paged<Track>? albumTracks = await wApiAlbum.GetAlbumTracks("4aawyAB9vmqN3uQ7FjRGTy", 50);
         if (albumTracks?.Items?.Length > 0)
@@ -145,6 +149,8 @@
             }
         }
 
+        StateHasChanged();
+
         Paged<RAlbum>? savedAlbums = await wApiAlbum.GetSavedAlbums(50);
         if (savedAlbums?.Items?.Length > 0)
         {
@@ -159,6 +165,8 @@
             }
         }
 
+        StateHasChanged();
+
         _ = await wApiAlbum.PutSaveAlbums(new string[]
         {
             "382ObEPsp2rxGrnsizN5TX", "1A2GTWGtFfWp7KSQTwWOyo", "2noRn2Aes5aoNVsU6iWThc"
@@ -169,6 +177,8 @@
             "382ObEPsp2rxGrnsizN5TX", "1A2GTWGtFfWp7KSQTwWOyo", "2noRn2Aes5aoNVsU6iWThc"
         });
 
+        StateHasChanged();
+
         _ = await wApiAlbum.DeleteRemoveAlbums(new string[]
         {
             "382ObEPsp2rxGrnsizN5TX", "1A2GTWGtFfWp7KSQTwWOyo", "2noRn2Aes5aoNVsU6iWThc"
@@ -178,6 +188,8 @@
         {
             "382ObEPsp2rxGrnsizN5TX", "1A2GTWGtFfWp7KSQTwWOyo", "2noRn2Aes5aoNVsU6iWThc"
         });
+
+        StateHasChanged();
 
         RPagedAlbums? rPagedAlbums = await wApiAlbum.GetNewReleases("SE", 50);
         if (rPagedAlbums?.Albums?.Items?.Length > 0)
@@ -192,6 +204,8 @@
                 newAlbumReleases.AddRange(rPagedAlbums.Albums.Items);
             }
         }
+
+        StateHasChanged();
 
         await base.OnInitializedAsync();
     }

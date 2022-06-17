@@ -1,0 +1,248 @@
+﻿@using WebApis.Net6.Spotify.Models
+@using WebApis.Net6.Spotify.Models.Responses
+@using WebApis.Net6.Spotify.WebApiEndpoints
+@using WebApis.Net6.Spotify
+@inject IWApiUserProfile wApiUserProfile
+
+<h3>TestingWebApisNet6</h3>
+
+@if(userProfile is not null)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetCurrentUsersProfile</span>
+        </div>
+        <div class="MCDivTestResults">
+            <span>@userProfile.Id</span><br />
+        </div>
+    </div>
+}
+<br />
+
+@if(usersTopArtistsList?.Count > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetUsersTopArtists</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Artist artist in usersTopArtistsList)
+        {
+            <span>@artist.Name</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(usersTopTracksList?.Count > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetUsersTopTracks</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Track track in usersTopTracksList)
+        {
+            <span>@track.Name</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(otherUserProfile is not null)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetUsersProfile</span>
+        </div>
+        <div class="MCDivTestResults">
+            <span>@otherUserProfile.DisplayName</span><br />
+        </div>
+    </div>
+}
+<br />
+
+@if(checkIfUsersFollowPlaylistAfterAddBools?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>PutFollowPlaylist and GetCheckIfUsersFollowPlaylist</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(bool saved in checkIfUsersFollowPlaylistAfterAddBools)
+        {
+            <span>@saved</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(checkIfUsersFollowPlaylistAfterRemoveBools?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>PutFollowPlaylist and GetCheckIfUsersFollowPlaylist</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(bool removed in checkIfUsersFollowPlaylistAfterRemoveBools)
+        {
+            <span>@removed</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(followedArtistsList?.Count > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetFollowedArtists</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Artist artist in followedArtistsList)
+        {
+            <span>@artist.Name</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(checkIfUserFollowsArtistsAfterAddBools?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>PutFollowArtists and GetCheckIfUserFollowsArtists</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(bool added in checkIfUserFollowsArtistsAfterAddBools)
+        {
+            <span>@added</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(checkIfUserFollowsArtistsAfterRemoveBools?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>DeleteUnfollowArtists and GetCheckIfUserFollowsArtists</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(bool removed in checkIfUserFollowsArtistsAfterRemoveBools)
+        {
+            <span>@removed</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@code {
+    UserProfile? userProfile;
+    List<Artist> usersTopArtistsList = new();
+    List<Track> usersTopTracksList = new();
+    UserProfile? otherUserProfile;
+    bool[]? checkIfUsersFollowPlaylistAfterAddBools;
+    bool[]? checkIfUsersFollowPlaylistAfterRemoveBools;
+    List<Artist> followedArtistsList = new();
+    bool[]? checkIfUserFollowsArtistsAfterAddBools;
+    bool[]? checkIfUserFollowsArtistsAfterRemoveBools;
+
+    protected override async Task OnInitializedAsync()
+    {
+        userProfile = await wApiUserProfile.GetCurrentUsersProfile();
+
+        StateHasChanged();
+
+        Paged<Artist>? usersTopArtists = await wApiUserProfile.GetUsersTopArtists(50);
+        if (usersTopArtists?.Items?.Length > 0)
+        {
+            usersTopArtistsList.AddRange(usersTopArtists.Items);
+        }
+        while (!string.IsNullOrWhiteSpace(usersTopArtists?.Next))
+        {
+            usersTopArtists = await wApiUserProfile.GetNextPageUsersTopArtists(usersTopArtists.Next);
+            if (usersTopArtists?.Items?.Length > 0)
+            {
+                usersTopArtistsList.AddRange(usersTopArtists.Items);
+            }
+        }
+
+        StateHasChanged();
+
+        Paged<Track>? usersTopTracks = await wApiUserProfile.GetUsersTopTracks(50);
+        if (usersTopTracks?.Items?.Length > 0)
+        {
+            usersTopTracksList.AddRange(usersTopTracks.Items);
+        }
+        while (!string.IsNullOrWhiteSpace(usersTopTracks?.Next))
+        {
+            usersTopTracks = await wApiUserProfile.GetNextPageUsersTopTracks(usersTopTracks.Next);
+            if (usersTopTracks?.Items?.Length > 0)
+            {
+                usersTopTracksList.AddRange(usersTopTracks.Items);
+            }
+        }
+
+        StateHasChanged();
+
+        otherUserProfile = await wApiUserProfile.GetUsersProfile("smedjan");
+
+        StateHasChanged();
+
+        _ = await wApiUserProfile.PutFollowPlaylist("3cEYpjA9oz9GiPac4AsH4n");
+
+        checkIfUsersFollowPlaylistAfterAddBools = await wApiUserProfile.GetCheckIfUsersFollowPlaylist("3cEYpjA9oz9GiPac4AsH4n",
+            new string[] { "jkdesxdxvu6uetjdnaro2yrfc", "jmperezperez", "thelinmichael", "wizzler" });
+
+        StateHasChanged();
+
+        _ = await wApiUserProfile.DeleteUnfollowPlaylist("3cEYpjA9oz9GiPac4AsH4n");
+
+        checkIfUsersFollowPlaylistAfterRemoveBools = await wApiUserProfile.GetCheckIfUsersFollowPlaylist("3cEYpjA9oz9GiPac4AsH4n",
+            new string[] { "jkdesxdxvu6uetjdnaro2yrfc", "jmperezperez", "thelinmichael", "wizzler" });
+
+        StateHasChanged();
+
+        RPagedArtists? followedArtists = await wApiUserProfile.GetFollowedArtists("0I2XqVXqHScXjHhk6AYYRe", 50);
+        if (followedArtists?.Artists?.Items?.Length > 0)
+        {
+            followedArtistsList.AddRange(followedArtists.Artists.Items);
+        }
+        while (!string.IsNullOrWhiteSpace(followedArtists?.Artists?.Next))
+        {
+            followedArtists = await wApiUserProfile.GetNextPageFollowedArtists(followedArtists.Artists.Next);
+            if (followedArtists?.Artists?.Items?.Length > 0)
+            {
+                followedArtistsList.AddRange(followedArtists.Artists.Items);
+            }
+        }
+
+        StateHasChanged();
+
+        _ = await wApiUserProfile.PutFollowArtists(new string[] { "2CIMQHirSU0MQqyYHq0eOx", "57dN52uHvrHOxijzpIgu3E", 
+            "1vCWHaC5f2uS3yhpwWbIA6" });
+
+        checkIfUserFollowsArtistsAfterAddBools = await wApiUserProfile.GetCheckIfUserFollowsArtists(
+            new string[] { "2CIMQHirSU0MQqyYHq0eOx", "57dN52uHvrHOxijzpIgu3E", "1vCWHaC5f2uS3yhpwWbIA6" });
+
+        StateHasChanged();
+
+        _ = await wApiUserProfile.DeleteUnfollowArtists(new string[] { "2CIMQHirSU0MQqyYHq0eOx", "57dN52uHvrHOxijzpIgu3E", 
+            "1vCWHaC5f2uS3yhpwWbIA6" });
+
+        checkIfUserFollowsArtistsAfterRemoveBools = await wApiUserProfile.GetCheckIfUserFollowsArtists(
+            new string[] { "2CIMQHirSU0MQqyYHq0eOx", "57dN52uHvrHOxijzpIgu3E", "1vCWHaC5f2uS3yhpwWbIA6" });
+
+        StateHasChanged();
+
+        await base.OnInitializedAsync();
+    }
+}

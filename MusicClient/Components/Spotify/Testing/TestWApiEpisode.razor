@@ -94,15 +94,21 @@
     {
         episode = await wApiEpisode.GetEpisode("512ojhOuo1ktJprKbVcKyQ");
 
+        StateHasChanged();
+
         severalEpisodes = await wApiEpisode.GetSeveralEpisodes(new string[]
         {
             "77o6BIVlYM3msb4MMIL1jH", "0Q86acNRm6V9GYx55SXKwf"
         });
 
+        StateHasChanged();
+
         _ = await wApiEpisode.PutSaveEpisodesForUser(new string[] { "77o6BIVlYM3msb4MMIL1jH", "0Q86acNRm6V9GYx55SXKwf" });
 
         checkUsersSavedEpisodesAfterAddBools = await wApiEpisode.GetCheckUsersSavedEpisodes(
             new string[] { "77o6BIVlYM3msb4MMIL1jH", "0Q86acNRm6V9GYx55SXKwf" });
+
+        StateHasChanged();
 
         Paged<REpisode>? usersSavedEpisodes = await wApiEpisode.GetUsersSavedEpisodes(50);
         if (usersSavedEpisodes?.Items?.Length > 0)
@@ -130,10 +136,14 @@
             }
         }
 
+        StateHasChanged();
+
         _ = await wApiEpisode.DeleteRemoveUsersSavedEpisodes(new string[] { "77o6BIVlYM3msb4MMIL1jH", "0Q86acNRm6V9GYx55SXKwf" });
 
         checkUsersSavedEpisodesAfterRemoveBools = await wApiEpisode.GetCheckUsersSavedEpisodes(
             new string[] { "77o6BIVlYM3msb4MMIL1jH", "0Q86acNRm6V9GYx55SXKwf" });
+
+        StateHasChanged();
 
         await base.OnInitializedAsync();
     }

@@ -111,10 +111,14 @@
     {
         show = await wApiShow.GetShow("38bS44xjbVVZ3No3ByF1dJ");
 
+        StateHasChanged();
+
         severalShows = await wApiShow.GetSeveralShows(new string[]
         {
             "5CfCWKI5pZ28U0uOzXkDHe", "5as3aKmN2k11yfDDDSrvaZ"
         });
+
+        StateHasChanged();
 
         Paged<Episode>? showEpisodes = await wApiShow.GetShowEpisodes("38bS44xjbVVZ3No3ByF1dJ", limit: 50);
         if (showEpisodes?.Items?.Length > 0)
@@ -130,10 +134,14 @@
             }
         }
 
+        StateHasChanged();
+
         _ = await wApiShow.PutSaveShowsForCurrentUser(new string[] { "5CfCWKI5pZ28U0uOzXkDHe", "5as3aKmN2k11yfDDDSrvaZ" });
 
         checkUsersSavedShowsAfterAddBools = await wApiShow.GetCheckUsersSavedShows(
             new string[] { "5CfCWKI5pZ28U0uOzXkDHe", "5as3aKmN2k11yfDDDSrvaZ" });
+
+        StateHasChanged();
 
         Paged<RShow>? usersSavedShows = await wApiShow.GetUsersSavedShows(50);
         if (usersSavedShows?.Items?.Length > 0)
@@ -161,10 +169,14 @@
             }
         }
 
+        StateHasChanged();
+
         _ = await wApiShow.DeleteRemoveUsersSavedShows(new string[] { "5CfCWKI5pZ28U0uOzXkDHe", "5as3aKmN2k11yfDDDSrvaZ" });
 
         checkUsersSavedShowsAfterRemoveBools = await wApiShow.GetCheckUsersSavedShows(
             new string[] { "5CfCWKI5pZ28U0uOzXkDHe", "5as3aKmN2k11yfDDDSrvaZ" });
+
+        StateHasChanged();
 
         await base.OnInitializedAsync();
     }

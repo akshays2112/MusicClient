@@ -31,6 +31,7 @@ builder.Services.AddScoped<IWApiArtist, WApiArtist>();
 builder.Services.AddScoped<IWApiShow, WApiShow>();
 builder.Services.AddScoped<IWApiEpisode, WApiEpisode>();
 builder.Services.AddScoped<IWApiTrack, WApiTrack>();
+builder.Services.AddScoped<IWApiUserProfile, WApiUserProfile>();
 
 //builder.Services.AddSingleton(typeof(IUsersProfileApi), typeof(UsersProfileApi));
 //builder.Services.AddSingleton(typeof(IPlaylistsApi), typeof(PlaylistsApi));

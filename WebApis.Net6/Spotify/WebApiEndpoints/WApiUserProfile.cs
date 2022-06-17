@@ -1,13 +1,14 @@
 ﻿using WebApis.Net6.Spotify.Models;
+using WebApis.Net6.Spotify.Models.Responses;
 
 namespace WebApis.Net6.Spotify.WebApiEndpoints;
 
 public class WApiUserProfile : IWApiUserProfile
 {
-    private readonly WApiGlobals _wApiGlobals;
-    private readonly WApiSpotifyGlobals _wApiSpotifyGlobals;
+    private readonly IWApiGlobals _wApiGlobals;
+    private readonly IWApiSpotifyGlobals _wApiSpotifyGlobals;
 
-    public WApiUserProfile(WApiGlobals wApiGlobals, WApiSpotifyGlobals wApiSpotifyGlobals)
+    public WApiUserProfile(IWApiGlobals wApiGlobals, IWApiSpotifyGlobals wApiSpotifyGlobals)
     {
         _wApiGlobals = wApiGlobals;
         _wApiSpotifyGlobals = wApiSpotifyGlobals;
@@ -28,9 +29,15 @@ public class WApiUserProfile : IWApiUserProfile
         WApiSpotifyGlobals.TimeRanges? time_range = WApiSpotifyGlobals.TimeRanges.medium_term, string? accessToken = null)
         => await GetUsersTopItems<Paged<Artist>>(WApiSpotifyGlobals.ArtistsOrTracks.artists, limit, offset, time_range, accessToken);
 
+    public async Task<Paged<Artist>?> GetNextPageUsersTopArtists(string nextPage, string? accessToken = null)
+        => await GetNextPageUsersTopItems<Artist>(nextPage, accessToken);
+
     public async Task<Paged<Track>?> GetUsersTopTracks(int limit = 20, int offset = 0,
         WApiSpotifyGlobals.TimeRanges? time_range = WApiSpotifyGlobals.TimeRanges.medium_term, string? accessToken = null)
         => await GetUsersTopItems<Paged<Track>>(WApiSpotifyGlobals.ArtistsOrTracks.tracks, limit, offset, time_range, accessToken);
+
+    public async Task<Paged<Track>?> GetNextPageUsersTopTracks(string nextPage, string? accessToken = null)
+        => await GetNextPageUsersTopItems<Track>(nextPage, accessToken);
 
     ///<summary>
     ///Get User's Top Items
@@ -56,6 +63,13 @@ public class WApiUserProfile : IWApiUserProfile
                       new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
                 new() { Name = "time_range", SimpleValue = time_range.ToString() }
             }
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+
+    public async Task<Paged<T>?> GetNextPageUsersTopItems<T>(string nextPage, string? accessToken = null)
+        => await _wApiGlobals.CallWebApiEndpoint<Paged<T>>(new()
+        {
+            HttpMethod = HttpMethod.Get,
+            PrecalculatedQueryString = nextPage
         }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
@@ -110,9 +124,8 @@ public class WApiUserProfile : IWApiUserProfile
     ///Get Followed Artists
     ///Get the current user's followed artists.
     ///</summary>
-    public async Task<Paged<Artist>?> GetFollowedArtists(string? after, int limit = 20,
-        int offset = 0, string? accessToken = null)
-        => await _wApiGlobals.CallWebApiEndpoint<Paged<Artist>>(new()
+    public async Task<RPagedArtists?> GetFollowedArtists(string? after, int limit = 20, string? accessToken = null)
+        => await _wApiGlobals.CallWebApiEndpoint<RPagedArtists>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/me/following",
@@ -122,12 +135,22 @@ public class WApiUserProfile : IWApiUserProfile
                 new() { Name = "after", SimpleValue = after },
                 new() { Name = "limit", SimpleValue = limit, Constraints = new Constraint[]
                     { new() { Value = 1, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
-                      new() { Value = 50, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } },
-                new() { Name = "offset", SimpleValue = offset, Constraints = new Constraint[]
-                    { new() { Value = 0, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.GreaterThanOrEqual) },
-                      new() { Value = 5, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } }
+                      new() { Value = 50, ConstraintComparison = ((int)WApiGlobals.ConstraintComparison.LessThanOrEqual) } } }
             }
         }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+
+    public async Task<RPagedArtists?> GetNextPageFollowedArtists(string nextPage, string? accessToken = null)
+        => await _wApiGlobals.CallWebApiEndpoint<RPagedArtists>(new()
+        {
+            HttpMethod = HttpMethod.Get,
+            PrecalculatedQueryString = nextPage
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+
+    public async Task<EmptyResponse?> PutFollowArtists(string[] ids, string? accessToken = null)
+        => await PutFollowArtistsOrUsers(WApiSpotifyGlobals.ArtistOrUser.artist, ids, accessToken);
+
+    public async Task<EmptyResponse?> PutFollowUsers(string[] ids, string? accessToken = null)
+        => await PutFollowArtistsOrUsers(WApiSpotifyGlobals.ArtistOrUser.user, ids, accessToken);
 
     ///<summary>
     ///Follow Artists or Users
@@ -143,6 +166,12 @@ public class WApiUserProfile : IWApiUserProfile
             BodyObject = new { ids }
         }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
+    public async Task<EmptyResponse?> DeleteUnfollowArtists(string[] ids, string? accessToken = null)
+        => await DeleteUnfollowArtistsOrUsers(WApiSpotifyGlobals.ArtistOrUser.artist, ids, accessToken);
+
+    public async Task<EmptyResponse?> DeleteUnfollowUsers(string[] ids, string? accessToken = null)
+        => await DeleteUnfollowArtistsOrUsers(WApiSpotifyGlobals.ArtistOrUser.user, ids, accessToken);
+
     ///<summary>
     ///Follow Artists or Users
     ///Add the current user as a follower of one or more artists or other Spotify users.
@@ -156,6 +185,12 @@ public class WApiUserProfile : IWApiUserProfile
             QuerySimpleParameters = new SimpleParameter[] { new() { Name = "type", SimpleValue = type.ToString() } },
             BodyObject = new { ids }
         }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+
+    public async Task<bool[]?> GetCheckIfUserFollowsArtists(string[] ids, string? accessToken = null)
+        => await GetCheckIfUserFollowsArtistsOrUsers(ids, WApiSpotifyGlobals.ArtistOrUser.artist, accessToken);
+
+    public async Task<bool[]?> GetCheckIfUserFollowsUsers(string[] ids, string? accessToken = null)
+        => await GetCheckIfUserFollowsArtistsOrUsers(ids, WApiSpotifyGlobals.ArtistOrUser.user, accessToken);
 
     ///<summary>
     ///Check If User Follows Artists or Users
