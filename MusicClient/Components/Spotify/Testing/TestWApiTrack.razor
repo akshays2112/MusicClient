@@ -1,0 +1,220 @@
+﻿@using WebApis.Net6.Spotify.Models
+@using WebApis.Net6.Spotify.Models.Responses
+@using WebApis.Net6.Spotify.WebApiEndpoints
+@using WebApis.Net6.Spotify
+@inject IWApiTrack wApiTrack
+
+<h3>TestingWebApisNet6</h3>
+
+@if(track is not null)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetTrack</span>
+        </div>
+        <div class="MCDivTestResults">
+            <span>@track.Name</span><br />
+        </div>
+    </div>
+}
+<br />
+
+@if(severalTracks?.Tracks?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetSeveralTracks</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Track track in severalTracks.Tracks)
+        {
+            <span>@track.Name</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(checkUsersSavedTracksAfterAddBools?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetCheckUsersSavedTracks and PutSaveTracksForCurrentUser</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(bool addBool in checkUsersSavedTracksAfterAddBools)
+        {
+            <span>@addBool</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(usersSavedTracksList?.Count > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetUsersSavedTracks [@usersSavedTracksList.Count]</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Track track in usersSavedTracksList)
+        {
+            <span>@track.Name</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(checkUsersSavedTracksAfterRemoveBools?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetCheckUsersSavedTracks and DeleteRemoveUsersSavedTracks</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(bool removeBool in checkUsersSavedTracksAfterRemoveBools)
+        {
+            <span>@removeBool</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(rAudioFeatures?.AudioFeatures?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetTracksAudioFeatures</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(AudioFeature audioFeature in rAudioFeatures.AudioFeatures)
+        {
+            <span>@audioFeature.Id</span><br />
+            <span>@audioFeature.Danceability</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(audioFeature is not null)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetTracksAudioFeatures</span>
+        </div>
+        <div class="MCDivTestResults">
+            <span>@audioFeature.Id</span><br />
+            <span>@audioFeature.Danceability</span><br />
+        </div>
+    </div>
+}
+<br />
+
+@if(audioAnalysis is not null)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetTracksAudioAnalysis</span>
+        </div>
+        <div class="MCDivTestResults">
+            <span>@audioAnalysis.Track?.Rhythmstring</span><br />
+        </div>
+    </div>
+}
+<br />
+
+@if(recommendation is not null && recommendation.Tracks?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetRecommendations</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Track track in recommendation.Tracks)
+        {
+            <span>@track.Name</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@code {
+    Track? track;
+    RTracks? severalTracks;
+    List<Track> usersSavedTracksList = new();
+    bool[]? checkUsersSavedTracksAfterAddBools;
+    bool[]? checkUsersSavedTracksAfterRemoveBools;
+    RAudioFeatures? rAudioFeatures;
+    AudioFeature? audioFeature;
+    AudioAnalysis? audioAnalysis;
+    Recommendation? recommendation;
+
+    protected override async Task OnInitializedAsync()
+    {
+        track = await wApiTrack.GetTrack("11dFghVXANMlKmJXsNCbNl");
+
+        severalTracks = await wApiTrack.GetSeveralTracks(new string[]
+        {
+            "7ouMYWpwJ422jRcDASZB7P", "4VqPOruhp5EdPBeR92t6lQ", "2takcwOaAZWiXQijPHIx7B"
+        });
+
+        _ = await wApiTrack.PutSaveTracksForCurrentUser(new string[] {
+            "7ouMYWpwJ422jRcDASZB7P", "4VqPOruhp5EdPBeR92t6lQ", "2takcwOaAZWiXQijPHIx7B" });
+
+        checkUsersSavedTracksAfterAddBools = await wApiTrack.GetCheckUsersSavedTracks(
+            new string[] { "7ouMYWpwJ422jRcDASZB7P", "4VqPOruhp5EdPBeR92t6lQ", "2takcwOaAZWiXQijPHIx7B" });
+
+        Paged<RTrack>? usersSavedTracks = await wApiTrack.GetUsersSavedTracks(50);
+        if (usersSavedTracks?.Items?.Length > 0)
+        {
+            foreach(RTrack rTrack in usersSavedTracks.Items)
+            {
+                if (rTrack?.Track is not null)
+                {
+                    usersSavedTracksList.Add(rTrack.Track);
+                }
+            }
+        }
+        while (!string.IsNullOrWhiteSpace(usersSavedTracks?.Next))
+        {
+            usersSavedTracks = await wApiTrack.GetNextPageUsersSavedTracks(usersSavedTracks.Next);
+            if (usersSavedTracks?.Items?.Length > 0)
+            {
+                foreach (RTrack rTrack in usersSavedTracks.Items)
+                {
+                    if (rTrack?.Track is not null)
+                    {
+                        usersSavedTracksList.Add(rTrack.Track);
+                    }
+                }
+            }
+        }
+
+        _ = await wApiTrack.DeleteRemoveUsersSavedTracks(new string[] {
+            "7ouMYWpwJ422jRcDASZB7P", "4VqPOruhp5EdPBeR92t6lQ", "2takcwOaAZWiXQijPHIx7B" });
+
+        checkUsersSavedTracksAfterRemoveBools = await wApiTrack.GetCheckUsersSavedTracks(
+            new string[] { "7ouMYWpwJ422jRcDASZB7P", "4VqPOruhp5EdPBeR92t6lQ", "2takcwOaAZWiXQijPHIx7B" });
+
+        rAudioFeatures = await wApiTrack.GetTracksAudioFeatures(new string[]
+        {
+            "7ouMYWpwJ422jRcDASZB7P", "4VqPOruhp5EdPBeR92t6lQ", "2takcwOaAZWiXQijPHIx7B"
+        });
+
+        audioFeature = await wApiTrack.GetTracksAudioFeatures("11dFghVXANMlKmJXsNCbNl");
+
+        audioAnalysis = await wApiTrack.GetTracksAudioAnalysis("11dFghVXANMlKmJXsNCbNl");
+
+        recommendation = await wApiTrack.GetRecommendations(new
+        {
+            seed_tracks = new string[] { "7ouMYWpwJ422jRcDASZB7P", "4VqPOruhp5EdPBeR92t6lQ", "2takcwOaAZWiXQijPHIx7B" }
+        });
+
+        await base.OnInitializedAsync();
+    }
+}

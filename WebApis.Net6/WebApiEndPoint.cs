@@ -17,9 +17,15 @@ public class WebApiEndpoint<T>
 
     public SimpleParameter[]? QuerySimpleParameters { get; set; } = Array.Empty<SimpleParameter>();
 
-    public ObjectParameter? QueryObjectParameters { get; set; }
+    public ObjectParameterProperty[]? QueryObjParameterProperties { get; set; }
+
+    public object? QueryObjInstance { get; set; }
 
     public string? PrecalculatedQueryString { get; set; } = string.Empty;
+
+    public object? BodyObject { get; set; }
+
+    public T? Response { get; set; }
 
     public string? GetQueryString()
     {
@@ -74,27 +80,26 @@ public class WebApiEndpoint<T>
                 }
             }
         }
-        if (QueryObjectParameters is not null && QueryObjectParameters.ObjectParameterProperties is not null &&
-            QueryObjectParameters.ObjectParameterProperties.Length > 0)
+        if (QueryObjInstance is not null && QueryObjParameterProperties is not null &&
+            QueryObjParameterProperties.Length > 0)
         {
-            Type? type = QueryObjectParameters?.GetType();
+            Type? type = QueryObjInstance.GetType();
             if (type is not null)
             {
-                for (int a = 0; a < QueryObjectParameters?.ObjectParameterProperties?.Length; a++)
+                for (int a = 0; a < QueryObjParameterProperties.Length; a++)
                 {
-                    if (QueryObjectParameters.ObjectParameterProperties[a] is not null &&
-                    !string.IsNullOrWhiteSpace(QueryObjectParameters.ObjectParameterProperties[a].PropertyName))
+                    if (QueryObjParameterProperties[a] is not null &&
+                    !string.IsNullOrWhiteSpace(QueryObjParameterProperties[a].PropertyName))
                     {
                         PropertyInfo? objPropertyInfo = type.GetProperty(
-                            QueryObjectParameters.ObjectParameterProperties[a].PropertyName ?? string.Empty);
+                            QueryObjParameterProperties[a].PropertyName);
                         if (objPropertyInfo is not null)
                         {
-                            object? value = objPropertyInfo?.GetValue(
-                                QueryObjectParameters.ObjectParameterProperties[a].PropertyName);
+                            object? value = objPropertyInfo?.GetValue(QueryObjInstance);
                             if (value is not null)
                             {
                                 queryString2.Append(
-                                    $"{QueryObjectParameters.ObjectParameterProperties[a].PropertyName}={GetQueryStringValue(value)}&");
+                                    $"{QueryObjParameterProperties[a].PropertyName}={GetQueryStringValue(value)}&");
                             }
                         }
                     }
@@ -103,15 +108,11 @@ public class WebApiEndpoint<T>
         }
         if(queryString2.Length > 0)
         {
-            queryString.Append("?").Append(queryString2);
+            queryString.Append('?').Append(queryString2);
         }
         string retStr = queryString.ToString();
         return (retStr[^1] == '&' ? retStr[..^1] : retStr);
     }
-
-    public object? BodyObject { get; set; }
-
-    public T? Response { get; set; }
 
     public string? GetQueryStringValue(object? value)
     {
