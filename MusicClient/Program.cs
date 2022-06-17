@@ -18,15 +18,18 @@ builder.Services.AddScoped<HttpClient>(context => new() { BaseAddress = new Uri(
 builder.Services.AddScoped<IWApiGlobals, WApiGlobals>();
 builder.Services.AddScoped<IWApiSpotifyGlobals, WApiSpotifyGlobals>(context =>
 {
-    WApiSpotifyGlobals wApiSpotifyGlobals = new();
-    wApiSpotifyGlobals.SpotifyClientId = Globals.SpotifyClientId;
-    wApiSpotifyGlobals.SpotifyClientSecret = Globals.SpotifyClientSecret;
+    WApiSpotifyGlobals wApiSpotifyGlobals = new()
+    {
+        SpotifyClientId = Globals.SpotifyClientId,
+        SpotifyClientSecret = Globals.SpotifyClientSecret
+    };
     return wApiSpotifyGlobals;
 });
 builder.Services.AddScoped<ISpotifyAuthentication, SpotifyAuthentication>();
 builder.Services.AddScoped<IWApiAlbum, WApiAlbum>();
 builder.Services.AddScoped<IWApiArtist, WApiArtist>();
 builder.Services.AddScoped<IWApiShow, WApiShow>();
+builder.Services.AddScoped<IWApiEpisode, WApiEpisode>();
 
 //builder.Services.AddSingleton(typeof(IUsersProfileApi), typeof(UsersProfileApi));
 //builder.Services.AddSingleton(typeof(IPlaylistsApi), typeof(PlaylistsApi));

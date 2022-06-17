@@ -1,13 +1,14 @@
 ﻿using WebApis.Net6.Spotify.Models;
+using WebApis.Net6.Spotify.Models.Responses;
 
 namespace WebApis.Net6.Spotify.WebApiEndpoints;
 
 public class WApiEpisode : IWApiEpisode
 {
-    private readonly WApiGlobals _wApiGlobals;
-    private readonly WApiSpotifyGlobals _wApiSpotifyGlobals;
+    private readonly IWApiGlobals _wApiGlobals;
+    private readonly IWApiSpotifyGlobals _wApiSpotifyGlobals;
 
-    public WApiEpisode(WApiGlobals wApiGlobals, WApiSpotifyGlobals wApiSpotifyGlobals)
+    public WApiEpisode(IWApiGlobals wApiGlobals, IWApiSpotifyGlobals wApiSpotifyGlobals)
     {
         _wApiGlobals = wApiGlobals;
         _wApiSpotifyGlobals = wApiSpotifyGlobals;
@@ -37,9 +38,9 @@ public class WApiEpisode : IWApiEpisode
     ///Get Several Episodes
     ///Get Spotify catalog information for several episodes based on their Spotify IDs.
     ///</summary>
-    public async Task<Episode[]?> GetSeveralEpisodes(string[] ids, string? market = null,
+    public async Task<REpisodes?> GetSeveralEpisodes(string[] ids, string? market = null,
         string? accessToken = null)
-        => await _wApiGlobals.CallWebApiEndpoint<Episode[]>(new()
+        => await _wApiGlobals.CallWebApiEndpoint<REpisodes>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/episodes",
@@ -55,9 +56,9 @@ public class WApiEpisode : IWApiEpisode
     ///This API endpoint is in beta and could change without warning.Please share any feedback 
     ///that you have, or issues that you discover, in our developer community forum.
     ///</summary>
-    public async Task<Paged<Episode>?> GetUsersSavedEpisodes(string id, int limit = 20,
+    public async Task<Paged<REpisode>?> GetUsersSavedEpisodes(int limit = 20,
         int offset = 0, string? market = null, string? accessToken = null)
-        => await _wApiGlobals.CallWebApiEndpoint<Paged<Episode>>(new()
+        => await _wApiGlobals.CallWebApiEndpoint<Paged<REpisode>>(new()
         {
             HttpMethod = HttpMethod.Get,
             EndPointUrl = "/me/episodes",
@@ -73,17 +74,24 @@ public class WApiEpisode : IWApiEpisode
             }
         }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
+    public async Task<Paged<REpisode>?> GetNextPageUsersSavedEpisodes(string nextPage, string? accessToken = null)
+        => await _wApiGlobals.CallWebApiEndpoint<Paged<REpisode>>(new()
+        {
+            HttpMethod = HttpMethod.Get,
+            PrecalculatedQueryString = nextPage
+        }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
+
     ///<summary>
     ///Save Episodes for Current User
     ///Save one or more episodes to current Spotify user's library.
     ///</summary>
-    public async Task<EmptyResponse?> PutSaveEpisodesForCurrentUser(string[] ids,
+    public async Task<EmptyResponse?> PutSaveEpisodesForUser(string[] ids,
         string? accessToken = null)
         => await _wApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
         {
             HttpMethod = HttpMethod.Put,
             EndPointUrl = "/me/episodes",
-            BodyObject = new { ids = ids },
+            BodyObject = new { ids },
         }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>
@@ -91,16 +99,12 @@ public class WApiEpisode : IWApiEpisode
     ///Delete one or more episodes from current Spotify user's library.
     ///</summary>
     public async Task<EmptyResponse?> DeleteRemoveUsersSavedEpisodes(string[] ids,
-        string? market = null, string? accessToken = null)
+        string? accessToken = null)
         => await _wApiGlobals.CallWebApiEndpoint<EmptyResponse>(new()
         {
             HttpMethod = HttpMethod.Delete,
             EndPointUrl = "/me/episodes",
-            QuerySimpleParameters = new SimpleParameter[]
-            {
-                new() { Name = "market", SimpleValue = market }
-            },
-            BodyObject = new { ids = ids }
+            BodyObject = new { ids }
         }, accessToken ?? _wApiSpotifyGlobals.SpotifyAccessToken?.AccessToken);
 
     ///<summary>

@@ -1,0 +1,140 @@
+﻿@using WebApis.Net6.Spotify.Models
+@using WebApis.Net6.Spotify.Models.Responses
+@using WebApis.Net6.Spotify.WebApiEndpoints
+@using WebApis.Net6.Spotify
+@inject IWApiEpisode wApiEpisode
+
+<h3>TestingWebApisNet6</h3>
+
+@if(episode is not null)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetEpisode</span>
+        </div>
+        <div class="MCDivTestResults">
+            <span>@episode.Name</span><br />
+        </div>
+    </div>
+}
+<br />
+
+@if(severalEpisodes?.Episodes?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetSeveralEpisodes</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Episode episode in severalEpisodes.Episodes)
+        {
+            <span>@episode.Name</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(checkUsersSavedEpisodesAfterAddBools?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetCheckUsersSavedEpisodes and PutSaveEpisodesForCurrentUser</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(bool addBool in checkUsersSavedEpisodesAfterAddBools)
+        {
+            <span>@addBool</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(usersSavedEpisodesList?.Count > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetUsersSavedEpisodes</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Episode episode in usersSavedEpisodesList)
+        {
+            <span>@episode.Name</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(checkUsersSavedEpisodesAfterRemoveBools?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetCheckUsersSavedEpisodes and DeleteRemoveUsersSavedEpisodes</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(bool removeBool in checkUsersSavedEpisodesAfterRemoveBools)
+        {
+            <span>@removeBool</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@code {
+    Episode? episode;
+    REpisodes? severalEpisodes;
+    List<Episode> usersSavedEpisodesList = new();
+    bool[]? checkUsersSavedEpisodesAfterAddBools;
+    bool[]? checkUsersSavedEpisodesAfterRemoveBools;
+
+    protected override async Task OnInitializedAsync()
+    {
+        episode = await wApiEpisode.GetEpisode("512ojhOuo1ktJprKbVcKyQ");
+
+        severalEpisodes = await wApiEpisode.GetSeveralEpisodes(new string[]
+        {
+            "77o6BIVlYM3msb4MMIL1jH", "0Q86acNRm6V9GYx55SXKwf"
+        });
+
+        _ = await wApiEpisode.PutSaveEpisodesForUser(new string[] { "77o6BIVlYM3msb4MMIL1jH", "0Q86acNRm6V9GYx55SXKwf" });
+
+        checkUsersSavedEpisodesAfterAddBools = await wApiEpisode.GetCheckUsersSavedEpisodes(
+            new string[] { "77o6BIVlYM3msb4MMIL1jH", "0Q86acNRm6V9GYx55SXKwf" });
+
+        Paged<REpisode>? usersSavedEpisodes = await wApiEpisode.GetUsersSavedEpisodes(50);
+        if (usersSavedEpisodes?.Items?.Length > 0)
+        {
+            foreach(REpisode rEpisode in usersSavedEpisodes.Items)
+            {
+                if (rEpisode?.Episode is not null)
+                {
+                    usersSavedEpisodesList.Add(rEpisode.Episode);
+                }
+            }
+        }
+        while (!string.IsNullOrWhiteSpace(usersSavedEpisodes?.Next))
+        {
+            usersSavedEpisodes = await wApiEpisode.GetNextPageUsersSavedEpisodes(usersSavedEpisodes.Next);
+            if (usersSavedEpisodes?.Items?.Length > 0)
+            {
+                foreach (REpisode rEpisode in usersSavedEpisodes.Items)
+                {
+                    if (rEpisode?.Episode is not null)
+                    {
+                        usersSavedEpisodesList.Add(rEpisode.Episode);
+                    }
+                }
+            }
+        }
+
+        _ = await wApiEpisode.DeleteRemoveUsersSavedEpisodes(new string[] { "77o6BIVlYM3msb4MMIL1jH", "0Q86acNRm6V9GYx55SXKwf" });
+
+        checkUsersSavedEpisodesAfterRemoveBools = await wApiEpisode.GetCheckUsersSavedEpisodes(
+            new string[] { "77o6BIVlYM3msb4MMIL1jH", "0Q86acNRm6V9GYx55SXKwf" });
+
+        await base.OnInitializedAsync();
+    }
+}
