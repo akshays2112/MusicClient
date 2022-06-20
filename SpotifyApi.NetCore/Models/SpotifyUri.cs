@@ -4,9 +4,9 @@ using System.Text.RegularExpressions;
 
 namespace SpotifyApi.NetCore.Models
 {
-    /// <summary>
+    ///<summary>
     /// Domain Model Object that parses and describes a Spotify URI or Id.
-    /// </summary>
+    ///</summary>
     public class SpotifyUri
     {
         internal static readonly Regex SpotifyUriRegEx = new Regex("spotify:[a-z]+:[a-zA-Z0-9]+$");
@@ -14,9 +14,9 @@ namespace SpotifyApi.NetCore.Models
         internal static readonly Regex SpotifyUserCollectionUriRegEx = new Regex("^spotify:user:[a-z0-9_-]+:collection:[a-z]+:[a-zA-Z0-9]+$");
         internal static readonly Regex SpotifyIdRegEx = new Regex("^[a-zA-Z0-9]+$");
 
-        /// <summary>
+        ///<summary>
         /// Instantiates a new <see cref="SpotifyUri"/>.
-        /// </summary>
+        ///</summary>
         /// <param name="inputValue">A Spotify Id or URI.</param>
         /// <param name="type">The item type, e.g. "album", "artist", "track", "playlist".</param>
         public SpotifyUri(string inputValue, string type = null)
@@ -86,49 +86,49 @@ namespace SpotifyApi.NetCore.Models
             }
         }
 
-        /// <summary>
+        ///<summary>
         /// True when <see cref="InputValue"/> contains a Spotify URI.
-        /// </summary>
+        ///</summary>
         public bool IsSpotifyUri { get; private set; }
 
-        /// <summary>
+        ///<summary>
         /// True when <see cref="InputValue"/> contains a User Playlist URI
-        /// </summary>
+        ///</summary>
         public bool IsUserPlaylistUri { get; private set; }
 
-        /// <summary>
+        ///<summary>
         /// True when <see cref="InputValue"/> contains a User Collection URI
-        /// </summary>
+        ///</summary>
         public bool IsUserCollectionUri { get; private set; }
 
-        /// <summary>
+        ///<summary>
         /// True when <see cref="InputValue"/> contains a valid Spotify URI or Id
-        /// </summary>
+        ///</summary>
         public bool IsValid { get; private set; }
 
-        /// <summary>
+        ///<summary>
         /// The raw input value.
-        /// </summary>
+        ///</summary>
         public string InputValue { get; private set; }
 
-        /// <summary>
+        ///<summary>
         /// The full (extended) Spotify URI including user, collection and type (if provided).
-        /// </summary>
+        ///</summary>
         public string FullUri { get; private set; }
 
-        /// <summary>
+        ///<summary>
         /// The Spotify URI derived (or copied) from input value.
-        /// </summary>
+        ///</summary>
         public string Uri { get; private set; }
 
-        /// <summary>
+        ///<summary>
         /// The item type, e.g. "album", "artist", "track", "playlist".
-        /// </summary>
+        ///</summary>
         public string ItemType { get; private set; }
 
-        /// <summary>
+        ///<summary>
         /// The Id only.
-        /// </summary>
+        ///</summary>
         public string Id { get; private set; }
 
         private static string TypeFromUri(string uri) => uri.Split(':')[1];

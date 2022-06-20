@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// Endpoints for retrieving information about the top artists or tracks of the current user from the Spotify catalog.
-    /// </summary>
+    ///</summary>
     public class PersonalizationApi : SpotifyWebApi, IPersonalizationApi
     {
         #region constructors
@@ -26,15 +26,15 @@ namespace SpotifyApi.NetCore
         #endregion
 
         #region GetUsersTopArtistsOrTracks
-        /// <summary>
+        ///<summary>
         /// Get the current user’s top artists based on calculated affinity.
-        /// </summary>
+        ///</summary>
         /// <param name="limit">Optional. The maximum number of entities to return. Default: 20. Minimum: 1. Maximum: 50.</param>
         /// <param name="offset">Optional. The index of the first object to return. Default: 0 (i.e., the first object). Use with limit to get the next set of objects.</param>
         /// <param name="timeRange">Optional. Over what time frame the affinities are computed. Valid values: long_term (calculated from several years of data and including all new data as it becomes available), medium_term (approximately last 6 months), short_term (approximately last 4 weeks). Default: medium_term.</param>
         /// <param name="accessToken">The bearer token which is gotten during the authentication/authorization process.</param>
         /// <returns>A Task that, once successfully completed, returns a full <see cref="PagedArtists"/> object.</returns>
-        /// <remarks>
+        ///<remarks>
         /// https://developer.spotify.com/documentation/web-api/reference/personalization/get-users-top-artists-and-tracks/
         /// </remarks>
         public Task<PagedArtists> GetUsersTopArtists(
@@ -44,15 +44,15 @@ namespace SpotifyApi.NetCore
             string accessToken = null
             ) => GetUsersTopArtistsOrTracks<PagedArtists>("artist", limit, offset, timeRange, accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Get the current user’s top artists based on calculated affinity.
-        /// </summary>
+        ///</summary>
         /// <param name="limit">Optional. The maximum number of entities to return. Default: 20. Minimum: 1. Maximum: 50.</param>
         /// <param name="offset">Optional. The index of the first object to return. Default: 0 (i.e., the first object). Use with limit to get the next set of objects.</param>
         /// <param name="timeRange">Optional. Over what time frame the affinities are computed. Valid values: long_term (calculated from several years of data and including all new data as it becomes available), medium_term (approximately last 6 months), short_term (approximately last 4 weeks). Default: medium_term.</param>
         /// <param name="accessToken">The bearer token which is gotten during the authentication/authorization process.</param>
         /// <returns>A Task that, once successfully completed, returns a instance of `T`.</returns>
-        /// <remarks>
+        ///<remarks>
         /// https://developer.spotify.com/documentation/web-api/reference/personalization/get-users-top-artists-and-tracks/
         /// </remarks>
         public Task<T> GetUsersTopArtists<T>(
@@ -62,15 +62,15 @@ namespace SpotifyApi.NetCore
             string accessToken = null
             ) => GetUsersTopArtistsOrTracks<T>("artist", limit, offset, timeRange, accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Get the current user’s top tracks based on calculated affinity.
-        /// </summary>
+        ///</summary>
         /// <param name="limit">Optional. The maximum number of entities to return. Default: 20. Minimum: 1. Maximum: 50.</param>
         /// <param name="offset">Optional. The index of the first object to return. Default: 0 (i.e., the first object). Use with limit to get the next set of objects.</param>
         /// <param name="timeRange">Optional. Over what time frame the affinities are computed. Valid values: long_term (calculated from several years of data and including all new data as it becomes available), medium_term (approximately last 6 months), short_term (approximately last 4 weeks). Default: medium_term.</param>
         /// <param name="accessToken">The bearer token which is gotten during the authentication/authorization process.</param>
         /// <returns>A Task that, once successfully completed, returns a full <see cref="PagedTracks"/> object.</returns>
-        /// <remarks>
+        ///<remarks>
         /// https://developer.spotify.com/documentation/web-api/reference/personalization/get-users-top-artists-and-tracks/
         /// </remarks>
         public Task<PagedTracks> GetUsersTopTracks(
@@ -80,15 +80,15 @@ namespace SpotifyApi.NetCore
             string accessToken = null
             ) => GetUsersTopArtistsOrTracks<PagedTracks>("track", limit, offset, timeRange, accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Get the current user’s top tracks based on calculated affinity.
-        /// </summary>
+        ///</summary>
         /// <param name="limit">Optional. The maximum number of entities to return. Default: 20. Minimum: 1. Maximum: 50.</param>
         /// <param name="offset">Optional. The index of the first object to return. Default: 0 (i.e., the first object). Use with limit to get the next set of objects.</param>
         /// <param name="timeRange">Optional. Over what time frame the affinities are computed. Valid values: long_term (calculated from several years of data and including all new data as it becomes available), medium_term (approximately last 6 months), short_term (approximately last 4 weeks). Default: medium_term.</param>
         /// <param name="accessToken">The bearer token which is gotten during the authentication/authorization process.</param>
         /// <returns>A Task that, once successfully completed, returns a instance of `T`.</returns>
-        /// <remarks>
+        ///<remarks>
         /// https://developer.spotify.com/documentation/web-api/reference/personalization/get-users-top-artists-and-tracks/
         /// </remarks>
         public Task<T> GetUsersTopTracks<T>(

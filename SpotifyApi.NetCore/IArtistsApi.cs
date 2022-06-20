@@ -2,24 +2,24 @@ using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// Defines a wrapper for the Spotify Web Artists API.
-    /// </summary>
+    ///</summary>
     public interface IArtistsApi
     {
         #region GetArtist
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information for a single artist identified by their unique Spotify ID.
-        /// </summary>
+        ///</summary>
         /// <param name="artistId">The Spotify ID for the artist.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>Task of Artist</returns>
         Task<Artist> GetArtist(string artistId, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information for a single artist identified by their unique Spotify ID.
-        /// </summary>
+        ///</summary>
         /// <param name="artistId">The Spotify ID for the artist.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <typeparam name="T">Optionally provide your own type to deserialise Spotify's response to.</typeparam>
@@ -29,19 +29,19 @@ namespace SpotifyApi.NetCore
         #endregion
 
         #region GetRelatedArtists
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information about artists similar to a given artist. Similarity is 
         /// based on analysis of the Spotify community’s listening history.
-        /// </summary>
+        ///</summary>
         /// <param name="artistId">The Spotify ID for the artist.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>Task of Artist[]</returns>
         Task<Artist[]> GetRelatedArtists(string artistId, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information about artists similar to a given artist. Similarity is 
         /// based on analysis of the Spotify community’s listening history.
-        /// </summary>
+        ///</summary>
         /// <param name="artistId">The Spotify ID for the artist.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <typeparam name="T">Optionally provide your own type to deserialise Spotify's response to.</typeparam>
@@ -52,9 +52,9 @@ namespace SpotifyApi.NetCore
 
         #region SearchArtists
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify Catalog information about artists that match a keyword string.
-        /// </summary>
+        ///</summary>
         /// <param name="artist">Artist search keyword(s). Wildcards accepted. See
         /// https://developer.spotify.com/documentation/web-api/reference/search/search/#writing-a-query---guidelines
         /// for more info.
@@ -70,17 +70,17 @@ namespace SpotifyApi.NetCore
 
         #region GetArtists
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information for several artists based on their Spotify IDs.
-        /// </summary>
+        ///</summary>
         /// <param name="artistIds">The Spotify IDs for the artists. Maximum: 50 IDs.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>Task of Artist[]</returns>
         Task<Artist[]> GetArtists(string[] artistIds, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information for several artists based on their Spotify IDs.
-        /// </summary>
+        ///</summary>
         /// <param name="artistIds">The Spotify IDs for the artists. Maximum: 50 IDs.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <typeparam name="T">Optionally provide your own type to deserialise Spotify's response to.</typeparam>
@@ -91,9 +91,9 @@ namespace SpotifyApi.NetCore
 
         #region GetArtistsTopTracks
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information about an artist’s top tracks by country.
-        /// </summary>
+        ///</summary>
         /// <param name="artistId">The Spotify ID for the artist.</param>
         /// <param name="market">Required. An ISO 3166-1 alpha-2 country code (<see cref="SpotifyCountryCodes"/>)
         /// or the string `from_token`.</param>
@@ -101,9 +101,9 @@ namespace SpotifyApi.NetCore
         /// <returns>Task of Track[]</returns>
         Task<Track[]> GetArtistsTopTracks(string artistId, string market, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information about an artist’s top tracks by country.
-        /// </summary>
+        ///</summary>
         /// <param name="artistId">The Spotify ID for the artist.</param>
         /// <param name="market">Required. An ISO 3166-1 alpha-2 country code (<see cref="SpotifyCountryCodes"/>)
         /// or the string `from_token`.</param>
@@ -116,9 +116,9 @@ namespace SpotifyApi.NetCore
 
         #region GetArtistsAlbums
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information about an artist’s albums.
-        /// </summary>
+        ///</summary>
         /// <param name="artistId">The Spotify ID for the artist.</param>
         /// <param name="includeGroups">Optional. An array of keywords (<see cref="SpotifyArtistAlbumGroups"/>) 
         /// that will be used to filter the response. If not supplied, all album types will be returned.</param>
@@ -132,7 +132,7 @@ namespace SpotifyApi.NetCore
         /// first result). Use with <paramref name="limit"/> to get the next page of search results.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>Task of Album[]</returns>
-        /// <remarks> https://developer.spotify.com/documentation/web-api/reference/artists/get-artists-albums/ </remarks>
+        ///<remarks> https://developer.spotify.com/documentation/web-api/reference/artists/get-artists-albums/ </remarks>
         Task<PagedAlbums> GetArtistsAlbums(
             string artistId,
             string[] includeGroups = null,
@@ -141,9 +141,9 @@ namespace SpotifyApi.NetCore
             int offset = 0,
             string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information about an artist’s albums.
-        /// </summary>
+        ///</summary>
         /// <param name="artistId">The Spotify ID for the artist.</param>
         /// <param name="includeGroups">Optional. An array of keywords (<see cref="SpotifyArtistAlbumGroups"/>) 
         /// that will be used to filter the response. If not supplied, all album types will be returned.</param>
@@ -158,7 +158,7 @@ namespace SpotifyApi.NetCore
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <typeparam name="T">Optionally provide your own type to deserialise Spotify's response to.</typeparam>
         /// <returns>Task of T. The Spotify response is deserialised as T.</returns>
-        /// <remarks> https://developer.spotify.com/documentation/web-api/reference/artists/get-artists-albums/ </remarks>
+        ///<remarks> https://developer.spotify.com/documentation/web-api/reference/artists/get-artists-albums/ </remarks>
         Task<T> GetArtistsAlbums<T>(
             string artistId,
             string[] includeGroups = null,

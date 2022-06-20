@@ -5,16 +5,16 @@ namespace SpotifyApi.NetCore.Authorization
 {
     // https://docs.microsoft.com/en-nz/dotnet/api/system.collections.concurrent.concurrentdictionary-2?view=netframework-4.7.1#remarks
 
-    /// <summary>
+    ///<summary>
     /// An internal, in-memory Bearer Token cache store for use with <see cref="AccountsService"/>.
-    /// </summary>
+    ///</summary>
     internal class MemoryBearerTokenStore : IBearerTokenStore
     {
         private readonly ConcurrentDictionary<string, BearerAccessToken> _store = new ConcurrentDictionary<string, BearerAccessToken>();
 
-        /// <summary>
+        ///<summary>
         /// Inserts or replaces a <see cref="BearerAccessToken"/>.
-        /// </summary>
+        ///</summary>
         /// <param name="key">The identifier key for the token.</param>
         /// <param name="token">The token as <see cref="BearerAccessToken"/>.</param>
         public Task InsertOrReplace(string key, BearerAccessToken token)
@@ -23,9 +23,9 @@ namespace SpotifyApi.NetCore.Authorization
             return Task.CompletedTask;
         }
 
-        /// <summary>
+        ///<summary>
         /// Get a <see cref="BearerAccessToken"/> by its key.
-        /// </summary>
+        ///</summary>
         public Task<BearerAccessToken> Get(string key)
         {
             _store.TryGetValue(key, out BearerAccessToken value);

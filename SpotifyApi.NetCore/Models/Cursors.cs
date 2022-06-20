@@ -4,15 +4,15 @@ namespace SpotifyApi.NetCore
 {
     public class Cursors
     {
-        /// <summary>
+        ///<summary>
         /// The cursor to use as key to find the next page of items.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("after")]
         public string After { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The cursor to use as key to find the previous page of items.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("before")]
         public string Before { get; set; }
     }

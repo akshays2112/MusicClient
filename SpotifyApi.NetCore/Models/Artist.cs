@@ -3,70 +3,70 @@ using System.Text.Json.Serialization;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// Artist object (full).
-    /// </summary>
-    /// <remarks> https://developer.spotify.com/documentation/web-api/reference/object-model/ </remarks>
+    ///</summary>
+    ///<remarks> https://developer.spotify.com/documentation/web-api/reference/object-model/ </remarks>
     public partial class Artist
     {
-        /// <summary>
+        ///<summary>
         /// Known external URLs for this artist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("external_urls")]
         public ExternalUrls ExternalUrls { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Information about the followers of the artist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("followers")]
         public Followers Followers { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// A list of the genres the artist is associated with. For example: "Prog Rock" , "Post-Grunge". 
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("genres")]
         public string[] Genres { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// A link to the Web API endpoint providing full details of the artist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("href")]
         public string Href { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The Spotify ID for the artist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("id")]
         public string Id { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Images of the artist in various sizes, widest first.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("images")]
         public Image[] Images { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The name of the artist
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The popularity of the artist. The value will be between 0 and 100, with 100 being the most 
         /// popular.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("popularity")]
         public int Popularity { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The object type: "artist"
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("type")]
         public string Type { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The Spotify URI for the artist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("uri")]
         public string Uri { get; set; }
     }

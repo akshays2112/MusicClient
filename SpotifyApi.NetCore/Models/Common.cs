@@ -2,10 +2,10 @@ using System.Text.Json.Serialization;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// External URL object
-    /// </summary>
-    /// <remarks>
+    ///</summary>
+    ///<remarks>
     /// https://developer.spotify.com/documentation/web-api/reference/object-model/#external-url-object
     /// </remarks>
     public partial class ExternalUrls
@@ -14,132 +14,132 @@ namespace SpotifyApi.NetCore
         public string Spotify { get; set; }
     }
 
-    /// <summary>
+    ///<summary>
     /// Followers object
-    /// </summary>
-    /// <remarks>
+    ///</summary>
+    ///<remarks>
     /// https://developer.spotify.com/documentation/web-api/reference/object-model/#followers-object
     /// </remarks>
     public partial class Followers
     {
-        /// <summary>
+        ///<summary>
         /// A link to the Web API endpoint providing full details of the followers; null if not available.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("href")]
         public string Href { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The total number of followers.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("total")]
         public int Total { get; set; }
     }
 
-    /// <summary>
+    ///<summary>
     /// Image object
-    /// </summary>
-    /// <remarks>
+    ///</summary>
+    ///<remarks>
     /// https://developer.spotify.com/documentation/web-api/reference/object-model/#image-object
     /// </remarks>
     public partial class Image
     {
-        /// <summary>
+        ///<summary>
         /// The image height in pixels. If unknown: null or not returned.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("height")]
         public int? Height { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The source URL of the image.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("url")]
         public string Url { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The image width in pixels. If unknown: null or not returned.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("width")]
         public int? Width { get; set; }
     }
 
-    /// <summary>
+    ///<summary>
     /// User object (public)
-    /// </summary>
-    /// <remarks>
+    ///</summary>
+    ///<remarks>
     /// https://developer.spotify.com/documentation/web-api/reference/object-model/#user-object-public
     /// </remarks>
     public partial class User
     {
-        /// <summary>
+        ///<summary>
         /// The country of the user, as set in the user's account profile. An ISO 3166-1 alpha-2 country 
         /// code. This field is only available when the current user has granted access to the 
         /// user-read-private scope.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("country")]
         public string Country { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The name displayed on the user’s profile. null if not available.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("display_name")]
         public string DisplayName { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The user's email address, as entered by the user when creating their account. Important! 
         /// This email address is unverified; there is no proof that it actually belongs to the user. 
         /// This field is only available when the current user has granted access to the user-read-email 
         /// scope.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("email")]
         public string Email { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Known public external URLs for this user.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("external_urls")]
         public ExternalUrls ExternalUrls { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Information about the followers of this user.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("followers")]
         public Followers Followers { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// A link to the Web API endpoint for this user.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("href")]
         public string Href { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The Spotify user ID for this user.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("id")]
         public string Id { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The user’s profile image.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("images")]
         public Image[] Images { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The user's Spotify subscription level: "premium", "free", etc. (The subscription level 
         /// "open" can be considered the same as "free".) This field is only available when the 
         /// current user has granted access to the user-read-private scope.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("product")]
         public string Product { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The object type: "user"
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("type")]
         public string Type { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The Spotify URI for this user.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("uri")]
         public string Uri { get; set; }
 
@@ -147,23 +147,23 @@ namespace SpotifyApi.NetCore
         public string Name { get; set; }
     }
 
-    /// <summary>
+    ///<summary>
     /// Resume Point object (public)
-    /// </summary>
-    /// <remarks>
+    ///</summary>
+    ///<remarks>
     /// https://developer.spotify.com/documentation/web-api/reference/object-model/#resume-point-object
     /// </remarks>
     public partial class ResumePoint
     {
-        /// <summary>
+        ///<summary>
         /// Whether or not the episode has been fully played by the user.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("fully_played")]
         public bool FullyPlayed { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The user’s most recent position in the episode in milliseconds.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("resume_position_ms")]
         public long ResumePositionMs { get; set; }
     }

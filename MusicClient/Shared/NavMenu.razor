@@ -4,6 +4,7 @@
 @using System.Text.RegularExpressions
 @using System.Net
 @using WebApis.Net6
+@using WebApis.Net6.Authentication
 @using WebApis.Net6.Spotify
 @inject IWApiGlobals wApiGlobals
 @inject IWApiSpotifyGlobals wApiSpotifyGlobals
@@ -105,6 +106,9 @@
                     </NavLink>
                     <NavLink class="nav-link" href="/spotify/testing/testingwapiuserprofile">
                         <span class="oi oi-plus" aria-hidden="true"></span> Test WApiUserProfile
+                    </NavLink>
+                    <NavLink class="nav-link" href="/spotify/testing/testingwapiplaylist">
+                        <span class="oi oi-plus" aria-hidden="true"></span> Test WApiPlaylist
                     </NavLink>
                 }
             </li>

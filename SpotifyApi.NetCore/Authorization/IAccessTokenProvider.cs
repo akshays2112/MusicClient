@@ -2,14 +2,14 @@
 
 namespace SpotifyApi.NetCore.Authorization
 {
-    /// <summary>
+    ///<summary>
     /// Defines a provider of Bearer (Access) Tokens for the Spotify Service
-    /// </summary>
+    ///</summary>
     public interface IAccessTokenProvider
     {
-        /// <summary>
+        ///<summary>
         /// Returns a valid access token for the Spotify Service
-        /// </summary>
+        ///</summary>
         /// <returns></returns>
         Task<string> GetAccessToken();
     }

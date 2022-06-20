@@ -4,10 +4,10 @@ namespace SpotifyApi.NetCore
 {
     using System.Text.Json.Serialization;
 
-    /// <summary>
+    ///<summary>
     /// Search Result.
-    /// </summary>
-    /// <remarks> https://developer.spotify.com/documentation/web-api/reference/search/search/ </remarks>
+    ///</summary>
+    ///<remarks> https://developer.spotify.com/documentation/web-api/reference/search/search/ </remarks>
     public partial class SearchResult
     {
         [JsonPropertyName("artists")]
@@ -23,30 +23,30 @@ namespace SpotifyApi.NetCore
         public PlaylistsSearchResult Playlists { get; set; }
     }
 
-    /// <summary>
+    ///<summary>
     /// Artists Search Result.
-    /// </summary>
+    ///</summary>
     public partial class ArtistsSearchResult : Paged<Artist>
     {
     }
 
-    /// <summary>
+    ///<summary>
     /// Albums Search Result.
-    /// </summary>
+    ///</summary>
     public partial class AlbumsSearchResult : Paged<Album>
     {
     }
 
-    /// <summary>
+    ///<summary>
     /// Tracks Search Result.
-    /// </summary>
+    ///</summary>
     public partial class TracksSearchResult : Paged<Track>
     {
     }
 
-    /// <summary>
+    ///<summary>
     /// Playlists Search Result
-    /// </summary>
+    ///</summary>
     public partial class PlaylistsSearchResult : Paged<PlaylistSimplified>
     {
     }

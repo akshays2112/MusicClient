@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore.Authorization
 {
-    /// <summary>
+    ///<summary>
     /// INCOMPLETE
     /// Provides Spotify Accounts Service functionality as described in <!-- see cref="https://developer.spotify.com/documentation/general/guides/authorization-guide/#client-credentials-flow"/ -->
-    /// </summary>
+    ///</summary>
     public class AccountsService : IAccountsService
     {
         protected const string TokenUrl = "https://accounts.spotify.com/api/token";
@@ -23,9 +23,9 @@ namespace SpotifyApi.NetCore.Authorization
 
         #region constructors
 
-        /// <summary>
+        ///<summary>
         /// Instantiates an AccountsService class.
-        /// </summary>
+        ///</summary>
         /// <param name="httpClient">An instance of <see cref="HttpClient"/> for making HTTP calls to the Spotify Accounts Service.</param>
         /// <param name="configuration">An instance of <see cref="IConfiguration"/> for providing Configuration.</param>
         /// <param name="bearerTokenStore">An instance of <see cref="IBearerTokenStore"/> for storing cached Access (Bearer) tokens.</param>
@@ -42,29 +42,29 @@ namespace SpotifyApi.NetCore.Authorization
             _bearerTokenStore = bearerTokenStore ?? new MemoryBearerTokenStore();
         }
 
-        /// <summary>
+        ///<summary>
         /// Instantiates an AccountsService class.
-        /// </summary>
+        ///</summary>
         public AccountsService() : this(new HttpClient(), null, null) { }
 
-        /// <summary>
+        ///<summary>
         /// Instantiates an AccountsService class.
-        /// </summary>
+        ///</summary>
         /// <param name="httpClient">An instance of <see cref="HttpClient"/> for making HTTP calls to the Spotify Accounts Service.</param>
         public AccountsService(HttpClient httpClient) : this(httpClient, null, null) { }
 
-        /// <summary>
+        ///<summary>
         /// Instantiates an AccountsService class.
-        /// </summary>
+        ///</summary>
         /// <param name="httpClient">An instance of <see cref="HttpClient"/> for making HTTP calls to the Spotify Accounts Service.</param>
         /// <param name="configuration">An instance of <see cref="IConfiguration"/> for providing Configuration.</param>
         public AccountsService(HttpClient httpClient, IConfiguration configuration) : this(httpClient, configuration, null) { }
 
         #endregion
 
-        /// <summary>
+        ///<summary>
         /// Returns a valid access token for the Spotify Service.
-        /// </summary>
+        ///</summary>
         /// <returns>The token as string.</returns>
         public async Task<string> GetAccessToken()
         {

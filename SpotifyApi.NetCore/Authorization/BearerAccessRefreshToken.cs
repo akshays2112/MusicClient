@@ -3,9 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace SpotifyApi.NetCore.Authorization
 {
-    /// <summary>
+    ///<summary>
     /// A Bearer plus Refresh Token DTO.
-    /// </summary>
+    ///</summary>
     public class BearerAccessRefreshToken : BearerAccessToken
     {
         /*
@@ -18,16 +18,16 @@ namespace SpotifyApi.NetCore.Authorization
             }        
         */
 
-        /// <summary>
+        ///<summary>
         /// A Refresh token.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("refresh_token")]
         public string RefreshToken { get; set; }
     }
 
-    /// <summary>
+    ///<summary>
     /// A Bearer (Access) token DTO.
-    /// </summary>
+    ///</summary>
     public class BearerAccessToken
     {
         /*
@@ -38,38 +38,38 @@ namespace SpotifyApi.NetCore.Authorization
             }
         */
 
-        /// <summary>
+        ///<summary>
         /// Access (bearer) token.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("access_token")]
         public string AccessToken { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Number of seconds after issue that the token expres. <seealso cref="Expires"/>
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("expires_in")]
         public int ExpiresIn { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// List of scopes that the token is valid for. Can be null.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("scope")]
         public string Scope { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The approximate Date and Time that the token expires.
-        /// </summary>
+        ///</summary>
         public DateTime? Expires { get; internal set; }
     }
 
-    /// <summary>
+    ///<summary>
     /// Static extensions for <see cref="BearerAccessToken"/> and <see cref="BearerAccessRefreshToken"/>.
-    /// </summary>
+    ///</summary>
     public static class BearerAccessTokenExtensions
     {
-        /// <summary>
+        ///<summary>
         /// Derive and set the Expires property on a <see cref="BearerAccessToken"/>.
-        /// </summary>
+        ///</summary>
         /// <param name="token">A instance of <see cref="BearerAccessToken"/>.</param>
         /// <param name="issuedDateTime">Approximate date and time that the token was issued.</param>
         /// <returns>The derived Expires value.</returns>
@@ -79,18 +79,18 @@ namespace SpotifyApi.NetCore.Authorization
             return token.Expires.Value;
         }
 
-        /// <summary>
+        ///<summary>
         /// Enforces invariants on a <see cref="BearerAccessToken"/>.
-        /// </summary>
+        ///</summary>
         /// <param name="token">An instance of <see cref="BearerAccessToken"/></param>
         public static void EnforceInvariants(this BearerAccessToken token)
         {
             if (token.Expires == null) throw new InvalidOperationException("Expires must not be null. Call SetExpires() to set");
         }
 
-        /// <summary>
+        ///<summary>
         /// Enforces invariants on a <see cref="BearerAccessRefreshToken"/>.
-        /// </summary>
+        ///</summary>
         /// <param name="token">An instance of <see cref="BearerAccessRefreshToken"/></param>
         public static void EnforceInvariants(this BearerAccessRefreshToken token)
         {

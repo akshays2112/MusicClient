@@ -2,15 +2,15 @@ using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// Get Spotify Catalog information about artists, albums, tracks or playlists that match a keyword string.
-    /// </summary>
+    ///</summary>
     public interface ISearchApi
     {
-        /// <summary>
+        ///<summary>
         /// Get Spotify Catalog information about artists, albums, tracks or playlists that match a
         /// keyword string.
-        /// </summary>
+        ///</summary>
         /// <param name="query">Search query keywords and optional field filters and operators. For 
         /// example: `q=roadhouse%20blues`. See also https://developer.spotify.com/documentation/web-api/reference/search/search/#writing-a-query---guidelines </param>
         /// <param name="type">Specify one of <see cref="SpotifySearchTypes"/>.</param>
@@ -33,10 +33,10 @@ namespace SpotifyApi.NetCore
             int offset = 0,
             string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify Catalog information about artists, albums, tracks or playlists that match a
         /// keyword string.
-        /// </summary>
+        ///</summary>
         /// <param name="query">Search query keywords and optional field filters and operators. For 
         /// example: `q=roadhouse%20blues`. See also https://developer.spotify.com/documentation/web-api/reference/search/search/#writing-a-query---guidelines </param>
         /// <param name="types">Specify multiple <see cref="SpotifySearchTypes"/> to search across.</param>
@@ -61,10 +61,10 @@ namespace SpotifyApi.NetCore
             int offset = 0,
             string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify Catalog information about artists, albums, tracks or playlists that match a
         /// keyword string.
-        /// </summary>
+        ///</summary>
         /// <param name="query">Search query keywords and optional field filters and operators. For 
         /// example: `q=roadhouse%20blues`. See also https://developer.spotify.com/documentation/web-api/reference/search/search/#writing-a-query---guidelines </param>
         /// <param name="types">Specify multiple <see cref="SpotifySearchTypes"/> to search across.</param>

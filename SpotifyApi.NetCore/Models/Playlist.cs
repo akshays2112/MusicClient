@@ -4,202 +4,202 @@ using System.Text.Json.Serialization;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>Playlist object (full)</summary>
-    /// <remarks>
+    ///<summary>Playlist object (full)</summary>
+    ///<remarks>
     /// https://developer.spotify.com/documentation/web-api/reference/object-model/#playlist-object-full 
     /// </remarks>
     public partial class Playlist
     {
-        /// <summary>
+        ///<summary>
         /// Returns true if context is not search and the owner allows other users to modify the playlist. 
         /// Otherwise returns false.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("collaborative")]
         public bool Collaborative { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The playlist description. Only returned for modified, verified playlists, otherwise null.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("description")]
         public string Description { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Known external URLs for this playlist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("external_urls")]
         public ExternalUrls ExternalUrls { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Information about the followers of the playlist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("followers")]
         public Followers Followers { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// A link to the Web API endpoint providing full details of the playlist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("href")]
         public string Href { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The Spotify ID for the playlist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("id")]
         public string Id { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Images for the playlist. The array may be empty or contain up to three images. The images 
         /// are returned by size in descending order. See Working with Playlists.Note: If returned, 
         /// the source URL for the image ( url ) is temporary and will expire in less than a day.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("images")]
         public Image[] Images { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The name of the playlist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The user who owns the playlist
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("owner")]
         public User Owner { get; set; }
 
         [JsonPropertyName("primary_color")]
         public object PrimaryColor { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The playlist’s public/private status: true the playlist is public, false the playlist is 
         /// private, null the playlist status is not relevant. 
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("public")]
         public bool? Public { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The version identifier for the current playlist. 
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("snapshot_id")]
         public string SnapshotId { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Information about the tracks of the playlist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("tracks")]
         public Paged<PlaylistTrack> Tracks { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The object type: “playlist”
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("type")]
         public string Type { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The Spotify URI for the playlist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("uri")]
         public string Uri { get; set; }
     }
 
-    /// <summary>Playlist object (simplified)</summary>
-    /// <remarks>
+    ///<summary>Playlist object (simplified)</summary>
+    ///<remarks>
     /// https://developer.spotify.com/documentation/web-api/reference/object-model/#playlist-object-simplified 
     /// </remarks>
     public partial class PlaylistSimplified
     {
-        /// <summary>
+        ///<summary>
         /// Returns true if context is not search and the owner allows other users to modify the playlist. 
         /// Otherwise returns false.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("collaborative")]
         public bool Collaborative { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The playlist description. Only returned for modified, verified playlists, otherwise null.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("description")]
         public string Description { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Known external URLs for this playlist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("external_urls")]
         public ExternalUrls ExternalUrls { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// A link to the Web API endpoint providing full details of the playlist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("href")]
         public string Href { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The Spotify ID for the playlist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("id")]
         public string Id { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Images for the playlist. The array may be empty or contain up to three images. The images 
         /// are returned by size in descending order. See Working with Playlists. Note: If returned, 
         /// the source URL for the image(url ) is temporary and will expire in less than a day.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("images")]
         public Image[] Images { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The name of the playlist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The user who owns the playlist
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("owner")]
         public User Owner { get; set; }
 
         [JsonPropertyName("primary_color")]
         public object PrimaryColor { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The playlist’s public/private status: true the playlist is public, false the playlist is 
         /// private, null the playlist status is not relevant. 
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("public")]
         public bool? Public { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The version identifier for the current playlist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("snapshot_id")]
         public string SnapshotId { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// A collection containing a link ( href ) to the Web API endpoint where full details of the 
         /// playlist’s tracks can be retrieved, along with the total number of tracks in the playlist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("tracks")]
         public PlaylistTracks Tracks { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The object type: “playlist”
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("type")]
         public string Type { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The Spotify URI for the playlist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("uri")]
         public string Uri { get; set; }
     }
 
-    /// <summary>
+    ///<summary>
     /// A collection containing a link ( href ) to the Web API endpoint where full details of the playlist’s 
     /// tracks can be retrieved, along with the total number of tracks in the playlist.
-    /// </summary>
-    /// <remarks>
+    ///</summary>
+    ///<remarks>
     /// https://developer.spotify.com/documentation/web-api/reference/object-model/#playlist-object-simplified
     /// </remarks>
     public partial class PlaylistTracks
@@ -211,40 +211,40 @@ namespace SpotifyApi.NetCore
         public int Total { get; set; }
     }
 
-    /// <summary>
+    ///<summary>
     /// Playlist track object
-    /// </summary>
-    /// <remarks>
+    ///</summary>
+    ///<remarks>
     /// https://developer.spotify.com/documentation/web-api/reference/object-model/#playlist-track-object
     /// </remarks>
     public partial class PlaylistTrack
     {
-        /// <summary>
+        ///<summary>
         /// The date and time the track was added. Note that some very old playlists may return null 
         /// in this field.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("added_at")]
         public DateTimeOffset? AddedAt { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The Spotify user who added the track. Note that some very old playlists may return null 
         /// in this field.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("added_by")]
         public User AddedBy { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Whether this track is a local file or not.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("is_local")]
         public bool IsLocal { get; set; }
 
         [JsonPropertyName("primary_color")]
         public string PrimaryColor { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Information about the track.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("track")]
         public Track Track { get; set; }
 
@@ -276,14 +276,14 @@ namespace SpotifyApi.NetCore
         public int Total { get; set; }
     }
 
-    /// <summary>
+    ///<summary>
     /// Upon adding items to a playlist a snapshot_id is returned.
-    /// </summary>
+    ///</summary>
     public partial class PlaylistSnapshotID
     {
-        /// <summary>
+        ///<summary>
         /// A snapshot_id which identifies a version of the playlist for future requests.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("snapshot_id")]
         public string SnapshotID { get; set; }
     }

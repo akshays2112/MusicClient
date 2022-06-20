@@ -2,8 +2,9 @@
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using WebApis.Net6.Spotify;
 
-namespace WebApis.Net6.Spotify;
+namespace WebApis.Net6.Authentication;
 
 public class SpotifyAuthentication : ISpotifyAuthentication
 {

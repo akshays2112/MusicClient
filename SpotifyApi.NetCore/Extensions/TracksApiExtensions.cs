@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore.Extensions
 {
-    /// <summary>
+    ///<summary>
     /// Helper extension methods for <see cref="TracksApi" />
-    /// </summary>
+    ///</summary>
     public static class TracksApiExtensions
     {
-        /// <summary>
+        ///<summary>
         /// Get a single track by its ISRC code.
-        /// </summary>
+        ///</summary>
         /// <param name="tracksApi">This instance of <see cref="ITracksApi"/>.</param>
         /// <param name="isrc">A valid 12 digit ISRC code.</param>
         /// <returns></returns>

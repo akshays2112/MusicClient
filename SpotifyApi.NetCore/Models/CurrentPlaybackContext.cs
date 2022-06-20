@@ -5,33 +5,33 @@ namespace SpotifyApi.NetCore
     using System;
     using System.Text.Json.Serialization;
 
-    /// <summary>
+    ///<summary>
     /// Currently Playing Object
-    /// </summary>
-    /// <remarks> https://developer.spotify.com/documentation/web-api/reference/player/get-the-users-currently-playing-track/ </remarks>
+    ///</summary>
+    ///<remarks> https://developer.spotify.com/documentation/web-api/reference/player/get-the-users-currently-playing-track/ </remarks>
     public abstract partial class CurrentPlaybackContext
     {
-        /// <summary>
+        ///<summary>
         /// Unix Millisecond Timestamp when data was fetched.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("timestamp")]
         public long Timestamp { get; set; }
 
         [JsonPropertyName("device")]
         public Device Device { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Progress into the currently playing track. Can be null.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("progress_ms")]
         public long? ProgressMs { get; set; }
 
         [JsonPropertyName("is_playing")]
         public bool IsPlaying { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The object type of the currently playing item. Can be one of track, episode, ad or unknown.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("currently_playing_type")]
         public string CurrentlyPlayingType { get; set; }
 
@@ -41,42 +41,42 @@ namespace SpotifyApi.NetCore
         [JsonPropertyName("repeat_state")]
         public string RepeatState { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// A Context Object. Can be null.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("context")]
         public Context Context { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Allows to update the user interface based on which playback actions are available within the current context.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("actions")]
         public Actions Actions { get; set; }
     }
 
     public partial class Context
     {
-        /// <summary>
+        ///<summary>
         /// The external_urls of the context, or null if not available.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("external_urls")]
         public ExternalUrls ExternalUrls { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The href of the context, or null if not available.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("href")]
         public Uri Href { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The object type of the item’s context. Can be one of album , artist or playlist.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("type")]
         public string Type { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The uri of the context.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("uri")]
         public string Uri { get; set; }
     }

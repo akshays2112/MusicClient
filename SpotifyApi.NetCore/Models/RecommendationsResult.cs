@@ -2,65 +2,65 @@ using System.Text.Json.Serialization;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// recommendations object
-    /// </summary>
+    ///</summary>
     public partial class RecommendationsResult
     {
-        /// <summary>
+        ///<summary>
         /// An array of track object (simplified) ordered according to the parameters supplied.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("tracks")]
         public Track[] Tracks { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// An array of recommendation seed objects.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("seeds")]
         public Seed[] Seeds { get; set; }
     }
 
-    /// <summary>
+    ///<summary>
     /// recommendations seed object
-    /// </summary>
+    ///</summary>
     public partial class Seed
     {
-        /// <summary>
+        ///<summary>
         /// The number of recommended tracks available for this seed.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("initialPoolSize")]
         public int InitialPoolSize { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The number of tracks available after min_* and max_* filters have been applied.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("afterFilteringSize")]
         public int AfterFilteringSize { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The number of tracks available after relinking for regional availability.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("afterRelinkingSize")]
         public int AfterRelinkingSize { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The id used to select this seed. This will be the same as the string used in the seed_artists, 
         /// seed_tracks or seed_genres parameter.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("id")]
         public string Id { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The entity type of this seed. One of artist , track or genre.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("type")]
         public string Type { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// A link to the full track or artist data for this seed. For tracks this will be a link to 
         /// a Track Object. For artists a link to an Artist Object. For genre seeds, this value will 
         /// be null.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("href")]
         public string Href { get; set; }
     }

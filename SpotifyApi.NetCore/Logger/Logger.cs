@@ -5,16 +5,16 @@ using System.Runtime.CompilerServices;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// Simple Class Library Logger
-    /// </summary>
+    ///</summary>
     public static class Logger
     {
         private static ILoggerFactory _Factory = null;
 
-        /// <summary>
+        ///<summary>
         /// Instance of <see cref="ILoggerFactory"/>.
-        /// </summary>
+        ///</summary>
         public static ILoggerFactory LoggerFactory
         {
             get
@@ -28,18 +28,18 @@ namespace SpotifyApi.NetCore
             set { _Factory = value; }
         }
 
-        /// <summary>
+        ///<summary>
         /// Create an instance of <see cref="ILogger"/> with the given category.
-        /// </summary>
+        ///</summary>
         /// <param name="category">The category description for this instance of the logger.</param>
         /// <returns>Instance of <see cref="ILogger"/></returns>
         public static ILogger CreateLogger(string category) => LoggerFactory.CreateLogger(category);
 
         private static string Category(string className, string memberName) => $"SpotifyApi.NetCore:{className}.{memberName}";
 
-        /// <summary>
+        ///<summary>
         /// Log a message at Debug level using a category name derived from className and Member name
-        /// </summary>
+        ///</summary>
         /// <param name="message">The log message.</param>
         /// <param name="className">Optional. The name of the class emiting the log message. e.g. `nameof(RestHttpClient)`.</param>
         /// <param name="memberName">The compiler will set the caller member name. Can be overidden.</param>
@@ -62,9 +62,9 @@ namespace SpotifyApi.NetCore
             CreateLogger(category).LogDebug(fullMessage);
         }
 
-        /// <summary>
+        ///<summary>
         /// Log a message at Information level using a category name derived from className and Member name
-        /// </summary>
+        ///</summary>
         /// <param name="message">The log message.</param>
         /// <param name="className">Optional. The name of the class emiting the log message. e.g. `nameof(RestHttpClient)`.</param>
         /// <param name="memberName">The compiler will set the caller member name. Can be overidden.</param>
@@ -77,9 +77,9 @@ namespace SpotifyApi.NetCore
             CreateLogger(category).LogInformation(message);
         }
 
-        /// <summary>
+        ///<summary>
         /// Log a message at Warning level using a category name derived from className and Member name
-        /// </summary>
+        ///</summary>
         /// <param name="message">The log message.</param>
         /// <param name="className">Optional. The name of the class emiting the log message. e.g. `nameof(RestHttpClient)`.</param>
         /// <param name="memberName">The compiler will set the caller member name. Can be overidden.</param>
@@ -92,9 +92,9 @@ namespace SpotifyApi.NetCore
             CreateLogger(category).LogWarning(message);
         }
 
-        /// <summary>
+        ///<summary>
         /// Log a message at Error level using a category name derived from className and Member name
-        /// </summary>
+        ///</summary>
         /// <param name="message">The log message.</param>
         /// <param name="exception">Optional. An Exception to log.</param>
         /// <param name="className">Optional. The name of the class emiting the log message. e.g. `nameof(RestHttpClient)`.</param>

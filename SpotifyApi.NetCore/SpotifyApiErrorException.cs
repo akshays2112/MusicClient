@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// A Spotify API Error Exception.
-    /// </summary>
+    ///</summary>
     public class SpotifyApiErrorException : Exception
     {
-        /// <summary>
+        ///<summary>
         /// Instantiates a SpotifyApiErrorException with a message.
-        /// </summary>
+        ///</summary>
         /// <param name="message"></param>
         public SpotifyApiErrorException(string message) : base(message) { }
 
-        /// <summary>
+        ///<summary>
         /// Instantiates a SpotifyApiErrorException with a status code and a <see cref="SpotifyApiError"/> .
-        /// </summary>
+        ///</summary>
         /// <param name="statusCode"></param>
         /// <param name="spotifyApiError"></param>
         public SpotifyApiErrorException(HttpStatusCode statusCode, SpotifyApiError spotifyApiError) : base(spotifyApiError?.Message)
@@ -28,19 +28,19 @@ namespace SpotifyApi.NetCore
             SpotifyApiError = spotifyApiError;
         }
 
-        /// <summary>
+        ///<summary>
         /// The HTTP Status Code returned from the Spotify API
-        /// </summary>
+        ///</summary>
         public HttpStatusCode HttpStatusCode { get; private set; }
 
-        /// <summary>
+        ///<summary>
         /// The derived <see cref="SpotifyApiError"/> returned from the Spotify API
-        /// </summary>
+        ///</summary>
         public SpotifyApiError SpotifyApiError { get; private set; }
 
-        /// <summary>
+        ///<summary>
         /// Reads an <see cref="HttpResponseMessage"/> to parse a <see cref="SpotifyApiError"/>.
-        /// </summary>
+        ///</summary>
         /// <param name="response">The <see cref="HttpResponseMessage"/>.</param>
         /// <returns>An instance of <see cref="SpotifyApiError"/>.</returns>
         public static async Task<SpotifyApiError> ReadErrorResponse(HttpResponseMessage response)
@@ -79,19 +79,19 @@ namespace SpotifyApi.NetCore
         }
     }
 
-    /// <summary>
+    ///<summary>
     /// A model for a Spotify API Error.
-    /// </summary>
+    ///</summary>
     public class SpotifyApiError
     {
-        /// <summary>
+        ///<summary>
         /// The message returned by the API
-        /// </summary>
+        ///</summary>
         public string Message { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The raw JSON string returned by the API
-        /// </summary>
+        ///</summary>
         public string Json { get; set; }
     }
 }

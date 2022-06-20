@@ -2,23 +2,23 @@ using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// Defines a wrapper for the Spotify Web Tracks API.
-    /// </summary>
+    ///</summary>
     public interface ITracksApi
     {
         #region GetTrack
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information for a single track identified by its unique Spotify ID.
-        /// </summary>
+        ///</summary>
         /// <param name="trackId">The Spotify ID for the track.</param>
         /// <returns>Task of Track</returns>
         public Task<Track> GetTrack(string trackId, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information for a single track identified by its unique Spotify ID.
-        /// </summary>
+        ///</summary>
         /// <param name="trackId">The Spotify ID for the track.</param>
         /// <param name="market">Optional. An ISO 3166-1 alpha-2 <see cref="SpotifyCountryCode"/> or the
         /// string `from_token`. Provide this parameter if you want to apply Track Relinking.</param>
@@ -26,9 +26,9 @@ namespace SpotifyApi.NetCore
         /// <returns>Task of Track</returns>
         Task<Track> GetTrack(string trackId, string market = null, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information for a single track identified by its unique Spotify ID.
-        /// </summary>
+        ///</summary>
         /// <param name="trackId">The Spotify ID for the track.</param>
         /// <param name="market">Optional. An ISO 3166-1 alpha-2 <see cref="SpotifyCountryCode"/> or the
         /// string `from_token`. Provide this parameter if you want to apply Track Relinking.</param>
@@ -41,9 +41,9 @@ namespace SpotifyApi.NetCore
 
         #region GetTracks
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information for multiple tracks based on their Spotify IDs.
-        /// </summary>
+        ///</summary>
         /// <param name="trackIds">An array of the Spotify IDs for the tracks. Maximum: 50 IDs.</param>
         /// <param name="market">Optional. An ISO 3166-1 alpha-2 <see cref="SpotifyCountryCode"/> or the
         /// string `from_token`. Provide this parameter if you want to apply Track Relinking.</param>
@@ -51,9 +51,9 @@ namespace SpotifyApi.NetCore
         /// <returns>Task of Track[]</returns>
         Task<Track[]> GetTracks(string[] trackIds, string market = null, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information for multiple tracks based on their Spotify IDs.
-        /// </summary>
+        ///</summary>
         /// <param name="trackIds">An array of the Spotify IDs for the tracks. Maximum: 50 IDs.</param>
         /// <param name="market">Optional. An ISO 3166-1 alpha-2 <see cref="SpotifyCountryCode"/> or the
         /// string `from_token`. Provide this parameter if you want to apply Track Relinking.</param>
@@ -66,17 +66,17 @@ namespace SpotifyApi.NetCore
 
         #region GetTrackAudioAnalysis
 
-        /// <summary>
+        ///<summary>
         /// Get a detailed audio analysis for a single track identified by its unique Spotify ID.
-        /// </summary>
+        ///</summary>
         /// <param name="trackId">The Spotify ID for the track.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>Task of <see cref="TrackAudioAnalysis" /></returns>
         Task<TrackAudioAnalysis> GetTrackAudioAnalysis(string trackId, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get a detailed audio analysis for a single track identified by its unique Spotify ID.
-        /// </summary>
+        ///</summary>
         /// <param name="trackId">The Spotify ID for the track.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <typeparam name="T">Optionally provide your own type to deserialise Spotify's response to.</typeparam>
@@ -87,17 +87,17 @@ namespace SpotifyApi.NetCore
 
         #region GetTrackAudioFeatures
 
-        /// <summary>
+        ///<summary>
         /// Get audio feature information for a single track identified by its unique Spotify ID.
-        /// </summary>
+        ///</summary>
         /// <param name="trackId">The Spotify ID for the track.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>Task of <see cref="TrackAudioFeatures" /></returns>
         Task<TrackAudioFeatures> GetTrackAudioFeatures(string trackId, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get audio feature information for a single track identified by its unique Spotify ID.
-        /// </summary>
+        ///</summary>
         /// <param name="trackId">The Spotify ID for the track.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <typeparam name="T">Optionally provide your own type to deserialise Spotify's response to.</typeparam>
@@ -108,17 +108,17 @@ namespace SpotifyApi.NetCore
 
         #region GetTracksAudioFeatures
 
-        /// <summary>
+        ///<summary>
         /// Get audio features for multiple tracks based on their Spotify IDs.
-        /// </summary>
+        ///</summary>
         /// <param name="trackIds">An array of the Spotify IDs for the tracks. Maximum: 100 IDs.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>Task of <see cref="TrackAudioFeatures[]" /></returns>
         Task<TrackAudioFeatures[]> GetTracksAudioFeatures(string[] trackIds, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get audio features for multiple tracks based on their Spotify IDs.
-        /// </summary>
+        ///</summary>
         /// <param name="trackIds">An array of the Spotify IDs for the tracks. Maximum: 100 IDs.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <typeparam name="T">Optionally provide your own type to deserialise Spotify's response to.</typeparam>
@@ -129,9 +129,9 @@ namespace SpotifyApi.NetCore
 
         #region SearchTracks
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify Catalog information about tracks that match a keyword string.
-        /// </summary>
+        ///</summary>
         /// <param name="query">Search query keywords and optional field filters and operators. See
         /// https://developer.spotify.com/documentation/web-api/reference/search/search/#writing-a-query---guidelines</param>
         /// <param name="market">Optional. Choose a <see cref="SpotifyCountryCodes"/>. If a country code

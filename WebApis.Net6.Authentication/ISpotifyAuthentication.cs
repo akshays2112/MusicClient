@@ -1,4 +1,4 @@
-﻿namespace WebApis.Net6.Spotify
+﻿namespace WebApis.Net6.Authentication
 {
     public interface ISpotifyAuthentication
     {

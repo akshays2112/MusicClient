@@ -5,27 +5,27 @@ namespace SpotifyApi.NetCore
 {
     public class PlayHistory
     {
-        /// <summary>
+        ///<summary>
         /// The track the user listened to.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("track")]
         public Track Track { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The date and time the track was played.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("played_at")]
         public string PlayedAt { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The context the track was played from.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("context")]
         public Context Context { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Converts the date and time the track was played into <see cref="DateTimeOffset"/>.
-        /// </summary>
+        ///</summary>
         public DateTimeOffset? PlayedAtDateTime()
         {
             if (PlayedAt == null) return null;

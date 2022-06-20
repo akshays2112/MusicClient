@@ -4,9 +4,9 @@ namespace SpotifyApi.NetCore
 {
     public partial class CurrentEpisodePlaybackContext : CurrentPlaybackContext
     {
-        /// <summary>
+        ///<summary>
         /// The currently playing Episode. Can be null.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("item")]
         public Episode Item { get; set; }
     }

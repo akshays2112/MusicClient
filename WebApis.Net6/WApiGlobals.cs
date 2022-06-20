@@ -36,7 +36,8 @@ public class WApiGlobals : IWApiGlobals
                 Content = content
             };
             HttpResponseMessage httpResponseMessage = await _httpClient.SendAsync(request);
-            if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
+            if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK ||
+                httpResponseMessage.StatusCode == System.Net.HttpStatusCode.Created)
             {
                 if (typeof(T) == typeof(EmptyResponse)) return default;
                 string response = await httpResponseMessage.Content.ReadAsStringAsync();

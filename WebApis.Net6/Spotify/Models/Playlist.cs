@@ -14,7 +14,7 @@ public class Playlist
     public ExternalUrls? ExternalUrls { get; set; }
 
     [JsonPropertyName("followers")]
-    public Follower[]? Followers { get; set; } = Array.Empty<Follower>();
+    public Follower? Followers { get; set; }
 
     [JsonPropertyName("href")]
     public string? Href { get; set; } = string.Empty;

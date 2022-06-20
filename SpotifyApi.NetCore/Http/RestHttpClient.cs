@@ -6,31 +6,31 @@ using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore.Http
 {
-    /// <summary>
+    ///<summary>
     /// Static helper extensions on HttpClient for communicating with the Spotify Web API.
-    /// </summary>
-    /// <remarks>See https://developer.spotify.com/web-api/ </remarks>
+    ///</summary>
+    ///<remarks>See https://developer.spotify.com/web-api/ </remarks>
     internal static class RestHttpClient
     {
-        /// <summary>
+        ///<summary>
         /// Makes an HTTP(S) GET request to <seealso cref="requestUrl"/> and returns the result as (awaitable Task of) <seealso cref="string"/>.
-        /// </summary>
+        ///</summary>
         /// <param name="requestUri">The entire request URL as <see cref="Uri"/>.</param>
         /// <returns>An (awaitable Task of) <seealso cref="string"/></returns>
-        /// <remarks>Will Authorise using the values of the SpotifyApiClientId and SpotifyApiClientSecret appSettings. See 
+        ///<remarks>Will Authorise using the values of the SpotifyApiClientId and SpotifyApiClientSecret appSettings. See 
         /// https://developer.spotify.com/web-api/authorization-guide/#client-credentials-flow </remarks>
         public static async Task<string> Get(this HttpClient http, Uri requestUri)
         {
             return await Get(http, requestUri, null);
         }
 
-        /// <summary>
+        ///<summary>
         /// Makes an HTTP(S) GET request to <seealso cref="requestUrl"/> and returns the result as (awaitable Task of) <seealso cref="string"/>.
-        /// </summary>
+        ///</summary>
         /// <param name="requestUri">The entire request URL as <see cref="Uri"/>.</param>
         /// <param name="authenticationHeader"></param>
         /// <returns>An (awaitable Task of) <seealso cref="string"/></returns>
-        /// <remarks>Will Authorise using the values of the SpotifyApiClientId and SpotifyApiClientSecret appSettings. See 
+        ///<remarks>Will Authorise using the values of the SpotifyApiClientId and SpotifyApiClientSecret appSettings. See 
         /// https://developer.spotify.com/web-api/authorization-guide/#client-credentials-flow </remarks>
         public static async Task<string> Get(
             this HttpClient http,
@@ -55,27 +55,27 @@ namespace SpotifyApi.NetCore.Http
             return await response.Content.ReadAsStringAsync();
         }
 
-        /// <summary>
+        ///<summary>
         /// Makes an HTTP(S) POST request to <seealso cref="requestUrl"/> with <seealso cref="formData"/> as the request body. Returns the result as (awaitable Task of) <seealso cref="string"/>.
-        /// </summary>
+        ///</summary>
         /// <param name="requestUri">The entire request URL as <see cref="Uri"/>.</param>
         /// <param name="formData">The URL encoded formData in format "key1=value1&amp;key2=value2"</param>
         /// <returns>An (awaitable Task of) <seealso cref="string"/> </returns>
-        /// <remarks>Will Authorise using the values of the SpotifyApiClientId and SpotifyApiClientSecret appSettings. See 
+        ///<remarks>Will Authorise using the values of the SpotifyApiClientId and SpotifyApiClientSecret appSettings. See 
         /// https://developer.spotify.com/web-api/authorization-guide/#client-credentials-flow </remarks>
         public static async Task<string> Post(this HttpClient http, Uri requestUri, string formData)
         {
             return await Post(http, requestUri, formData, null);
         }
 
-        /// <summary>
+        ///<summary>
         /// Makes an HTTP(S) POST request to <seealso cref="requestUrl"/> with <seealso cref="formData"/> as the request body. Returns the result as (awaitable Task of) <seealso cref="string"/>.
-        /// </summary>
+        ///</summary>
         /// <param name="requestUri">The entire request URI as <see cref="Uri"/>.</param>
         /// <param name="formData">The URL encoded formData in format "key1=value1&amp;key2=value2"</param>
         /// <param name="headerValue">An authentication header for the request.</param>
         /// <returns>An (awaitable Task of) <seealso cref="string"/> </returns>
-        /// <remarks>Will Authorise using the values of the SpotifyApiClientId and SpotifyApiClientSecret appSettings. See 
+        ///<remarks>Will Authorise using the values of the SpotifyApiClientId and SpotifyApiClientSecret appSettings. See 
         /// https://developer.spotify.com/web-api/authorization-guide/#client-credentials-flow </remarks>
         public static async Task<string> Post(
             this HttpClient http,
@@ -103,9 +103,9 @@ namespace SpotifyApi.NetCore.Http
             return await response.Content.ReadAsStringAsync();
         }
 
-        /// <summary>
+        ///<summary>
         /// Checks the reponse from the Spotify Server for an error.
-        /// </summary>
+        ///</summary>
         /// <param name="response"></param>
         /// <returns>If a Spotify API Error message is parsed, a <see cref="SpotifyApiErrorException"/> is thrown.
         /// If any other error is returned a <see cref="HttpResponseMessageException"/> if thrown. If no error

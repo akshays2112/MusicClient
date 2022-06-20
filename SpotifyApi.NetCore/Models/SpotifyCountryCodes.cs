@@ -1,14 +1,14 @@
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// ISO 3166-1 alpha-2 country codes as used by Spotify to indicate market.
-    /// </summary>
-    /// <remarks>https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2</remarks>
+    ///</summary>
+    ///<remarks>https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2</remarks>
     public static class SpotifyCountryCodes
     {
-        /// <summary>
+        ///<summary>
         /// Indicates that Spotify should get the market from the User's access token.
-        /// </summary>
+        ///</summary>
         public const string _From_Token = "from_token";
         public const string Andorra = "AD";
         public const string United_Arab_Emirates = "AE";

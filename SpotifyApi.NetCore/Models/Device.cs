@@ -3,52 +3,52 @@ using System.Text.Json.Serialization;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// Device Object
-    /// </summary>
-    /// <remarks> https://developer.spotify.com/documentation/web-api/reference/player/get-a-users-available-devices/ </remarks>
+    ///</summary>
+    ///<remarks> https://developer.spotify.com/documentation/web-api/reference/player/get-a-users-available-devices/ </remarks>
     public partial class Device
     {
-        /// <summary>
+        ///<summary>
         /// The device ID. This may be null.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("id")]
         public string Id { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// If this device is the currently active device.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("is_active")]
         public bool IsActive { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// If this device is currently in a private session.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("is_private_session")]
         public bool IsPrivateSession { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Whether controlling this device is restricted. At present if this is “true” then no Web 
         /// API commands will be accepted by this device.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("is_restricted")]
         public bool IsRestricted { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The name of the device.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// Device type, such as “Computer”, “Smartphone” or “Speaker”.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("type")]
         public string Type { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The current volume in percent. This may be null.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("volume_percent")]
         public int? VolumePercent { get; set; }
     }

@@ -2,9 +2,9 @@
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// A response from the Spotify API
-    /// </summary>
+    ///</summary>
     /// <typeparam name="T"></typeparam>
     public class SpotifyResponse
     {
@@ -13,9 +13,9 @@ namespace SpotifyApi.NetCore
         public string ReasonPhrase { get; set; }
     }
 
-    /// <summary>
+    ///<summary>
     /// A generic response from the Spotify API
-    /// </summary>
+    ///</summary>
     /// <typeparam name="T"></typeparam>
     public class SpotifyResponse<T> : SpotifyResponse
     {

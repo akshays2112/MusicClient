@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// Base class helper for Spotify Web API service classes.
-    /// </summary>
+    ///</summary>
     public abstract class SpotifyWebApi
     {
         protected internal const string BaseUrl = "https://api.spotify.com/v1";
@@ -21,11 +21,11 @@ namespace SpotifyApi.NetCore
 
         #region Constructors
 
-        /// <summary>
+        ///<summary>
         /// This constructor accepts an <see cref="IAccessTokenProvider"/> that will be used to provide a 
         /// Spotify access token for all calls to the API (except when an accessToken is provided using the
         /// optional `accessToken` parameter on each method).
-        /// </summary>
+        ///</summary>
         /// <param name="httpClient">An instance of <see cref="HttpClient"/></param>
         /// <param name="accessTokenProvider">An instance of an <see cref="IAccessTokenProvider"/></param>
         public SpotifyWebApi(HttpClient httpClient, IAccessTokenProvider accessTokenProvider) : this(httpClient)
@@ -33,10 +33,10 @@ namespace SpotifyApi.NetCore
             _tokenProvider = accessTokenProvider ?? throw new ArgumentNullException(nameof(accessTokenProvider));
         }
 
-        /// <summary>
+        ///<summary>
         /// This constructor accepts a Spotify access token that will be used for all calls to the API 
         /// (except when an accessToken is provided using the optional `accessToken` parameter on each method).
-        /// </summary>
+        ///</summary>
         /// <param name="httpClient">An instance of <see cref="HttpClient"/></param>
         /// <param name="accessToken">A valid access token from the Spotify Accounts service</param>
         public SpotifyWebApi(HttpClient httpClient, string accessToken) : this(httpClient)
@@ -45,10 +45,10 @@ namespace SpotifyApi.NetCore
             _accessToken = accessToken;
         }
 
-        /// <summary>
+        ///<summary>
         /// Use this constructor when an accessToken will be provided using the `accessToken` parameter 
         /// on each method
-        /// </summary>
+        ///</summary>
         /// <param name="httpClient">An instance of <see cref="HttpClient"/></param>
         public SpotifyWebApi(HttpClient httpClient)
         {
@@ -70,18 +70,18 @@ namespace SpotifyApi.NetCore
             return token;
         }
 
-        /// <summary>
+        ///<summary>
         /// Invoke a GET request and deserialise the JSON to a model of T
-        /// </summary>
+        ///</summary>
         /// <param name="url">The URL to GET</param>
         /// <typeparam name="T">The type to deserialise to</typeparam>
         [Obsolete("Use UriBuilder to construct Uri using AppendToQuery extensions")]
         protected internal virtual Task<T> GetModel<T>(string url, string accessToken = null)
             => GetModel<T>(new Uri(url), accessToken: accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Invoke a GET request and deserialise the JSON to a model of T
-        /// </summary>
+        ///</summary>
         /// <param name="url">The URL to GET</param>
         /// <typeparam name="T">The type to deserialise to</typeparam>
         protected internal virtual async Task<T> GetModel<T>(Uri uri, string accessToken = null)
@@ -96,9 +96,9 @@ namespace SpotifyApi.NetCore
             );
         }
 
-        /// <summary>
+        ///<summary>
         /// Invoke a GET request and deserialise the result to JSON from a root property of the Spotify Response
-        /// </summary>
+        ///</summary>
         /// <param name="url">The URL to GET</param>
         /// <param name="rootPropertyName">The name of the root property of the JSON response to deserialise, e.g. "artists"</param>
         /// <typeparam name="T">The type to deserialise to</typeparam>
@@ -110,9 +110,9 @@ namespace SpotifyApi.NetCore
             string accessToken = null)
                 => GetModelFromProperty<T>(new Uri(url), rootPropertyName, accessToken: accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Invoke a GET request and deserialise the result to JSON from a root property of the Spotify Response
-        /// </summary>
+        ///</summary>
         /// <param name="url">The URL to GET</param>
         /// <param name="rootPropertyName">The name of the root property of the JSON response to deserialise, e.g. "artists"</param>
         /// <typeparam name="T">The type to deserialise to</typeparam>
@@ -127,9 +127,9 @@ namespace SpotifyApi.NetCore
             return JsonSerializer.Deserialize<T>(jObject?.EnumerateObject().FirstOrDefault(o => o.Name == rootPropertyName).Value.ToString());
         }
 
-        /// <summary>
+        ///<summary>
         /// GET uri and deserialize as <see cref="JObject"/>
-        /// </summary>
+        ///</summary>
         protected internal virtual async Task<JsonElement?> GetJObject(Uri uri, string accessToken = null)
         {
             string json = await _http.Get
@@ -148,71 +148,71 @@ namespace SpotifyApi.NetCore
             return deserialized;
         }
 
-        /// <summary>
+        ///<summary>
         /// Helper to PUT an object as JSON body
-        /// </summary>
+        ///</summary>
         [Obsolete("Use UriBuilder to construct Uri using AppendToQuery extensions")]
         protected internal virtual async Task<SpotifyResponse> Put(string url, object data, string accessToken = null)
             => await PostOrPut<dynamic>("PUT", new Uri(url), data, accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Helper to POST an object as JSON body
-        /// </summary>
+        ///</summary>
         [Obsolete("Use UriBuilder to construct Uri using AppendToQuery extensions")]
         protected internal virtual async Task<SpotifyResponse> Post(string url, object data, string accessToken = null)
             => await PostOrPut<dynamic>("POST", new Uri(url), data, accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Helper to PUT an object as JSON body
-        /// </summary>
+        ///</summary>
         protected internal virtual async Task<SpotifyResponse> Put(Uri uri, string accessToken = null)
             => await PostOrPut<dynamic>("PUT", uri, null, accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Helper to PUT an object as JSON body
-        /// </summary>
+        ///</summary>
         protected internal virtual async Task<SpotifyResponse<T>> Put<T>(Uri uri, string accessToken = null)
             => await PostOrPut<T>("PUT", uri, null, accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Helper to PUT an object as JSON body
-        /// </summary>
+        ///</summary>
         protected internal virtual async Task<SpotifyResponse> Put(Uri uri, object data, string accessToken = null)
             => await PostOrPut<dynamic>("PUT", uri, data, accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Helper to POST an object as JSON body and deserialize response as T
-        /// </summary>
+        ///</summary>
         protected internal virtual async Task<SpotifyResponse<T>> Put<T>(Uri uri, object data, string accessToken = null)
             => await PostOrPut<T>("PUT", uri, data, accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Helper to POST an object as JSON body
-        /// </summary>
+        ///</summary>
         protected internal virtual async Task<SpotifyResponse> Post(Uri uri, string accessToken = null)
             => await PostOrPut<dynamic>("POST", uri, null, accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Helper to POST an object as JSON body
-        /// </summary>
+        ///</summary>
         protected internal virtual async Task<SpotifyResponse> Post(Uri uri, object data, string accessToken = null)
             => await PostOrPut<dynamic>("POST", uri, data, accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Helper to POST an object as JSON body and deserialize response as T
-        /// </summary>
+        ///</summary>
         protected internal virtual async Task<SpotifyResponse<T>> Post<T>(Uri uri, object data, string accessToken = null)
             => await PostOrPut<T>("POST", uri, data, accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Helper to DELETE an object as JSON body
-        /// </summary>
+        ///</summary>
         protected internal virtual async Task<SpotifyResponse> Delete(Uri uri, object data, string accessToken = null)
             => await Delete<dynamic>(uri, data, accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Helper to DELETE an object with content to put in request body.
-        /// </summary>
+        ///</summary>
         protected internal virtual async Task<SpotifyResponse<T>> Delete<T>(Uri uri, object data, string accessToken = null)
         {
             Logger.Debug($"DELETE {uri}. Token = {accessToken?.ToString()?[..4]}...", nameof(SpotifyWebApi));
@@ -260,9 +260,9 @@ namespace SpotifyApi.NetCore
             return spotifyResponse;
         }
 
-        /// <summary>
+        ///<summary>
         /// Helper to DELETE an object
-        /// </summary>
+        ///</summary>
         protected internal virtual async Task<SpotifyResponse> Delete(Uri uri, string accessToken = null)
         {
             Logger.Debug($"DELETE {uri}. Token = {accessToken?.ToString()?[..4]}...", nameof(SpotifyWebApi));

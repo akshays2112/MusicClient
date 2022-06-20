@@ -1,9 +1,9 @@
 ﻿namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// Paged Full Show Objects.
-    /// </summary>
-    /// <remarks> https://developer.spotify.com/documentation/web-api/reference/object-model/ </remarks>
+    ///</summary>
+    ///<remarks> https://developer.spotify.com/documentation/web-api/reference/object-model/ </remarks>
     public class PagedShows : Paged<Show>
     {
     }

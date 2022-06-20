@@ -22,9 +22,9 @@ namespace SpotifyApi.NetCore
         [JsonPropertyName("previous")]
         public string Previous { get; set; }
 
-        /// <summary>
+        ///<summary>
         /// The cursors used to find the next set of items.
-        /// </summary>
+        ///</summary>
         [JsonPropertyName("cursors")]
         public Cursors Cursors { get; set; }
 

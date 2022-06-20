@@ -1,0 +1,327 @@
+﻿@using WebApis.Net6.Spotify.Models
+@using WebApis.Net6.Spotify.Models.Responses
+@using WebApis.Net6.Spotify.Models.Queries
+@using WebApis.Net6.Spotify.WebApiEndpoints
+@using WebApis.Net6.Spotify
+@inject IWApiPlaylist wApiPlaylist
+
+<h3>TestingWebApisNet6</h3>
+
+@if(playlist is not null)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetPlaylist</span>
+        </div>
+        <div class="MCDivTestResults">
+            <span>@playlist.Name</span><br />
+        </div>
+    </div>
+}
+<br />
+
+@if(changePlaylistDetailsPlaylist is not null)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>PutChangePlaylistDetails and GetPlaylist</span>
+        </div>
+        <div class="MCDivTestResults">
+            <span>@changePlaylistDetailsPlaylist.Name</span><br />
+        </div>
+    </div>
+}
+<br />
+
+@if(playlistTracksList?.Count > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetPlaylistTracks</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(RTrack rtrack in playlistTracksList)
+        {
+            <span>@rtrack.Track?.Name</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(snapshotId is not null)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>PostAddItemsToPlaylist</span>
+        </div>
+        <div class="MCDivTestResults">
+            <span>@snapshotId.SnapshotId</span><br />
+        </div>
+    </div>
+}
+<br />
+
+@if(updatePlaylistItemsSnapshotId is not null)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>PutUpdatePlaylistItems</span>
+        </div>
+        <div class="MCDivTestResults">
+            <span>@updatePlaylistItemsSnapshotId.SnapshotId</span><br />
+        </div>
+    </div>
+}
+<br />
+
+@if(removePlaylistItemsSnapshotId is not null)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>DeleteRemovePlaylistItems</span>
+        </div>
+        <div class="MCDivTestResults">
+            <span>@removePlaylistItemsSnapshotId.SnapshotId</span><br />
+        </div>
+    </div>
+}
+<br />
+
+@if(currentUsersPlaylistsList?.Count > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetCurrentUsersPlaylists</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Playlist rPlaylist in currentUsersPlaylistsList)
+        {
+            <span>@rPlaylist.Name</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(usersPlaylistsList?.Count > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetUsersPlaylists</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Playlist rPlaylist in usersPlaylistsList)
+        {
+            <span>@rPlaylist.Name</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(createdPlaylist is not null)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>PostCreatePlaylist</span>
+        </div>
+        <div class="MCDivTestResults">
+            <span>@createdPlaylist.Name</span><br />
+        </div>
+    </div>
+}
+<br />
+
+@if(featuredPlaylistsList?.Count > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetFeaturedPlaylists</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Playlist playlist in featuredPlaylistsList)
+        {
+            <span>@playlist.Name</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(categorysPlaylistsList?.Count > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetCategorysPlaylists</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Playlist playlist in categorysPlaylistsList)
+        {
+            <span>@playlist.Name</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@if(playlistCoverImages?.Length > 0)
+{
+    <div>
+        <div class="MCDivTestHeader">
+            <span>GetFeaturedPlaylists</span>
+        </div>
+        <div class="MCDivTestResults">
+        @foreach(Image image in playlistCoverImages)
+        {
+            <span>@image.Url</span><br />
+        }
+        </div>
+    </div>
+}
+<br />
+
+@code {
+    Playlist? playlist, changePlaylistDetailsPlaylist, createdPlaylist;
+    List<RTrack> playlistTracksList = new();
+    List<Playlist> currentUsersPlaylistsList = new(), usersPlaylistsList = new();
+    List<Playlist> featuredPlaylistsList = new(), categorysPlaylistsList = new();
+    RSnapshotId? snapshotId, updatePlaylistItemsSnapshotId, removePlaylistItemsSnapshotId;
+    Image[]? playlistCoverImages;
+
+    protected override async Task OnInitializedAsync()
+    {
+        playlist = await wApiPlaylist.GetPlaylist("3cEYpjA9oz9GiPac4AsH4n");
+
+        StateHasChanged();
+
+        _ = await wApiPlaylist.PutChangePlaylistDetails("3cEYpjA9oz9GiPac4AsH4n", "AkshayS Testing Change Playlist Details",
+            description: "AkshayS Test Description 2");
+
+        changePlaylistDetailsPlaylist = await wApiPlaylist.GetPlaylist("3cEYpjA9oz9GiPac4AsH4n");
+
+        StateHasChanged();
+
+        Paged<RTrack>? playlistTracks = await wApiPlaylist.GetPlaylistTracks("3cEYpjA9oz9GiPac4AsH4n");
+        if (playlistTracks?.Items?.Length > 0)
+        {
+            playlistTracksList.AddRange(playlistTracks.Items);
+        }
+        while (!string.IsNullOrWhiteSpace(playlistTracks?.Next))
+        {
+            playlistTracks = await wApiPlaylist.GetNextPagePlaylistTracks(playlistTracks.Next);
+            if (playlistTracks?.Items?.Length > 0)
+            {
+                playlistTracksList.AddRange(playlistTracks.Items);
+            }
+        }
+
+        StateHasChanged();
+
+        snapshotId = await wApiPlaylist.PostAddItemsToPlaylist("3cEYpjA9oz9GiPac4AsH4n", new string[]
+        {
+            "spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"
+        });
+
+        StateHasChanged();
+
+        updatePlaylistItemsSnapshotId = await wApiPlaylist.PutUpdatePlaylistItems("3cEYpjA9oz9GiPac4AsH4n", new string[]
+        {
+            "spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M",
+            "spotify:episode:512ojhOuo1ktJprKbVcKyQ"
+        });
+
+        StateHasChanged();
+
+        removePlaylistItemsSnapshotId = await wApiPlaylist.DeleteRemovePlaylistItems("3cEYpjA9oz9GiPac4AsH4n", new QTracks
+        {
+            Tracks = new QUri[]
+            {
+                new QUri { Uri = "spotify:track:4iV5W9uYEdYUVa79Axb7Rh" },
+                new QUri { Uri = "spotify:track:1301WleyT98MSxVHPZCA6M" },
+                new QUri { Uri = "spotify:episode:512ojhOuo1ktJprKbVcKyQ" }    
+            }
+        });
+
+        StateHasChanged();
+
+        Paged<Playlist>? currentUsersPlaylists = await wApiPlaylist.GetCurrentUsersPlaylists(50);
+        if (currentUsersPlaylists?.Items?.Length > 0)
+        {
+            currentUsersPlaylistsList.AddRange(currentUsersPlaylists.Items);
+        }
+        while (!string.IsNullOrWhiteSpace(currentUsersPlaylists?.Next))
+        {
+            currentUsersPlaylists = await wApiPlaylist.GetNextPageCurrentUsersPlaylists(currentUsersPlaylists.Next);
+            if (currentUsersPlaylists?.Items?.Length > 0)
+            {
+                currentUsersPlaylistsList.AddRange(currentUsersPlaylists.Items);
+            }
+        }
+
+        StateHasChanged();
+
+        Paged<Playlist>? usersPlaylists = await wApiPlaylist.GetUsersPlaylists("smedjan", 50);
+        if (usersPlaylists?.Items?.Length > 0)
+        {
+            usersPlaylistsList.AddRange(usersPlaylists.Items);
+        }
+        while (!string.IsNullOrWhiteSpace(usersPlaylists?.Next))
+        {
+            usersPlaylists = await wApiPlaylist.GetNextPageCurrentUsersPlaylists(usersPlaylists.Next);
+            if (usersPlaylists?.Items?.Length > 0)
+            {
+                usersPlaylistsList.AddRange(usersPlaylists.Items);
+            }
+        }
+
+        StateHasChanged();
+
+        createdPlaylist = await wApiPlaylist.PostCreatePlaylist("jkdesxdxvu6uetjdnaro2yrfc", "AkshayS Testing Creating Playlist", 
+            description: "AkshayS Test Description");
+
+        StateHasChanged();
+
+        RPagedPlaylists? featuredPlaylists = await wApiPlaylist.GetFeaturedPlaylists("SE", limit: 50);
+        if (featuredPlaylists?.Playlists?.Items?.Length > 0)
+        {
+            featuredPlaylistsList.AddRange(featuredPlaylists.Playlists.Items);
+        }
+        while (!string.IsNullOrWhiteSpace(featuredPlaylists?.Playlists?.Next))
+        {
+            featuredPlaylists = await wApiPlaylist.GetNextPageFeaturedPlaylists(featuredPlaylists.Playlists.Next);
+            if (featuredPlaylists?.Playlists?.Items?.Length > 0)
+            {
+                featuredPlaylistsList.AddRange(featuredPlaylists.Playlists.Items);
+            }
+        }
+
+        StateHasChanged();
+
+        //No categories - Need to create some categories and then check.
+        RPagedPlaylists? categorysPlaylists = await wApiPlaylist.GetCategorysPlaylists("dinner", "SE");
+        if (categorysPlaylists?.Playlists?.Items?.Length > 0)
+        {
+            categorysPlaylistsList.AddRange(categorysPlaylists.Playlists.Items);
+        }
+        while (!string.IsNullOrWhiteSpace(categorysPlaylists?.Playlists?.Next))
+        {
+            categorysPlaylists = await wApiPlaylist.GetNextPageCategorysPlaylists(categorysPlaylists.Playlists.Next);
+            if (categorysPlaylists?.Playlists?.Items?.Length > 0)
+            {
+                categorysPlaylistsList.AddRange(categorysPlaylists.Playlists.Items);
+            }
+        }
+
+        StateHasChanged();
+
+        playlistCoverImages = await wApiPlaylist.GetPlaylistCoverImage("3cEYpjA9oz9GiPac4AsH4n");
+
+        StateHasChanged();
+
+        //This makes no sense as we do not upload an image. Nothing happens here on this call.
+        _ = await wApiPlaylist.PutAddCustomPlaylistCoverImage("3cEYpjA9oz9GiPac4AsH4n");
+
+        await base.OnInitializedAsync();
+    }
+}

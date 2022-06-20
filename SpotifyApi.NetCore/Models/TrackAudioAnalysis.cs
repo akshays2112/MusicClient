@@ -4,9 +4,9 @@ using System.Text.Json.Serialization;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// Track Audio Analysis
-    /// </summary>
+    ///</summary>
     public partial class TrackAudioAnalysis
     {
         [JsonPropertyName("bars")]
@@ -31,9 +31,9 @@ namespace SpotifyApi.NetCore
         public AudioAnalysisTrack Track { get; set; }
     }
 
-    /// <summary>
+    ///<summary>
     /// Bar object
-    /// </summary>
+    ///</summary>
     public partial class Bar
     {
         [JsonPropertyName("start")]
@@ -46,9 +46,9 @@ namespace SpotifyApi.NetCore
         public double Confidence { get; set; }
     }
 
-    /// <summary>
+    ///<summary>
     /// Meta object
-    /// </summary>
+    ///</summary>
     public partial class Meta
     {
         [JsonPropertyName("analyzer_version")]
@@ -73,9 +73,9 @@ namespace SpotifyApi.NetCore
         public string InputProcess { get; set; }
     }
 
-    /// <summary>
+    ///<summary>
     /// Segment object
-    /// </summary>
+    ///</summary>
     public partial class Segment
     {
         [JsonPropertyName("start")]
@@ -106,9 +106,9 @@ namespace SpotifyApi.NetCore
         public double[] Timbre { get; set; }
     }
 
-    /// <summary>
+    ///<summary>
     /// Audio analysis
-    /// </summary>
+    ///</summary>
     public partial class AudioAnalysisTrack
     {
         [JsonPropertyName("duration")]

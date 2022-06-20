@@ -22,6 +22,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\MusicClient.Data\MusicClient.Data.csproj" />
 		<ProjectReference Include="..\SpotifyApi.NetCore\SpotifyApi.NetCore.csproj" />
+		<ProjectReference Include="..\WebApis.Net6.Authentication\WebApis.Net6.Authentication.csproj" />
 		<ProjectReference Include="..\WebApis.Net6\WebApis.Net6.csproj" />
 	</ItemGroup>
 

@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// Get Spotify Catalog information about artists, albums, tracks or playlists that match a keyword string.
-    /// </summary>
+    ///</summary>
     public class SearchApi : SpotifyWebApi, ISearchApi
     {
         #region Constructors
 
-        /// <summary>
+        ///<summary>
         /// Instantiates a new <see cref="SearchApi"/>.
-        /// </summary>
-        /// <remarks>
+        ///</summary>
+        ///<remarks>
         /// Use this constructor when an accessToken will be provided using the `accessToken` parameter 
         /// on each method
         /// </remarks>
@@ -24,10 +24,10 @@ namespace SpotifyApi.NetCore
         {
         }
 
-        /// <summary>
+        ///<summary>
         /// Instantiates a new <see cref="SearchApi"/>.
-        /// </summary>
-        /// <remarks>
+        ///</summary>
+        ///<remarks>
         /// This constructor accepts a Spotify access token that will be used for all calls to the API 
         /// (except when an accessToken is provided using the optional `accessToken` parameter on each method).
         /// </remarks>
@@ -37,9 +37,9 @@ namespace SpotifyApi.NetCore
         {
         }
 
-        /// <summary>
+        ///<summary>
         /// Instantiates a new <see cref="SearchApi"/>.
-        /// </summary>
+        ///</summary>
         /// <param name="httpClient">An instance of <see cref="HttpClient"/></param>
         /// <param name="accessTokenProvider">An instance of <see cref="IAccessTokenProvider"/>, e.g. <see cref="Authorization.AccountsService"/>.</param>
         public SearchApi(HttpClient httpClient, IAccessTokenProvider accessTokenProvider) : base(httpClient, accessTokenProvider)
@@ -48,10 +48,10 @@ namespace SpotifyApi.NetCore
 
         #endregion
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify Catalog information about artists, albums, tracks or playlists that match a
         /// keyword string.
-        /// </summary>
+        ///</summary>
         /// <param name="query">Search query keywords and optional field filters and operators. For 
         /// example: `q=roadhouse%20blues`. See also https://developer.spotify.com/documentation/web-api/reference/search/search/#writing-a-query---guidelines </param>
         /// <param name="type">Specify one of <see cref="SpotifySearchTypes"/>.</param>
@@ -80,10 +80,10 @@ namespace SpotifyApi.NetCore
                 offset: offset,
                 accessToken: accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify Catalog information about artists, albums, tracks or playlists that match a
         /// keyword string.
-        /// </summary>
+        ///</summary>
         /// <param name="query">Search query keywords and optional field filters and operators. For 
         /// example: `q=roadhouse%20blues`. See also https://developer.spotify.com/documentation/web-api/reference/search/search/#writing-a-query---guidelines </param>
         /// <param name="types">Specify multiple <see cref="SpotifySearchTypes"/> to search across.</param>
@@ -114,10 +114,10 @@ namespace SpotifyApi.NetCore
                 offset: offset,
                 accessToken: accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify Catalog information about artists, albums, tracks or playlists that match a
         /// keyword string.
-        /// </summary>
+        ///</summary>
         /// <param name="query">Search query keywords and optional field filters and operators. For 
         /// example: `q=roadhouse%20blues`. See also https://developer.spotify.com/documentation/web-api/reference/search/search/#writing-a-query---guidelines </param>
         /// <param name="types">Specify multiple <see cref="SpotifySearchTypes"/> to search across.</param>

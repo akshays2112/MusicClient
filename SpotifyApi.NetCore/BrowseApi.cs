@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// Endpoints for getting playlists and new album releases featured on Spotify's Browse tab.
-    /// </summary>
+    ///</summary>
     public class BrowseApi : SpotifyWebApi, IBrowseApi
     {
         #region Constructors
 
-        /// <summary>
+        ///<summary>
         /// Instantiates a new <see cref="BrowseApi"/>.
-        /// </summary>
-        /// <remarks>
+        ///</summary>
+        ///<remarks>
         /// Use this constructor when an accessToken will be provided using the `accessToken` parameter 
         /// on each method
         /// </remarks>
@@ -24,10 +24,10 @@ namespace SpotifyApi.NetCore
         {
         }
 
-        /// <summary>
+        ///<summary>
         /// Instantiates a new <see cref="BrowseApi"/>.
-        /// </summary>
-        /// <remarks>
+        ///</summary>
+        ///<remarks>
         /// This constructor accepts a Spotify access token that will be used for all calls to the API 
         /// (except when an accessToken is provided using the optional `accessToken` parameter on each method).
         /// </remarks>
@@ -37,9 +37,9 @@ namespace SpotifyApi.NetCore
         {
         }
 
-        /// <summary>
+        ///<summary>
         /// Instantiates a new <see cref="BrowseApi"/>.
-        /// </summary>
+        ///</summary>
         /// <param name="httpClient">An instance of <see cref="HttpClient"/></param>
         /// <param name="accessTokenProvider">An instance of <see cref="IAccessTokenProvider"/>, e.g. <see cref="Authorization.AccountsService"/>.</param>
         public BrowseApi(HttpClient httpClient, IAccessTokenProvider accessTokenProvider) : base(httpClient, accessTokenProvider)
@@ -54,9 +54,9 @@ namespace SpotifyApi.NetCore
             return await GetModelFromProperty<string[]>(url, "genres");
         }
 
-        /// <summary>
+        ///<summary>
         /// Get a list of categories used to tag items in Spotify (on, for example, the Spotify player's "Browse" tab).
-        /// </summary>
+        ///</summary>
         /// <param name="country">Optional. A country: a <see cref="SpotifyCountryCodes"/>. Provide 
         /// this parameter to ensure that the category exists for a particular country.</param>
         /// <param name="locale">Optional. The desired language, consisting of an ISO 639-1 language 
@@ -72,7 +72,7 @@ namespace SpotifyApi.NetCore
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service,
         /// used for this call only. See constructors for other ways to provide an access token.</param>
         /// <returns>A <see cref="PagedCategories"/> object</returns>
-        /// <remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-list-categories/ </remarks>
+        ///<remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-list-categories/ </remarks>
         public Task<PagedCategories> GetCategories(
             string country = null,
             string locale = null,
@@ -85,9 +85,9 @@ namespace SpotifyApi.NetCore
                 offset: offset,
                 accessToken: accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Get a list of categories used to tag items in Spotify (on, for example, the Spotify player's "Browse" tab).
-        /// </summary>
+        ///</summary>
         /// <typeparam name="T">Type to deserialise result to.</typeparam>
         /// <param name="country">Optional. A country: a <see cref="SpotifyCountryCodes"/>. Provide 
         /// this parameter to ensure that the category exists for a particular country.</param>
@@ -104,7 +104,7 @@ namespace SpotifyApi.NetCore
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service,
         /// used for this call only. See constructors for other ways to provide an access token.</param>
         /// <returns>Result deserialised to `T`.</returns>
-        /// <remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-list-categories/ </remarks>
+        ///<remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-list-categories/ </remarks>
         public async Task<T> GetCategories<T>(string country = null, string locale = null, int? limit = null, int offset = 0, string accessToken = null)
         {
             var builder = new UriBuilder($"{BaseUrl}/browse/categories");
@@ -115,9 +115,9 @@ namespace SpotifyApi.NetCore
             return await GetModelFromProperty<T>(builder.Uri, "categories", accessToken: accessToken);
         }
 
-        /// <summary>
+        ///<summary>
         /// Get a single category used to tag items in Spotify (on, for example, the Spotify player's "Browse" tab).
-        /// </summary>
+        ///</summary>
         /// <param name="categoryId">The Spotify category ID for the category.</param>
         /// <param name="country">Optional. A country: a <see cref="SpotifyCountryCodes"/>. Provide 
         /// this parameter to ensure that the category exists for a particular country.</param>
@@ -130,7 +130,7 @@ namespace SpotifyApi.NetCore
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service,
         /// used for this call only. See constructors for other ways to provide an access token.</param>
         /// <returns>A <see cref="Category"/> object</returns>
-        /// <remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-category/ </remarks>
+        ///<remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-category/ </remarks>
         public Task<Category> GetCategory(
             string categoryId,
             string country = null,
@@ -141,9 +141,9 @@ namespace SpotifyApi.NetCore
                 locale: locale,
                 accessToken: accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Get a single category used to tag items in Spotify (on, for example, the Spotify player's "Browse" tab).
-        /// </summary>
+        ///</summary>
         /// <typeparam name="T">Type to deserialise result to.</typeparam>
         /// <param name="categoryId">The Spotify category ID for the category.</param>
         /// <param name="country">Optional. A country: a <see cref="SpotifyCountryCodes"/>. Provide 
@@ -157,7 +157,7 @@ namespace SpotifyApi.NetCore
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service,
         /// used for this call only. See constructors for other ways to provide an access token.</param>
         /// <returns>Result deserialised to `T`.</returns>
-        /// <remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-category/ </remarks>
+        ///<remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-category/ </remarks>
         public async Task<T> GetCategory<T>(string categoryId, string country = null, string locale = null, string accessToken = null)
         {
             var builder = new UriBuilder($"{BaseUrl}/browse/categories/{categoryId}");
@@ -166,9 +166,9 @@ namespace SpotifyApi.NetCore
             return await GetModel<T>(builder.Uri, accessToken: accessToken);
         }
 
-        /// <summary>
+        ///<summary>
         /// Get a list of Spotify playlists tagged with a particular category.
-        /// </summary>
+        ///</summary>
         /// <param name="categoryId">The Spotify category ID for the category.</param>
         /// <param name="country">Optional. A country: a <see cref="SpotifyCountryCodes"/>. Provide 
         /// this parameter to ensure that the category exists for a particular country.</param>
@@ -179,7 +179,7 @@ namespace SpotifyApi.NetCore
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service,
         /// used for this call only. See constructors for other ways to provide an access token.</param>
         /// <returns>A <see cref="PagedPlaylists"/> object</returns>
-        /// <remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-categorys-playlists/ </remarks>
+        ///<remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-categorys-playlists/ </remarks>
         public Task<PagedPlaylists> GetCategoryPlaylists(
             string categoryId,
             string country = null,
@@ -192,9 +192,9 @@ namespace SpotifyApi.NetCore
                 offset: offset,
                 accessToken: accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Get a list of Spotify playlists tagged with a particular category.
-        /// </summary>
+        ///</summary>
         /// <typeparam name="T">Type to deserialise result to.</typeparam>
         /// <param name="categoryId">The Spotify category ID for the category.</param>
         /// <param name="country">Optional. A country: a <see cref="SpotifyCountryCodes"/>. Provide 
@@ -206,7 +206,7 @@ namespace SpotifyApi.NetCore
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service,
         /// used for this call only. See constructors for other ways to provide an access token.</param>
         /// <returns>Result deserialised to `T`.</returns>
-        /// <remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-categorys-playlists/ </remarks>
+        ///<remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-categorys-playlists/ </remarks>
         public async Task<T> GetCategoryPlaylists<T>(
             string categoryId,
             string country = null,
@@ -221,9 +221,9 @@ namespace SpotifyApi.NetCore
             return await GetModelFromProperty<T>(builder.Uri, "playlists", accessToken: accessToken);
         }
 
-        /// <summary>
+        ///<summary>
         /// Get a list of Spotify featured playlists (shown, for example, on a Spotify player's "Browse" tab).
-        /// </summary>
+        ///</summary>
         /// <param name="country">Optional. A country: a <see cref="SpotifyCountryCodes"/>. Provide 
         /// this parameter to ensure that the category exists for a particular country.</param>
         /// <param name="locale">Optional. The desired language, consisting of an ISO 639-1 language 
@@ -243,7 +243,7 @@ namespace SpotifyApi.NetCore
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service,
         /// used for this call only. See constructors for other ways to provide an access token.</param>
         /// <returns>A <see cref="FeaturedPlaylists"/> object</returns>
-        /// <remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-list-featured-playlists/ </remarks>
+        ///<remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-list-featured-playlists/ </remarks>
         public Task<FeaturedPlaylists> GetFeaturedPlaylists(
             string country = null,
             string locale = null,
@@ -258,9 +258,9 @@ namespace SpotifyApi.NetCore
                 offset: offset,
                 accessToken: accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Get a list of Spotify featured playlists (shown, for example, on a Spotify player's "Browse" tab).
-        /// </summary>
+        ///</summary>
         /// <typeparam name="T">Type to deserialise result to.</typeparam>
         /// <param name="country">Optional. A country: a <see cref="SpotifyCountryCodes"/>. Provide 
         /// this parameter to ensure that the category exists for a particular country.</param>
@@ -281,7 +281,7 @@ namespace SpotifyApi.NetCore
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service,
         /// used for this call only. See constructors for other ways to provide an access token.</param>
         /// <returns>Result deserialised to `T`.</returns>
-        /// <remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-list-featured-playlists/ </remarks>
+        ///<remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-list-featured-playlists/ </remarks>
         public async Task<T> GetFeaturedPlaylists<T>(
             string country = null,
             string locale = null,
@@ -299,10 +299,10 @@ namespace SpotifyApi.NetCore
             return await GetModelFromProperty<T>(builder.Uri, "playlists", accessToken: accessToken);
         }
 
-        /// <summary>
+        ///<summary>
         /// Get a list of new album releases featured in Spotify (shown, for example, on a Spotify 
         /// player's "Browse" tab).
-        /// </summary>
+        ///</summary>
         /// <param name="country">Optional. Choose a <see cref="SpotifyCountryCodes"/>. If a country code
         /// is specified, only artists, albums, and tracks with content that is playable in that market 
         /// is returned. Note: Playlist results are not affected by the market parameter.</param>
@@ -313,17 +313,17 @@ namespace SpotifyApi.NetCore
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service,
         /// used for this call only. See constructors for more ways to provide access tokens.</param>
         /// <returns>Array of <see cref="Album"/></returns>
-        /// <remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-list-new-releases/ </remarks>
+        ///<remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-list-new-releases/ </remarks>
         public Task<PagedAlbums> GetNewReleases(
             string country = null,
             int? limit = null,
             int offset = 0,
             string accessToken = null) => GetNewReleases<PagedAlbums>(country, limit, offset, accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Get a list of new album releases featured in Spotify (shown, for example, on a Spotify 
         /// player's "Browse" tab).
-        /// </summary>
+        ///</summary>
         /// <typeparam name="T">Type to deserialise result to.</typeparam>
         /// <param name="country">Optional. Choose a <see cref="SpotifyCountryCodes"/>. If a country code
         /// is specified, only artists, albums, and tracks with content that is playable in that market 
@@ -335,7 +335,7 @@ namespace SpotifyApi.NetCore
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service,
         /// used for this call only. See constructors for more ways to provide access tokens.</param>
         /// <returns>Result deserialised to `T`.</returns>
-        /// <remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-list-new-releases/ </remarks>
+        ///<remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-list-new-releases/ </remarks>
         public async Task<T> GetNewReleases<T>(
             string country = null,
             int? limit = null,
@@ -349,9 +349,9 @@ namespace SpotifyApi.NetCore
             return await GetModelFromProperty<T>(builder.Uri, "albums", accessToken: accessToken);
         }
 
-        /// <summary>
+        ///<summary>
         /// Create a playlist-style listening experience based on seed artists, tracks and genres.
-        /// </summary>
+        ///</summary>
         /// <param name="seedArtists">An array of Spotify IDs for seed Artists. Up to 5 seed values 
         /// may be provided in any combination of Artists, Tracks and Genres.</param>
         /// <param name="seedGenres">An array of available seed Genres. Up to 5 seed values 
@@ -361,7 +361,7 @@ namespace SpotifyApi.NetCore
         /// <param name="limit">Optional. The target size of the list of recommended tracks. Default:
         /// 20. Minimum: 1. Maximum: 100.</param>
         /// <returns><see cref="RecommendationsResult"/></returns>
-        /// <remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-recommendations/ </remarks>
+        ///<remarks> https://developer.spotify.com/documentation/web-api/reference/browse/get-recommendations/ </remarks>
         public async Task<RecommendationsResult> GetRecommendations(
             string[] seedArtists = null,
             string[] seedGenres = null,
@@ -375,9 +375,9 @@ namespace SpotifyApi.NetCore
                 limit: limit,
                 accessToken: accessToken);
 
-        /// <summary>
+        ///<summary>
         /// Create a playlist-style listening experience based on seed artists, tracks and genres.
-        /// </summary>
+        ///</summary>
         /// <typeparam name="T">Type to deserialise result to.</typeparam>
         /// <param name="seedArtists">An array of Spotify IDs for seed Artists. Up to 5 seed values 
         /// may be provided in any combination of Artists, Tracks and Genres. <seealso cref="GetAvailableGenreSeeds"/>.</param>

@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore.Authorization
 {
-    /// <summary>
+    ///<summary>
     /// Spotify Accounts Service for the User (Authorization Code) Flow.
-    /// </summary>
-    /// <remarks>https://developer.spotify.com/documentation/general/guides/authorization-guide/#authorization-code-flow</remarks>
+    ///</summary>
+    ///<remarks>https://developer.spotify.com/documentation/general/guides/authorization-guide/#authorization-code-flow</remarks>
     public class UserAccountsService : AccountsService, IUserAccountsService
     {
         private const string AccountsAuthorizeUrl = "https://accounts.spotify.com/authorize";
 
         #region constructors
 
-        /// <summary>
+        ///<summary>
         /// Instantiate a new <see cref="UserAccountsService"/>.
-        /// </summary>
+        ///</summary>
         /// <param name="httpClient">An instance of <see cref="HttpClient"/>.</param>
         /// <param name="configuration">An instance of <see cref="IConfiguration"/>.</param>
         public UserAccountsService(HttpClient httpClient, IConfiguration configuration)
@@ -28,9 +28,9 @@ namespace SpotifyApi.NetCore.Authorization
             ValidateConfig();
         }
 
-        /// <summary>
+        ///<summary>
         /// Instantiate a new <see cref="UserAccountsService"/>.
-        /// </summary>
+        ///</summary>
         /// <param name="configuration">An instance of <see cref="IConfiguration"/>.</param>
         public UserAccountsService(IConfiguration configuration)
             : base(new HttpClient(), configuration)
@@ -40,9 +40,9 @@ namespace SpotifyApi.NetCore.Authorization
 
         #endregion
 
-        /// <summary>
+        ///<summary>
         /// Refresh a Bearer (Access) token when it has expired / is about to expire.
-        /// </summary>
+        ///</summary>
         /// <param name="refreshToken">The refresh token returned from the authorization code exchange.</param>
         /// <returns>An instance of <see cref="BearerAccessToken"/>.</returns>
         public async Task<BearerAccessToken> RefreshUserAccessToken(string refreshToken)
@@ -53,10 +53,10 @@ namespace SpotifyApi.NetCore.Authorization
                 $"grant_type=refresh_token&refresh_token={refreshToken}&redirect_uri={_config["SpotifyAuthRedirectUri"]}");
         }
 
-        /// <summary>
+        ///<summary>
         /// INCOMPLETE
         /// Derives and returns a URL for a webpage where a user can choose to grant your app access to their data.
-        /// </summary>
+        ///</summary>
         /// <param name="state">Optional, but strongly recommended. Random state value to provides protection against 
         /// attacks such as cross-site request forgery. See important notes in <!-- see cref="https://developer.spotify.com/documentation/general/guides/authorization-guide/#authorization-code-flow"/ --></param>
         /// <param name="scopes">Optional. A space-separated list of scopes.</param>
@@ -66,9 +66,9 @@ namespace SpotifyApi.NetCore.Authorization
             return AuthorizeUrl(state, scopes, _config["SpotifyApiClientId"], _config["SpotifyAuthRedirectUri"]);
         }
 
-        /// <summary>
+        ///<summary>
         /// Derives and returns a URL for a webpage where a user can choose to grant your app access to their data.
-        /// </summary>
+        ///</summary>
         /// <param name="state">Optional, but strongly recommended. Random state value to provides protection against 
         /// attacks such as cross-site request forgery. See important notes in <see cref="https://developer.spotify.com/documentation/general/guides/authorization-guide/#authorization-code-flow"/></param>
         /// <param name="scopes">Optional. A space-separated list of scopes.</param>
@@ -84,9 +84,9 @@ namespace SpotifyApi.NetCore.Authorization
             return $"{AccountsAuthorizeUrl}/?client_id={spotifyApiClientId}&response_type=code&redirect_uri={spotifyAuthRedirectUri}&scope={scope}&state={state}";
         }
 
-        /// <summary>
+        ///<summary>
         /// Exchange the authorization code returned by the `/authorize` endpoint for a <see cref="BearerAccessRefreshToken"/>.
-        /// </summary>
+        ///</summary>
         /// <param name="code">The authorization code returned from the initial request to the Account /authorize endpoint.</param>
         /// <returns>An instance of <see cref="BearerAccessRefreshToken"/></returns>
         public async Task<BearerAccessRefreshToken> RequestAccessRefreshToken(string code)

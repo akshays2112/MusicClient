@@ -1,6 +1,7 @@
 using MusicClient;
 using MusicClient.Data.SQLServer;
 using WebApis.Net6;
+using WebApis.Net6.Authentication;
 using WebApis.Net6.Spotify;
 using WebApis.Net6.Spotify.WebApiEndpoints;
 
@@ -32,6 +33,7 @@ builder.Services.AddScoped<IWApiShow, WApiShow>();
 builder.Services.AddScoped<IWApiEpisode, WApiEpisode>();
 builder.Services.AddScoped<IWApiTrack, WApiTrack>();
 builder.Services.AddScoped<IWApiUserProfile, WApiUserProfile>();
+builder.Services.AddScoped<IWApiPlaylist, WApiPlaylist>();
 
 //builder.Services.AddSingleton(typeof(IUsersProfileApi), typeof(UsersProfileApi));
 //builder.Services.AddSingleton(typeof(IPlaylistsApi), typeof(PlaylistsApi));

@@ -4,10 +4,10 @@ using System.Text.Json.Serialization;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// Audio features object
-    /// </summary>
-    /// <remarks> https://developer.spotify.com/documentation/web-api/reference/object-model/ </remarks>
+    ///</summary>
+    ///<remarks> https://developer.spotify.com/documentation/web-api/reference/object-model/ </remarks>
     public partial class TrackAudioFeatures
     {
         [JsonPropertyName("danceability")]

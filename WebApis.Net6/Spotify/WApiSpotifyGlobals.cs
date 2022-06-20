@@ -27,5 +27,7 @@ public class WApiSpotifyGlobals : IWApiSpotifyGlobals
 
     public enum IncludeGroups { album, single, appears_on, compilation }
 
+    public enum TrackOrEpisode { track, episode }
+
     #endregion
 }

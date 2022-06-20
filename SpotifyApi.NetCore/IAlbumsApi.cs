@@ -2,16 +2,16 @@ using System.Threading.Tasks;
 
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// Defines endpoints for retrieving information about one or more albums from the Spotify catalog.
-    /// </summary>
+    ///</summary>
     public interface IAlbumsApi
     {
         #region GetAlbum
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information for a single album.
-        /// </summary>
+        ///</summary>
         /// <param name="albumId">The Spotify ID for the album.</param>
         /// <param name="market">Optional. An ISO 3166-1 alpha-2 country code or the string `from_token` 
         /// (See <see cref="SpotifyCountryCodes"/>). Provide this parameter if you want to apply Track Relinking.</param>
@@ -19,9 +19,9 @@ namespace SpotifyApi.NetCore
         /// <returns>A Task that, once successfully completed, returns a full <see cref="Album"/> object.</returns>
         Task<Album> GetAlbum(string albumId, string market = null, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information for a single album.
-        /// </summary>
+        ///</summary>
         /// <param name="albumId">The Spotify ID for the album.</param>
         /// <param name="market">Optional. An ISO 3166-1 alpha-2 country code or the string `from_token` 
         /// (See <see cref="SpotifyCountryCodes"/>). Provide this parameter if you want to apply Track Relinking.</param>
@@ -34,9 +34,9 @@ namespace SpotifyApi.NetCore
 
         #region GetAlbumTracks
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information about an album’s tracks. Optional parameters can be used to limit the number of tracks returned.
-        /// </summary>
+        ///</summary>
         /// <param name="albumId">The Spotify ID for the album.</param>
         /// <param name="limit">Optional. The maximum number of tracks to return. Default: 20. Minimum: 1. Maximum: 50.</param>
         /// <param name="offset">Optional. The index of the first track to return. Default: 0 (the first 
@@ -45,7 +45,7 @@ namespace SpotifyApi.NetCore
         /// (See <see cref="SpotifyCountryCodes"/>). Provide this parameter if you want to apply Track Relinking.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>A Task that, once successfully completed, returns a full <see cref="Album"/> object.</returns>
-        /// <remarks>https://developer.spotify.com/documentation/web-api/reference/albums/get-albums-tracks/</remarks>
+        ///<remarks>https://developer.spotify.com/documentation/web-api/reference/albums/get-albums-tracks/</remarks>
         Task<Album> GetAlbumTracks(
             string albumId,
             int? limit = null,
@@ -53,9 +53,9 @@ namespace SpotifyApi.NetCore
             string market = null,
             string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information about an album’s tracks. Optional parameters can be used to limit the number of tracks returned.
-        /// </summary>
+        ///</summary>
         /// <param name="albumId">The Spotify ID for the album.</param>
         /// <param name="limit">Optional. The maximum number of tracks to return. Default: 20. Minimum: 1. Maximum: 50.</param>
         /// <param name="offset">Optional. The index of the first track to return. Default: 0 (the first 
@@ -65,7 +65,7 @@ namespace SpotifyApi.NetCore
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <typeparam name="T">Optionally provide your own type to deserialise Spotify's response to.</typeparam>
         /// <returns>A Task that, once successfully completed, returns a Model of T.</returns>
-        /// <remarks>https://developer.spotify.com/documentation/web-api/reference/albums/get-albums-tracks/</remarks>
+        ///<remarks>https://developer.spotify.com/documentation/web-api/reference/albums/get-albums-tracks/</remarks>
         Task<T> GetAlbumTracks<T>(
             string albumId,
             int? limit = null,
@@ -77,9 +77,9 @@ namespace SpotifyApi.NetCore
 
         #region GetAlbums
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information for multiple albums identified by their Spotify IDs.
-        /// </summary>
+        ///</summary>
         /// <param name="albumIds">An array of the Spotify IDs for the albums. Maximum: 20 IDs.</param>
         /// <param name="market">Optional. An ISO 3166-1 alpha-2 country code or the string `from_token` 
         /// (See <see cref="SpotifyCountryCodes"/>). Provide this parameter if you want to apply Track Relinking.</param>
@@ -87,9 +87,9 @@ namespace SpotifyApi.NetCore
         /// <returns>A Task that, once successfully completed, returns an array of full <see cref="Album"/> objects.</returns>
         Task<Album[]> GetAlbums(string[] albumIds, string market = null, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify catalog information for multiple albums identified by their Spotify IDs.
-        /// </summary>
+        ///</summary>
         /// <param name="albumIds">An array of the Spotify IDs for the albums. Maximum: 20 IDs.</param>
         /// <param name="market">Optional. An ISO 3166-1 alpha-2 country code or the string `from_token` 
         /// (See <see cref="SpotifyCountryCodes"/>). Provide this parameter if you want to apply Track Relinking.</param>
@@ -102,9 +102,9 @@ namespace SpotifyApi.NetCore
 
         #region SearchAlbums
 
-        /// <summary>
+        ///<summary>
         /// Get Spotify Catalog information about albums that match a keyword string.
-        /// </summary>
+        ///</summary>
         /// <param name="query">Search query keywords and optional field filters and operators. See
         /// https://developer.spotify.com/documentation/web-api/reference/search/search/#writing-a-query---guidelines</param>
         /// <param name="market">Optional. Choose a <see cref="SpotifyCountryCodes"/>. If a country code
@@ -134,9 +134,9 @@ namespace SpotifyApi.NetCore
 
         #region GetSavedAlbums
 
-        /// <summary>
+        ///<summary>
         /// Get a list of the albums saved in the current Spotify user's 'Your Music' library.
-        /// </summary>
+        ///</summary>
         /// <param name="limit">Optional. The maximum number of tracks to return. Default: 20. Minimum: 1. Maximum: 50.</param>
         /// <param name="market">Optional. An ISO 3166-1 alpha-2 country code or the string `from_token` 
         /// (See <see cref="SpotifyCountryCodes"/>). Provide this parameter if you want to apply Track Relinking.</param>
@@ -144,12 +144,12 @@ namespace SpotifyApi.NetCore
         /// object). Use with limit to get the next set of tracks.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>A Task that, once successfully completed, returns a full <see cref="Paged<Album>"/> object.</returns>
-        /// <remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/get-users-saved-albums</remarks>
+        ///<remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/get-users-saved-albums</remarks>
         Task<Paged<Album>> GetSavedAlbums(int? limit = null, string market = null, int offset = 0, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get a list of the albums saved in the current Spotify user's 'Your Music' library.
-        /// </summary>
+        ///</summary>
         /// <param name="limit">Optional. The maximum number of tracks to return. Default: 20. Minimum: 1. Maximum: 50.</param>
         /// <param name="market">Optional. An ISO 3166-1 alpha-2 country code or the string `from_token` 
         /// (See <see cref="SpotifyCountryCodes"/>). Provide this parameter if you want to apply Track Relinking.</param>
@@ -157,82 +157,82 @@ namespace SpotifyApi.NetCore
         /// object). Use with limit to get the next set of tracks.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>A Task that, once successfully completed, returns a full <see cref="Paged<T>"/> object.</returns>
-        /// <remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/get-users-saved-albums</remarks>
+        ///<remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/get-users-saved-albums</remarks>
         Task<Paged<T>> GetSavedAlbums<T>(int? limit = null, string market = null, int offset = 0, string accessToken = null);
 
         #endregion
 
         #region SaveAlbums
 
-        /// <summary>
+        ///<summary>
         /// Save one or more albums to the current user's 'Your Music' library.
-        /// </summary>
+        ///</summary>
         /// <param name="albumIds">An array of the Spotify IDs for the albums. Maximum: 20 IDs for Query Parameter or Maximum: 50 IDs for request body.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>A Task that, once successfully completed, returns a full <see cref="SpotifyResponse"/> object.</returns>
-        /// <remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/save-albums-user</remarks>
+        ///<remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/save-albums-user</remarks>
         Task<SpotifyResponse<Album[]>> SaveAlbums(string[] albumIds, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Save one or more albums to the current user's 'Your Music' library.
-        /// </summary>
+        ///</summary>
         /// <param name="albumIds">An array of the Spotify IDs for the albums. Maximum: 20 IDs for Query Parameter or Maximum: 50 IDs for request body.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>A Task that, once successfully completed, returns a full <see cref="SpotifyResponse"/> object.</returns>
-        /// <remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/save-albums-user</remarks>
+        ///<remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/save-albums-user</remarks>
         Task<SpotifyResponse<T>> SaveAlbums<T>(string[] albumIds, string accessToken = null);
 
         #endregion
 
         #region RemoveAlbums
 
-        /// <summary>
+        ///<summary>
         /// Remove one or more albums from the current user's 'Your Music' library.
-        /// </summary>
+        ///</summary>
         /// <param name="albumIds">An array of the Spotify IDs for the albums. Maximum: 20 IDs for Query Parameter or Maximum: 50 IDs for request body.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>A Task that, once successfully completed, returns a full <see cref="SpotifyResponse"/> object.</returns>
-        /// <remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/save-albums-user</remarks>
+        ///<remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/save-albums-user</remarks>
         Task<SpotifyResponse<Album[]>> RemoveAlbums(string[] albumIds, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Remove one or more albums from the current user's 'Your Music' library.
-        /// </summary>
+        ///</summary>
         /// <param name="albumIds">An array of the Spotify IDs for the albums. Maximum: 20 IDs for Query Parameter or Maximum: 50 IDs for request body.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>A Task that, once successfully completed, returns a full <see cref="SpotifyResponse"/> object.</returns>
-        /// <remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/save-albums-user</remarks>
+        ///<remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/save-albums-user</remarks>
         Task<SpotifyResponse> RemoveAlbums<T>(string[] albumIds, string accessToken = null);
 
         #endregion
 
         #region CheckSavedAlbums
 
-        /// <summary>
+        ///<summary>
         /// Check if one or more albums is already saved in the current Spotify user's 'Your Music' library.
-        /// </summary>
+        ///</summary>
         /// <param name="albumIds">An array of the Spotify IDs for the albums. Maximum: 20 IDs.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>A Task that, once successfully completed, returns a full <see cref="SpotifyResponse"/> object.</returns>
-        /// <remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/check-users-saved-albums</remarks>
+        ///<remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/check-users-saved-albums</remarks>
         Task<Album[]> CheckSavedAlbums(string[] albumIds, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Check if one or more albums is already saved in the current Spotify user's 'Your Music' library.
-        /// </summary>
+        ///</summary>
         /// <param name="albumIds">An array of the Spotify IDs for the albums. Maximum: 20 IDs.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>A Task that, once successfully completed, returns a full <see cref="SpotifyResponse"/> object.</returns>
-        /// <remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/check-users-saved-albums</remarks>
+        ///<remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/check-users-saved-albums</remarks>
         Task<T> CheckSavedAlbums<T>(string[] albumIds, string accessToken = null);
 
         #endregion
 
         #region GetNewReleases
 
-        /// <summary>
+        ///<summary>
         /// Get a list of new album releases featured in Spotify (shown, for example, on a Spotify player’s “Browse” tab).
-        /// </summary>
+        ///</summary>
         /// <param name="country">Optional. An ISO 3166-1 alpha-2 country code or the string `from_token` 
         /// (See <see cref="SpotifyCountryCodes"/>). A country: an ISO 3166-1 alpha-2 country code. Provide this parameter if 
         /// you want the list of returned items to be relevant to a particular country. If omitted, the returned albums will 
@@ -242,12 +242,12 @@ namespace SpotifyApi.NetCore
         /// object). Use with limit to get the next set of tracks.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>A Task that, once successfully completed, returns a full <see cref="SpotifyResponse"/> object.</returns>
-        /// <remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/get-new-releases</remarks>
+        ///<remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/get-new-releases</remarks>
         Task<Paged<Album>> GetNewReleases(string country, int? limit = null, int offset = 0, string accessToken = null);
 
-        /// <summary>
+        ///<summary>
         /// Get a list of new album releases featured in Spotify (shown, for example, on a Spotify player’s “Browse” tab).
-        /// </summary>
+        ///</summary>
         /// <param name="country">Optional. An ISO 3166-1 alpha-2 country code or the string `from_token` 
         /// (See <see cref="SpotifyCountryCodes"/>). A country: an ISO 3166-1 alpha-2 country code. Provide this parameter if 
         /// you want the list of returned items to be relevant to a particular country. If omitted, the returned albums will 
@@ -257,7 +257,7 @@ namespace SpotifyApi.NetCore
         /// object). Use with limit to get the next set of tracks.</param>
         /// <param name="accessToken">Optional. A valid access token from the Spotify Accounts service.</param>
         /// <returns>A Task that, once successfully completed, returns a full <see cref="SpotifyResponse"/> object.</returns>
-        /// <remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/get-new-releases</remarks>
+        ///<remarks>https://developer.spotify.com/documentation/web-api/reference/#/operations/get-new-releases</remarks>
         Task<T> GetNewReleases<T>(string country, int? limit = null, int offset = 0, string accessToken = null);
 
         #endregion

@@ -1,8 +1,8 @@
 namespace SpotifyApi.NetCore
 {
-    /// <summary>
+    ///<summary>
     /// Spotify Search Type constants
-    /// </summary>
+    ///</summary>
     public static class SpotifySearchTypes
     {
         public const string Album = "album";
