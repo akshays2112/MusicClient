@@ -1,14 +1,14 @@
 using MusicClient;
 using MusicClient.Data.SQLServer;
-using WebApis.Net6;
-using WebApis.Net6.Authentication;
-using WebApis.Net6.Spotify;
-using WebApis.Net6.Spotify.WebApiEndpoints;
+using WebApis.Net7;
+using WebApis.Net7.Authentication;
+using WebApis.Net7.Spotify;
+using WebApis.Net7.Spotify.WebApiEndpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
-MusicClientDBContext.ConnectionString = builder.Configuration.GetConnectionString("MusicClientDBConnectionString");
-Globals.RedirectUri = builder.Configuration.GetValue<string>("RedirectUri");
+MusicClientDBContext.ConnectionString = builder.Configuration.GetConnectionString("MusicClientDBConnectionString") ?? "";
+Globals.RedirectUri = builder.Configuration.GetValue<string>("RedirectUri") ?? "";
 Globals.SpotifyClientId = builder.Configuration.GetValue<string>("SpotifyClientId");
 Globals.SpotifyClientSecret = builder.Configuration.GetValue<string>("SpotifyClientSecret");
 
